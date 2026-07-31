@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "0.1",
+  "listingId": "demo-supplier-s50pro-001",
+  "sourceSystem": "demo-erp",
+  "updatedAt": "2026-07-31T10:00:00Z",
+  "robotClass": "ScrubberDryer",
+  "make": "Gausium",
+  "model": "Scrubber 50 Pro",
+  "variant": "Walzenbürste",
+  "modelYear": 2026,
+  "condition": "New",
+  "summary": "Autonomer Scheuersaugroboter der Mittelklasse für Hartböden in Supermärkten, Kliniken und Bahnhöfen.",
+  "highlights": ["Selbstständiges Andocken", "Walzenbürste nimmt Grobschmutz auf"],
+  "capabilities": {
+    "cleaningWidthCm": 46,
+    "areaPerformanceTheoreticalM2h": 1754,
+    "areaPerformancePracticalM2h": 900,
+    "runtimeMinutes": 180,
+    "chargingTimeMinutes": 120,
+    "freshWaterTankL": 30,
+    "wasteWaterTankL": 24,
+    "navigationTypes": ["Lidar2D", "DepthCamera"],
+    "dockingStation": true,
+    "suitableEnvironments": ["Retail", "Healthcare", "Transport"],
+    "minAreaM2": 800,
+    "weightKg": 148,
+    "features": ["Automatische Tankspülung", "Flottenreporting"]
+  },
+  "connectivity": {
+    "fleetApi": true,
+    "offlineCapable": false
+  },
+  "compliance": {
+    "ceMarking": true,
+    "conformityBasis": "MRL-2006-42-EC",
+    "standards": ["EN IEC 63327:2021"],
+    "operatingManualDeUrl": "https://example-supplier.de/docs/s50pro-betriebsanleitung.pdf",
+    "dataPrivacy": {
+      "camerasOnboard": true,
+      "recordsVideo": false,
+      "onDeviceProcessingOnly": true,
+      "cloudUpload": true,
+      "cloudRegion": "EU (Frankfurt)"
+    }
+  },
+  "offers": [
+    {
+      "offerType": "RaaS",
+      "priceCents": 119000,
+      "currency": "EUR",
+      "vatRate": 19,
+      "isStartingPrice": true,
+      "billingPeriod": "Month",
+      "minTermMonths": 24,
+      "noticePeriodMonths": 3,
+      "setupFeeCents": 0,
+      "serviceScope": {
+        "level": "Full",
+        "maintenance": true,
+        "repairs": true,
+        "wearParts": true,
+        "consumables": false,
+        "replacementDevice": true,
+        "replacementSlaHours": 48,
+        "onSiteSupport": true,
+        "remoteMonitoring": true,
+        "softwareUpdates": true,
+        "installation": true,
+        "statutoryInspection": true,
+        "insurance": false,
+        "notes": "Reinigungsmittel/Pads nicht enthalten"
+      },
+      "availability": { "inStock": true, "leadTimeDays": 14, "serviceRegions": ["DE", "AT"] }
+    },
+    {
+      "offerType": "Purchase",
+      "priceCents": 3199000,
+      "currency": "EUR",
+      "vatRate": 19,
+      "billingPeriod": "Once",
+      "setupFeeCents": 125000,
+      "deliveryFeeCents": 24900,
+      "serviceScope": {
+        "level": "None",
+        "notes": "Wartungsvertrag separat: 10–15 % des Kaufpreises p. a."
+      },
+      "availability": { "inStock": true, "leadTimeDays": 10, "serviceRegions": ["DE"] }
+    }
+  ],
+  "supplier": {
+    "name": "Demo Robotics GmbH",
+    "supplierType": "Dealer",
+    "website": "https://example-supplier.de",
+    "email": "vertrieb@example-supplier.de",
+    "countryCode": "DE",
+    "vatId": "DE123456789"
+  },
+  "location": { "countryCode": "DE", "postalCode": "65760", "city": "Eschborn" }
+}

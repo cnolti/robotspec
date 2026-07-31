@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "0.1",
+  "listingId": "demo-supplier-nr1700-lease",
+  "updatedAt": "2026-07-31T10:00:00Z",
+  "robotClass": "Vacuum",
+  "make": "Nexaro",
+  "model": "NR 1700",
+  "condition": "New",
+  "summary": "Kompakter gewerblicher Saugroboter für Büroflächen — deutscher Hersteller (Vorwerk-Gruppe).",
+  "capabilities": {
+    "areaPerformancePracticalM2h": 100,
+    "runtimeMinutes": 175,
+    "dustbinL": 1.5,
+    "navigationTypes": ["Lidar2D"],
+    "suitableEnvironments": ["Office"],
+    "features": ["IEC-63327-zertifiziert", "TÜV SÜD GS"]
+  },
+  "compliance": {
+    "ceMarking": true,
+    "conformityBasis": "MRL-2006-42-EC",
+    "standards": ["EN IEC 63327:2021"]
+  },
+  "offers": [
+    {
+      "offerType": "Leasing",
+      "priceCents": 6200,
+      "currency": "EUR",
+      "vatRate": 19,
+      "isStartingPrice": true,
+      "billingPeriod": "Month",
+      "minTermMonths": 48,
+      "serviceScope": {
+        "level": "None",
+        "notes": "Reine Finanzierungsrate, bonitäts- und laufzeitabhängig. Nexaro HUB (Dockingstation) nicht enthalten."
+      }
+    }
+  ],
+  "supplier": {
+    "name": "Demo Robotics GmbH",
+    "supplierType": "Dealer",
+    "countryCode": "DE"
+  }
+}

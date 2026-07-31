@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "0.1",
+  "listingId": "demo-supplier-bella-day",
+  "updatedAt": "2026-07-31T10:00:00Z",
+  "robotClass": "Delivery",
+  "make": "Pudu Robotics",
+  "model": "BellaBot",
+  "condition": "Demo",
+  "operatingHours": 220,
+  "summary": "Service-/Lieferroboter für Gastronomie-Events — Beispiel für eine Nicht-Reinigungsklasse in openRobot (kuratiert, v0.1 spezifiziert Reinigungsklassen voll).",
+  "compliance": {
+    "ceMarking": true,
+    "dataPrivacy": {
+      "camerasOnboard": true,
+      "recordsVideo": false,
+      "onDeviceProcessingOnly": true,
+      "cloudUpload": false
+    }
+  },
+  "offers": [
+    {
+      "offerType": "DayRate",
+      "priceCents": 14900,
+      "currency": "EUR",
+      "vatRate": 19,
+      "billingPeriod": "Day",
+      "serviceScope": {
+        "level": "Full",
+        "maintenance": true,
+        "repairs": true,
+        "replacementDevice": true,
+        "installation": true,
+        "notes": "Event-Tagesmiete inkl. Auf-/Abbau und Einweisung"
+      },
+      "availability": { "serviceRegions": ["DE-NW", "DE-HE"] }
+    }
+  ],
+  "supplier": {
+    "name": "Demo Event Robotics",
+    "supplierType": "RentalCompany",
+    "countryCode": "DE"
+  }
+}
