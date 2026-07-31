@@ -1,12 +1,12 @@
-# Mapping: openRobot v0.1 → RoboHub-Listing
+# Mapping: RobotSpec v0.1 → RoboHub-Listing
 
-Referenz-Mapping der RoboHub-Implementierung (`poc/src/lib/openrobot-map.ts`).
+Referenz-Mapping der RoboHub-Implementierung (`poc/src/lib/robotspec-map.ts`).
 Nur Reinigungsklassen sind in den RoboHub-Katalog übernehmbar; andere Klassen
 bleiben in der Kuratierungs-Queue.
 
 ## Klassen
 
-| openRobot `robotClass` | RoboHub `category` |
+| RobotSpec `robotClass` | RoboHub `category` |
 |---|---|
 | `ScrubberDryer` | `scheuersaugroboter` |
 | `Vacuum` | `saugroboter` |
@@ -16,7 +16,7 @@ bleiben in der Kuratierungs-Queue.
 
 ## Kernfelder
 
-| openRobot | RoboHub | Regel |
+| RobotSpec | RoboHub | Regel |
 |---|---|---|
 | `make` + `model` + `variant` | `manufacturer`, `name`, `id` | `id` = `partner-<slug>-<submissionId[0:6]>` |
 | `capabilities.areaPerformancePracticalM2h` | `capabilities.areaPerformanceM2h` + `perfBasis: "praktisch"` | praktischer Wert hat Vorrang |

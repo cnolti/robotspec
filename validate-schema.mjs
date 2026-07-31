@@ -5,7 +5,7 @@ import { readFileSync, readdirSync } from "fs";
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 addFormats(ajv);
 
-const schemaPath = "./schema/openrobot-v0.1.schema.json";
+const schemaPath = "./schema/robotspec-v0.1.schema.json";
 let schema;
 try {
   schema = JSON.parse(readFileSync(schemaPath, "utf8"));

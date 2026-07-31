@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "0.1",
+  "listingId": "demo-mfr-kira-b50-spec",
+  "updatedAt": "2026-07-31T12:00:00Z",
+  "robotClass": "ScrubberDryer",
+  "make": "Kärcher",
+  "model": "KIRA B 50",
+  "condition": "New",
+  "summary": "Produkt-Datenblatt ohne Angebotsteil — so publiziert ein Hersteller Spezifikationen, während Händler die Angebote (offers) beisteuern.",
+  "capabilities": {
+    "cleaningWidthCm": 55,
+    "areaPerformanceTheoreticalM2h": 2365,
+    "runtimeMinutes": 210,
+    "freshWaterTankL": 55,
+    "wasteWaterTankL": 55,
+    "navigationTypes": ["Lidar2D", "DepthCamera", "Ultrasonic"],
+    "dockingStation": true,
+    "autonomousWaterExchange": true,
+    "suitableEnvironments": ["Retail", "Logistics", "Healthcare"],
+    "maxSpeedKmh": 4.3,
+    "ipRating": "IPX3",
+    "weightKg": 245,
+    "dimensions": { "lengthMm": 1250, "widthMm": 750, "heightMm": 1100 },
+    "features": ["Dockingstation mit Tankspülung", "Kalenderfunktion"]
+  },
+  "connectivity": { "vda5050": false, "fleetApi": true },
+  "compliance": {
+    "ceMarking": true,
+    "conformityBasis": "MRL-2006-42-EC",
+    "operatingManualDeUrl": "https://example-manufacturer.de/docs/kira-b50-ba.pdf",
+    "dataPrivacy": {
+      "camerasOnboard": true,
+      "recordsVideo": false,
+      "onDeviceProcessingOnly": true,
+      "cloudUpload": true,
+      "cloudRegion": "EU"
+    }
+  },
+  "supplier": {
+    "name": "Demo Manufacturer SE",
+    "supplierType": "Manufacturer",
+    "countryCode": "DE"
+  }
+}

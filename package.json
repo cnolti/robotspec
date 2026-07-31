@@ -1,8 +1,8 @@
 {
-  "name": "openrobot-schema",
+  "name": "robotspec-schema",
   "version": "0.1.0",
   "private": true,
-  "description": "openRobot — offener Datenstandard für Serviceroboter-Angebote (Kauf, Miete, Leasing, RaaS)",
+  "description": "RobotSpec — offener Datenstandard für Serviceroboter: Produkt-Spezifikationen und Angebotsdaten (Kauf, Miete, Leasing, RaaS)",
   "type": "module",
   "scripts": {
     "validate": "node validate-schema.mjs"

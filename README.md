@@ -1,16 +1,20 @@
-# openRobot Schema
+# RobotSpec Schema
 
-> Offener Datenstandard für Serviceroboter-Angebote im DACH-Raum.
+> Offener Datenstandard für Serviceroboter: Produkt-Spezifikationen und Angebotsdaten im DACH-Raum.
 
-## Was ist openRobot?
+## Was ist RobotSpec?
 
-openRobot ist ein offenes, herstellerneutrales JSON Schema für strukturierte
-Serviceroboter-Angebote (Kauf, Miete, Leasing, RaaS). Es definiert ein
-kanonisches Format, mit dem Hersteller, Distributoren und Vermieter ihre
-Modelle, Preise und Verfügbarkeiten maschinenlesbar an Marktplätze und
-Plattformen liefern.
+RobotSpec ist ein offenes, herstellerneutrales JSON Schema für Serviceroboter.
+Es deckt beide Ebenen ab:
 
-**Vergleich:** openRobot ist für Serviceroboter das, was OpenImmo für
+1. **Produkt-Spezifikationen** (Spec Sheet): Leistungsdaten, Navigation,
+   Konnektivität, Compliance — ein Dokument ohne `offers` ist ein reines
+   Hersteller-Datenblatt.
+2. **Angebotsdaten**: Kauf, Miete, Leasing, RaaS mit Pflicht zur Preis- und
+   Service-Transparenz — Händler und Vermieter ergänzen `offers` zum selben
+   Modell.
+
+**Vergleich:** RobotSpec ist für Serviceroboter das, was OpenImmo für
 Immobilien ist — ein freier Datenstandard, der die Branche verbindet.
 
 ## Warum ein eigener Standard?
@@ -19,7 +23,7 @@ Eine Markterhebung (Juli 2026, 114 belegte Preispunkte über 20 Modelle im
 DACH-Raum) zeigt: **Fast kein Anbieter nennt gleichzeitig Betrag, Laufzeit,
 Serviceumfang und MwSt.-Status.** „Leasing ab 265 €" kann mit Servicepaket
 real 548 €/Monat kosten; identische Modelle liegen bei Händlern bis zu 39 %
-auseinander. openRobot macht die fehlenden Angaben zur Pflicht:
+auseinander. RobotSpec macht die fehlenden Angaben zur Pflicht:
 
 - Jedes Angebot (`Offer`) braucht `priceCents` (netto), `vatRate` und einen
   expliziten `serviceScope` mit `level: Full | Partial | None`
@@ -63,14 +67,14 @@ npm run validate   # Schema + alle Beispiele
 
 ## Referenzimplementierung
 
-Der RoboHub-POC (RaaS-Marktplatz für Reinigungsroboter) nutzt openRobot
+Der RoboHub-POC (RaaS-Marktplatz für Reinigungsroboter) nutzt RobotSpec
 produktiv als Partner-Ingest-Format: Validierung per Ajv, Kuratierungs-Queue
 statt Auto-Publish, Mapping auf ein internes Listing-Modell. Siehe
 [MAPPING-robohub.md](MAPPING-robohub.md).
 
 ## Dateien
 
-- `schema/openrobot-v0.1.schema.json` — das Schema (Draft 2020-12)
+- `schema/robotspec-v0.1.schema.json` — das Schema (Draft 2020-12)
 - `schema/examples/` — validierende Beispiel-Listings (RaaS mit Full-Service,
   Leasing ohne Service, Event-Tagesmiete)
 - `validate-schema.mjs` — Ajv-Validator
