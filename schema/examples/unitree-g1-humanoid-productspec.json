@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "0.1",
+  "listingId": "demo-dealer-unitree-g1-spec",
+  "updatedAt": "2026-07-31T14:00:00Z",
+  "robotClass": "Humanoid",
+  "make": "Unitree",
+  "model": "G1",
+  "condition": "New",
+  "summary": "Beispieldatensatz: humanoides Produkt-Datenblatt über den humanoidCapabilities-Block — so liefern Händler Humanoiden-Specs, bevor der Marktplatz die Kategorie voll führt. Werte entsprechen den öffentlichen Herstellerangaben der Basis-Konfiguration.",
+  "humanoidCapabilities": {
+    "heightCm": 127,
+    "weightKg": 35,
+    "degreesOfFreedom": 23,
+    "handType": "Interchangeable",
+    "walkingSpeedKmh": 7.2,
+    "runtimeMinutes": 120,
+    "batterySwappable": true,
+    "navigationTypes": ["Lidar3D", "DepthCamera"],
+    "autonomyLevel": "SemiAutonomous",
+    "teleoperationSupported": true,
+    "sdkAvailable": true,
+    "simulationSupport": ["Isaac Sim", "MuJoCo"],
+    "features": ["Quick-Release-Akku", "Sekundärentwicklung über SDK"]
+  },
+  "compliance": {
+    "ceMarking": true,
+    "dataPrivacy": {
+      "camerasOnboard": true,
+      "recordsVideo": true,
+      "onDeviceProcessingOnly": false,
+      "cloudUpload": true,
+      "cloudRegion": "unklar — beim Import prüfen"
+    }
+  },
+  "supplier": {
+    "name": "Demo Robotics Dealer",
+    "supplierType": "Dealer",
+    "countryCode": "DE"
+  }
+}

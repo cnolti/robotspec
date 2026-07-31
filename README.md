@@ -41,7 +41,7 @@ auseinander. RobotSpec macht die fehlenden Angaben zur Pflicht:
 
 | Version | Scope | Status |
 |---------|-------|--------|
-| **v0.1** | Reinigungsroboter voll spezifiziert; weitere Klassen (Delivery, Disinfection, Humanoid …) zulässig | Entwurf |
+| **v0.1** | Reinigungsroboter (`capabilities`) und Humanoide (`humanoidCapabilities`) voll spezifiziert; weitere Klassen (Delivery, Disinfection …) zulässig | Entwurf |
 
 ## Design-Prinzipien
 

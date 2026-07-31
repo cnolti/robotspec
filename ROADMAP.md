@@ -2,8 +2,9 @@
 
 ## v0.2 (Kandidaten)
 
+- ~~Humanoide voll spezifizieren~~ (erledigt in v0.1: `HumanoidCapabilities`, 22 Felder inkl. autonomyLevel-Ehrlichkeitsstufe)
 - Weitere Roboterklassen voll spezifizieren (Delivery, Disinfection —
-  eigene `capabilities`-Sub-Objekte analog `CleaningCapabilities`)
+  eigene Sub-Objekte analog `CleaningCapabilities`/`HumanoidCapabilities`)
 - `availability` als eigenständiger Feed (Bestands-/Lieferzeit-Updates ohne
   Voll-Listing, Delta-Updates über `listingId` + `updatedAt`)
 - Webhook-/Pull-Konventionen für Marktplätze (Standard-Endpunktnamen,

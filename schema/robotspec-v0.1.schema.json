@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://robotspec.org/schema/v0.1/listing.json",
   "title": "RobotSpec Listing v0.1",
-  "description": "Offener, herstellerneutraler Datenstandard für Serviceroboter: detaillierte Produkt-Spezifikationen UND Angebotsdaten (Kauf, Miete, Leasing, RaaS). Ein Dokument ohne offers ist ein Produkt-Datenblatt, mit offers ein Angebot. Kernprinzip der Angebotsseite: Betrag, Laufzeit, Serviceumfang und MwSt.-Status sind Pflicht je Offer.",
+  "description": "Offener, herstellerneutraler Datenstandard für Serviceroboter: detaillierte Produkt-Spezifikationen UND Angebotsdaten (Kauf, Miete, Leasing, RaaS). Ein Dokument ohne offers ist ein Produkt-Datenblatt, mit offers ein Angebot. v0.1 spezifiziert Reinigungsroboter (capabilities) und humanoide Roboter (humanoidCapabilities) im Detail; weitere Klassen folgen. Kernprinzip der Angebotsseite: Betrag, Laufzeit, Serviceumfang und MwSt.-Status sind Pflicht je Offer.",
   "type": "object",
   "required": [
     "schemaVersion",
@@ -143,6 +143,9 @@
     "extensions": {
       "type": "object",
       "description": "Plattform-/anbieterspezifische Zusatzdaten außerhalb des Standards"
+    },
+    "humanoidCapabilities": {
+      "$ref": "#/$defs/HumanoidCapabilities"
     }
   },
   "$defs": {
@@ -734,6 +737,141 @@
         "city": {
           "type": "string",
           "maxLength": 100
+        }
+      }
+    },
+    "HumanoidCapabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Spezifikationsblock für robotClass Humanoid. Statusdisziplin gilt auch hier: keine angekündigten Werte als gemessene ausgeben.",
+      "properties": {
+        "heightCm": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 250
+        },
+        "weightKg": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "payloadKg": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Nutzlast beim Tragen/Manipulieren"
+        },
+        "liftingCapacityKg": {
+          "type": "number",
+          "minimum": 0,
+          "description": "maximale Hebekraft, falls separat spezifiziert"
+        },
+        "degreesOfFreedom": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Gesamt-Freiheitsgrade (Basis-Konfiguration)"
+        },
+        "handDegreesOfFreedom": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60,
+          "description": "Freiheitsgrade je Hand, falls separat angegeben"
+        },
+        "handType": {
+          "type": "string",
+          "enum": [
+            "FiveFingerHand",
+            "ThreeFingerHand",
+            "TwoFingerGripper",
+            "Interchangeable",
+            "None"
+          ]
+        },
+        "walkingSpeedKmh": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 15
+        },
+        "runningSpeedKmh": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 40
+        },
+        "runtimeMinutes": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1440
+        },
+        "batteryCapacityWh": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "batterySwappable": {
+          "type": "boolean"
+        },
+        "navigationTypes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Lidar2D",
+              "Lidar3D",
+              "Camera",
+              "DepthCamera",
+              "Ultrasonic",
+              "Gps",
+              "MagneticTape",
+              "Other"
+            ]
+          }
+        },
+        "autonomyLevel": {
+          "type": "string",
+          "enum": [
+            "Teleoperated",
+            "Scripted",
+            "SemiAutonomous",
+            "Autonomous"
+          ],
+          "description": "Ehrliche Einstufung des heutigen Serienstands, nicht der Vision"
+        },
+        "teleoperationSupported": {
+          "type": "boolean"
+        },
+        "computePlatform": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "z. B. Nvidia Jetson Orin, eigener Chip"
+        },
+        "sdkAvailable": {
+          "type": "boolean"
+        },
+        "simulationSupport": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "description": "z. B. Isaac Sim, MuJoCo, Gazebo"
+        },
+        "ipRating": {
+          "type": "string",
+          "pattern": "^IP[0-9X][0-9X]$"
+        },
+        "noiseDb": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 120
+        },
+        "dimensions": {
+          "$ref": "#/$defs/Dimensions"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "maxItems": 40
         }
       }
     }
