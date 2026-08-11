@@ -14,10 +14,13 @@ Ziffer 4.1.1 erlaubt die Nutzung in Standardisierungsdokumenten ausdrücklich
 **11.08.2026 manuell in der offiziellen ECLASS-Content-Suche bestätigt**
 (BASIC 16.0, EN): Detailseiten von 21-19-03-11, 21-19-01-04 und 27-38-01-10
 inkl. angezeigter IRDIs; Suche „humanoid" liefert null Treffer; die
-„scrubber"-Trefferliste enthält keine autonome Klasse. Nur die IRDIs der
-beiden Flächenleistungs-**Merkmale** (AAJ714/AAJ747) stammen weiterhin aus
-der Vorrecherche (Merkmalsnamen und Klassenzuordnung sind bestätigt, die
-Merkmals-Detailseiten wurden nicht einzeln geöffnet).
+„scrubber"-Trefferliste enthält keine autonome Klasse. Ebenfalls am
+11.08.2026 in der Merkmals-Suche (Properties, BASIC 16.0, EN) bestätigt:
+die IRDIs beider Flächenleistungs-**Merkmale** inkl. Definitionstexte —
+`0173-1#02-AAJ714#007` „area efficiency (per hour, theoretical): theoretical
+area that is cleaned by the device per hour" und `0173-1#02-AAJ747#007`
+„area efficiency (per hour): area that is cleaned by the device per hour".
+Damit sind **alle** in diesem Dokument genannten IRDIs amtlich bestätigt.
 
 ## Klassen-Zuordnung (bestätigt 11.08.2026)
 
@@ -37,7 +40,7 @@ Klassen verteilt** (nicht, wie ursprünglich recherchiert, beide an
 praktische am Robotersauger. RobotSpec führt beide als getrennte Felder an
 jedem Listing — die Ehrlichkeitsregel bleibt der gemeinsame Nenner:
 
-| ECLASS-Merkmal | IRDI (Vorrecherche) | An Klasse (bestätigt) | RobotSpec-Feld |
+| ECLASS-Merkmal | IRDI (bestätigt 11.08.2026) | An Klasse (bestätigt) | RobotSpec-Feld |
 |---|---|---|---|
 | area efficiency (per hour, theoretical) | 0173-1#02-AAJ714#007 | 21-19-01-04 | `capabilities.areaPerformanceTheoreticalM2h` |
 | area efficiency (per hour) | 0173-1#02-AAJ747#007 | 21-19-03-11 | `capabilities.areaPerformancePracticalM2h` |
