@@ -41,7 +41,33 @@ auseinander. RobotSpec macht die fehlenden Angaben zur Pflicht:
 
 | Version | Scope | Status |
 |---------|-------|--------|
-| **v0.1** | Reinigungsroboter (`capabilities`) und Humanoide (`humanoidCapabilities`) voll spezifiziert; weitere Klassen (Delivery, Disinfection …) zulässig | Entwurf |
+| **v0.2** | v0.1 plus: `classifications` (ECLASS/ETIM/CPV …), `lifecycleStatus` mit validierter Regel „Announced ⇒ keine offers", Availability-Rework (`status` + Pflicht-Zeitstempel `asOf`), Bildmetadaten, Feed-Schema für Pull-Voll-Feeds, `rs:`-Präfix-Reservierung | **Aktuell** (Entwurf) |
+| **v0.1** | Reinigungsroboter (`capabilities`) und Humanoide (`humanoidCapabilities`) voll spezifiziert; weitere Klassen (Delivery, Disinfection …) zulässig | Stabil, wird von v0.2 abgelöst |
+
+### Neu in v0.2
+
+- **`classifications`** (optional): Verweise auf ECLASS, ETIM, CPV, UNSPSC …
+  — für Handel und öffentliche Ausschreibungen. Crosswalk und Lizenzhinweise:
+  [docs/crosswalk-eclass.md](docs/crosswalk-eclass.md).
+- **`lifecycleStatus`** (`Announced | Available | Discontinued`): Angekündigte
+  Produkte bekommen ein Spec-Sheet, keinen Preis — die Regel „Announced ⇒
+  keine offers" ist jetzt **schema-validiert**, nicht nur beschrieben.
+- **Availability-Rework** (breaking): `status`-Enum (`InStock | LeadTime |
+  MadeToOrder | PreOrder | OnRequest | OutOfStock`) und Pflicht-Zeitstempel
+  `asOf` — eine Verfügbarkeitsaussage ohne Datum ist keine Aussage.
+  `availableFrom` ist bei `PreOrder` Pflicht; `inStock` ist deprecated.
+- **Feed-Konvention**: `schema/robotspec-feed-0.2.schema.json` — Pull-Voll-Feed
+  mit Schutzschaltern (7-Tage-Karenz, 50-%-Regel, 30-Tage-Verfall auf
+  `OnRequest`) statt fehleranfälliger Delta-Semantik; dazu ein
+  „Feed Lite"-CSV-Profil für Shop-Exporte.
+- **schema.org-Bridge** (informativ):
+  [docs/bridge-schema-org.md](docs/bridge-schema-org.md) — Mapping,
+  JSON-LD-Referenzbeispiel, Google-Regeln, Anti-Patterns. Normativ ist nur
+  das `propertyID`-Präfix **`rs:`** für RobotSpec-Feldpfade reserviert.
+
+> This content contains ECLASS. The ECLASS Terms of Use apply (www.eclass.eu).
+> Referenzierte Version: ECLASS 16.0. Details in
+> [docs/crosswalk-eclass.md](docs/crosswalk-eclass.md).
 
 ## Design-Prinzipien
 
@@ -67,18 +93,25 @@ npm run validate   # Schema + alle Beispiele
 
 ## Referenzimplementierung
 
-Der RoboHub-POC (RaaS-Marktplatz für Reinigungsroboter) nutzt RobotSpec
+Ein RaaS-Marktplatz-POC für Reinigungsrobotik im DACH-Raum nutzt RobotSpec
 produktiv als Partner-Ingest-Format: Validierung per Ajv, Kuratierungs-Queue
-statt Auto-Publish, Mapping auf ein internes Listing-Modell. Siehe
-[MAPPING-robohub.md](MAPPING-robohub.md).
+statt Auto-Publish, Mapping auf ein internes Listing-Modell
+([MAPPING-referenz.md](MAPPING-referenz.md)). RobotSpec ist
+**herstellerneutral und offen** (MIT) — Beiträge und weitere
+Implementierungen sind ausdrücklich willkommen.
 
 ## Dateien
 
-- `schema/robotspec-v0.1.schema.json` — das Schema (Draft 2020-12)
-- `schema/examples/` — validierende Beispiel-Listings (RaaS mit Full-Service,
-  Leasing ohne Service, Event-Tagesmiete)
-- `validate-schema.mjs` — Ajv-Validator
-- `MAPPING-robohub.md` — Referenz-Mapping auf ein Marktplatz-Datenmodell
+- `schema/robotspec-v0.2.schema.json` — das aktuelle Listing-Schema (Draft 2020-12)
+- `schema/robotspec-feed-0.2.schema.json` — Feed-Umschlag für Pull-Voll-Feeds
+- `schema/robotspec-v0.1.schema.json` — Vorversion (für Bestandssysteme)
+- `schema/examples/` — validierende Beispiele (RaaS mit Full-Service, Leasing
+  ohne Service, Event-Tagesmiete, Spec-Sheets, Announced-Humanoid ohne offers,
+  Voll-Feed, Feed-Lite-CSV)
+- `validate-schema.mjs` — Ajv-Validator (beide Versionen + Feed + Negativtest)
+- `docs/crosswalk-eclass.md` — ECLASS/ETIM/CPV-Zuordnung (nicht-normativ)
+- `docs/bridge-schema-org.md` — schema.org-Bridge (informativ)
+- `MAPPING-referenz.md` — Referenz-Mapping auf ein Marktplatz-Datenmodell
 - `ROADMAP.md` — geplante Erweiterungen
 
 ## Lizenz

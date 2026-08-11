@@ -1,0 +1,4 @@
+listingId;offerType;availabilityStatus;availableFrom;priceCents;asOf
+GAU-50-RAAS;RaaS;InStock;;721000;2026-08-11T12:00:00Z
+NEX-1700-LEA;Leasing;LeadTime;2026-10-15;389000;2026-08-11T12:00:00Z
+KIR-B50-PUR;Purchase;OnRequest;;;2026-08-11T12:00:00Z

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "0.1",
+  "schemaVersion": "0.2",
   "listingId": "demo-dealer-unitree-g1-spec",
   "updatedAt": "2026-07-31T14:00:00Z",
   "robotClass": "Humanoid",
@@ -15,12 +15,21 @@
     "walkingSpeedKmh": 7.2,
     "runtimeMinutes": 120,
     "batterySwappable": true,
-    "navigationTypes": ["Lidar3D", "DepthCamera"],
+    "navigationTypes": [
+      "Lidar3D",
+      "DepthCamera"
+    ],
     "autonomyLevel": "SemiAutonomous",
     "teleoperationSupported": true,
     "sdkAvailable": true,
-    "simulationSupport": ["Isaac Sim", "MuJoCo"],
-    "features": ["Quick-Release-Akku", "Sekundärentwicklung über SDK"]
+    "simulationSupport": [
+      "Isaac Sim",
+      "MuJoCo"
+    ],
+    "features": [
+      "Quick-Release-Akku",
+      "Sekundärentwicklung über SDK"
+    ]
   },
   "compliance": {
     "ceMarking": true,

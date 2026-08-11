@@ -5,20 +5,27 @@ import { readFileSync, readdirSync } from "fs";
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 addFormats(ajv);
 
-const schemaPath = "./schema/robotspec-v0.1.schema.json";
-let schema;
-try {
-  schema = JSON.parse(readFileSync(schemaPath, "utf8"));
-  console.log("✓ Schema ist valides JSON");
-} catch (e) {
-  console.error("✗ Kein valides JSON:", e.message);
-  process.exit(1);
+function loadSchema(path) {
+  try {
+    const schema = JSON.parse(readFileSync(path, "utf8"));
+    console.log(`✓ ${path} ist valides JSON`);
+    return schema;
+  } catch (e) {
+    console.error(`✗ ${path} — kein valides JSON:`, e.message);
+    process.exit(1);
+  }
 }
 
-let validate;
+const v01 = loadSchema("./schema/robotspec-v0.1.schema.json");
+const v02 = loadSchema("./schema/robotspec-v0.2.schema.json");
+const feedSchema = loadSchema("./schema/robotspec-feed-0.2.schema.json");
+
+let validateV02, validateFeed;
 try {
-  validate = ajv.compile(schema);
-  console.log("✓ Schema kompiliert (JSON Schema Draft 2020-12)");
+  ajv.compile(v01); // v0.1 bleibt kompilierbar (Bestandssysteme)
+  validateV02 = ajv.compile(v02); // registriert $id für den Feed-$ref
+  validateFeed = ajv.compile(feedSchema);
+  console.log("✓ Schemata kompilieren (JSON Schema Draft 2020-12)");
 } catch (e) {
   console.error("✗ Schema kompiliert NICHT:", e.message);
   process.exit(1);
@@ -29,6 +36,8 @@ let passed = 0,
   failed = 0;
 for (const file of readdirSync(examplesDir).filter((f) => f.endsWith(".json"))) {
   const data = JSON.parse(readFileSync(`${examplesDir}/${file}`, "utf8"));
+  // Feed-Beispiele gegen das Feed-Schema, Listings gegen das Listing-Schema
+  const validate = file.startsWith("feed-") ? validateFeed : validateV02;
   if (validate(data)) {
     console.log(`  ✓ ${file}`);
     passed++;
@@ -40,5 +49,27 @@ for (const file of readdirSync(examplesDir).filter((f) => f.endsWith(".json"))) 
     failed++;
   }
 }
+
+// Negativtest der Announced-Regel: Announced + offers MUSS scheitern
+const announced = JSON.parse(
+  readFileSync(`${examplesDir}/neura-4ne1-announced-specsheet.json`, "utf8"),
+);
+announced.offers = [
+  {
+    offerType: "Purchase",
+    priceCents: 9800000,
+    currency: "EUR",
+    vatRate: 19,
+    serviceScope: { level: "None" },
+  },
+];
+if (validateV02(announced)) {
+  console.log("  ✗ Negativtest: Announced+offers wurde fälschlich akzeptiert");
+  failed++;
+} else {
+  console.log("  ✓ Negativtest: Announced+offers wird korrekt abgelehnt");
+  passed++;
+}
+
 console.log(`\n${passed} bestanden, ${failed} fehlgeschlagen`);
 process.exit(failed > 0 ? 1 : 0);

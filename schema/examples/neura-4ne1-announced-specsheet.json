@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "0.2",
+  "listingId": "neura-4ne1-gen35-specsheet",
+  "robotClass": "Humanoid",
+  "make": "NEURA Robotics",
+  "model": "4NE1",
+  "variant": "Gen 3.5",
+  "condition": "New",
+  "lifecycleStatus": "Announced",
+  "summary": "Angekündigter deutscher Humanoide (Auslieferung laut Hersteller ab Ende 2026). Reservierung möglich, aber nicht regulär bestellbar — deshalb bewusst OHNE offers: Der Hersteller nennt 98.000 € (1–19 Stück) ausdrücklich als 'Estimated price', nicht als Listenpreis.",
+  "description": "Referenzbeispiel für die v0.2-Regel 'Announced ⇒ keine offers': Angekündigte Produkte bekommen ein Spec-Sheet, keinen Preis. Sobald der 4NE1 regulär bestellbar ist, wechselt lifecycleStatus auf Available und ein Offer mit availability.status=PreOrder/LeadTime samt asOf-Zeitstempel kommt hinzu.",
+  "compliance": {
+    "ceMarking": false
+  },
+  "humanoidCapabilities": {
+    "autonomyLevel": "SemiAutonomous",
+    "teleoperationSupported": true,
+    "sdkAvailable": true
+  },
+  "supplier": {
+    "name": "NEURA Robotics",
+    "legalName": "NEURA Robotics GmbH",
+    "supplierType": "Manufacturer",
+    "website": "https://neura-robotics.com",
+    "countryCode": "DE"
+  }
+}

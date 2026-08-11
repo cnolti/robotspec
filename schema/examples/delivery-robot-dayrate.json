@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "0.1",
+  "schemaVersion": "0.2",
   "listingId": "demo-supplier-bella-day",
   "updatedAt": "2026-07-31T10:00:00Z",
   "robotClass": "Delivery",
@@ -32,7 +32,14 @@
         "installation": true,
         "notes": "Event-Tagesmiete inkl. Auf-/Abbau und Einweisung"
       },
-      "availability": { "serviceRegions": ["DE-NW", "DE-HE"] }
+      "availability": {
+        "status": "InStock",
+        "asOf": "2026-08-11T12:00:00Z",
+        "serviceRegions": [
+          "DE-NW",
+          "DE-HE"
+        ]
+      }
     }
   ],
   "supplier": {

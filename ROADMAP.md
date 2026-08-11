@@ -1,26 +1,47 @@
 # Roadmap
 
-## v0.2 (Kandidaten)
+## v0.2 — umgesetzt (08/2026)
 
-- ~~Humanoide voll spezifizieren~~ (erledigt in v0.1: `HumanoidCapabilities`, 22 Felder inkl. autonomyLevel-Ehrlichkeitsstufe)
+- ~~Humanoide voll spezifizieren~~ (v0.1: `HumanoidCapabilities`)
+- ~~`classifications`-Array~~ (ECLASS/ETIM/CPV/UNSPSC …, offene System-Liste;
+  `version` bei ECLASS Pflicht)
+- ~~`lifecycleStatus` mit validierter Regel „Announced ⇒ keine offers"~~
+- ~~Availability-Rework~~ (`status`-Enum + Pflicht-`asOf`, `availableFrom`-
+  Bedingungen, `quantityAvailable`; `inStock` deprecated — **Breaking Change**)
+- ~~Feed-Konvention~~ (Pull-Voll-Feed-Schema mit Schutzschaltern +
+  Feed-Lite-CSV-Profil; `feedSignature` als reserviertes Feld)
+- ~~schema.org-Bridge als informative Doku~~ + normative `rs:`-Präfix-Reservierung
+- ~~ECLASS/CPV-Crosswalk-Doku~~ (nicht-normativ, ToU-konform)
+- ~~Bildmetadaten~~ (`media.images[].widthPx/heightPx/altDe`)
+
+**Offene v0.2-Nacharbeit:** ECLASS-IRDIs manuell in der Content-Suche
+bestätigen (ca. 20 Min, siehe docs/crosswalk-eclass.md).
+
+## v0.3 (Kandidaten)
+
+- Konverter `@robotspec/to-schemaorg` (Profile `merchant-listing` /
+  `product-snippet`, `vatMode: gross|net`, Golden-File-Tests gegen die
+  Beispiele)
+- Referenz-API-Konventionen: Upsert über `(apiKey, listingId)`,
+  `PATCH …/availability` für Teilupdates, `X-Idempotency-Key`
+- Delta-Feeds (`feedType: delta`) — erst wenn Voll-Feeds in der Praxis
+  an Grenzen stoßen
+- `feedSignature` scharf schalten (HTTP Message Signatures, RFC 9421)
+- ECLASS-Change-Request „Autonome Scheuersaugmaschine" unter 21-19-01;
+  ETIM-Change-Request zum 12.0-Zyklus prüfen
 - Weitere Roboterklassen voll spezifizieren (Delivery, Disinfection —
-  eigene Sub-Objekte analog `CleaningCapabilities`/`HumanoidCapabilities`)
-- `availability` als eigenständiger Feed (Bestands-/Lieferzeit-Updates ohne
-  Voll-Listing, Delta-Updates über `listingId` + `updatedAt`)
-- Webhook-/Pull-Konventionen für Marktplätze (Standard-Endpunktnamen,
-  Paginierung, `If-Modified-Since`)
+  eigene Sub-Objekte analog `CleaningCapabilities`)
 - `serviceScope`-Preisaufschlüsselung: optionale `servicePriceCents` je
   Baustein, damit Full-Service-Raten zerlegbar werden
-- Englische Feldbeschreibungen (Schema-`description` zweisprachig oder EN
-  als Hauptsprache mit DE-Übersetzungsdatei)
 - Gebraucht-/Vorführgeräte: strukturierte Zustandsangaben
   (`batteryHealthPct`, Wartungshistorie)
+- Englische Feldbeschreibungen (EN als Hauptsprache mit DE-Übersetzung)
 
 ## Offen / zu klären
 
 - Governance: Wer pflegt Enum-Erweiterungen (neue `robotClass`,
   `navigationTypes`)?
 - Registry maschinenlesbarer Herstellernamen (Duplikate wie
-  "Gausium" vs. "Shanghai Gaussian Automation Technology")
+  „Gausium" vs. „Shanghai Gaussian Automation Technology")
 - Konformitätsnachweis: Signierte Listings / Verifizierbarkeit von
   `declarationOfConformityUrl`

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://robotspec.org/schema/v0.2/feed.json",
+  "title": "RobotSpec Full-Feed v0.2",
+  "description": "Pull-Feed-Umschlag: Ein Anbieter veröffentlicht seinen VOLLSTÄNDIGEN Listing-Bestand unter einer stabilen URL (Empfehlung: /robotspec-feed.json, täglich, mit ETag/If-None-Match). v0.2 kennt nur Voll-Feeds — Konsumenten-Schutzschalter statt Delta-Semantik: (1) Ein im Feed fehlendes Listing wird erst nach 7 Tagen Karenz entfernt. (2) Bricht listingCount gegenüber dem Vortag um mehr als 50 % ein, wird der Feed verworfen und Alarm ausgelöst. (3) Nach 30 Tagen ohne erfolgreichen Abruf fallen alle Angebote des Anbieters auf availability.status=OnRequest mit sichtbarem Stand-Datum.",
+  "type": "object",
+  "required": [
+    "feedVersion",
+    "feedType",
+    "generatedAt",
+    "supplier",
+    "listingCount",
+    "listings"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "feedVersion": {
+      "const": "0.2"
+    },
+    "feedType": {
+      "const": "full",
+      "description": "v0.2 kennt nur Voll-Feeds; Delta-Feeds sind v0.3-Kandidat"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "supplier": {
+      "type": "object",
+      "required": [
+        "name",
+        "countryCode"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "website": {
+          "type": "string",
+          "format": "uri",
+          "description": "Domain-Bindung: Feed-URL sollte auf dieser Domain liegen"
+        },
+        "countryCode": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "vatId": {
+          "type": "string",
+          "maxLength": 20
+        }
+      }
+    },
+    "listingCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "MUSS der Länge von listings entsprechen (Konsistenz-Check für Konsumenten)"
+    },
+    "listings": {
+      "type": "array",
+      "items": {
+        "$ref": "https://robotspec.org/schema/v0.2/listing.json"
+      }
+    },
+    "withdrawnListingIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 100
+      },
+      "description": "Optional: explizit zurückgezogene listingIds (sofortige Entfernung statt 7-Tage-Karenz)"
+    },
+    "nextPage": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Reserviert für Paginierung; in v0.2 immer null"
+    },
+    "feedSignature": {
+      "type": "string",
+      "description": "RESERVIERT für v0.3 (HTTP Message Signatures, RFC 9421). In v0.2 unbenutzt — Vertrauen über HTTPS + Domain-Bindung an supplier.website/vatId."
+    }
+  }
+}

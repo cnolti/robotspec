@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "0.1",
+  "schemaVersion": "0.2",
   "listingId": "demo-mfr-kira-b50-spec",
   "updatedAt": "2026-07-31T12:00:00Z",
   "robotClass": "ScrubberDryer",
@@ -13,17 +13,35 @@
     "runtimeMinutes": 210,
     "freshWaterTankL": 55,
     "wasteWaterTankL": 55,
-    "navigationTypes": ["Lidar2D", "DepthCamera", "Ultrasonic"],
+    "navigationTypes": [
+      "Lidar2D",
+      "DepthCamera",
+      "Ultrasonic"
+    ],
     "dockingStation": true,
     "autonomousWaterExchange": true,
-    "suitableEnvironments": ["Retail", "Logistics", "Healthcare"],
+    "suitableEnvironments": [
+      "Retail",
+      "Logistics",
+      "Healthcare"
+    ],
     "maxSpeedKmh": 4.3,
     "ipRating": "IPX3",
     "weightKg": 245,
-    "dimensions": { "lengthMm": 1250, "widthMm": 750, "heightMm": 1100 },
-    "features": ["Dockingstation mit Tankspülung", "Kalenderfunktion"]
+    "dimensions": {
+      "lengthMm": 1250,
+      "widthMm": 750,
+      "heightMm": 1100
+    },
+    "features": [
+      "Dockingstation mit Tankspülung",
+      "Kalenderfunktion"
+    ]
   },
-  "connectivity": { "vda5050": false, "fleetApi": true },
+  "connectivity": {
+    "vda5050": false,
+    "fleetApi": true
+  },
   "compliance": {
     "ceMarking": true,
     "conformityBasis": "MRL-2006-42-EC",

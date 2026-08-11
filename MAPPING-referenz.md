@@ -1,12 +1,12 @@
-# Mapping: RobotSpec v0.1 → RoboHub-Listing
+# Mapping: RobotSpec v0.1 → Marktplatz-Listing (Referenz)
 
-Referenz-Mapping der RoboHub-Implementierung (`poc/src/lib/robotspec-map.ts`).
-Nur Reinigungsklassen sind in den RoboHub-Katalog übernehmbar; andere Klassen
+Referenz-Mapping einer Marktplatz-Referenzimplementierung.
+Nur Reinigungsklassen sind in den Katalog der Referenzimplementierung übernehmbar; andere Klassen
 bleiben in der Kuratierungs-Queue.
 
 ## Klassen
 
-| RobotSpec `robotClass` | RoboHub `category` |
+| RobotSpec `robotClass` | Marktplatz-`category` |
 |---|---|
 | `ScrubberDryer` | `scheuersaugroboter` |
 | `Vacuum` | `saugroboter` |
@@ -16,7 +16,7 @@ bleiben in der Kuratierungs-Queue.
 
 ## Kernfelder
 
-| RobotSpec | RoboHub | Regel |
+| RobotSpec | Marktplatz | Regel |
 |---|---|---|
 | `make` + `model` + `variant` | `manufacturer`, `name`, `id` | `id` = `partner-<slug>-<submissionId[0:6]>` |
 | `capabilities.areaPerformancePracticalM2h` | `capabilities.areaPerformanceM2h` + `perfBasis: "praktisch"` | praktischer Wert hat Vorrang |
@@ -31,8 +31,8 @@ bleiben in der Kuratierungs-Queue.
 
 ## Bewusste Nicht-Übernahmen
 
-- `serviceScope`-Details fließen nicht strukturiert ins RoboHub-Modell (nur in
-  `pricingNotes`) — RoboHubs Vollkosten-Rechnung nutzt sie perspektivisch
+- `serviceScope`-Details fließen nicht strukturiert ins Marktplatz-Modell (nur in
+  `pricingNotes`) — die Vollkosten-Rechnung der Referenzimplementierung nutzt sie perspektivisch
   direkt; Feld-für-Feld-Übernahme ist v0.2-Kandidat.
-- `media.images` — RoboHub führt im POC keine Bilder.
-- `location` — RoboHub aggregiert auf DACH-Ebene.
+- `media.images` — die Referenzimplementierung führt im POC keine Bilder.
+- `location` — die Referenzimplementierung aggregiert auf DACH-Ebene.

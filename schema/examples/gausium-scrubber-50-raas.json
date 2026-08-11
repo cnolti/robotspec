@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "0.1",
+  "schemaVersion": "0.2",
   "listingId": "demo-supplier-s50pro-001",
   "sourceSystem": "demo-erp",
   "updatedAt": "2026-07-31T10:00:00Z",
@@ -10,7 +10,10 @@
   "modelYear": 2026,
   "condition": "New",
   "summary": "Autonomer Scheuersaugroboter der Mittelklasse für Hartböden in Supermärkten, Kliniken und Bahnhöfen.",
-  "highlights": ["Selbstständiges Andocken", "Walzenbürste nimmt Grobschmutz auf"],
+  "highlights": [
+    "Selbstständiges Andocken",
+    "Walzenbürste nimmt Grobschmutz auf"
+  ],
   "capabilities": {
     "cleaningWidthCm": 46,
     "areaPerformanceTheoreticalM2h": 1754,
@@ -19,12 +22,22 @@
     "chargingTimeMinutes": 120,
     "freshWaterTankL": 30,
     "wasteWaterTankL": 24,
-    "navigationTypes": ["Lidar2D", "DepthCamera"],
+    "navigationTypes": [
+      "Lidar2D",
+      "DepthCamera"
+    ],
     "dockingStation": true,
-    "suitableEnvironments": ["Retail", "Healthcare", "Transport"],
+    "suitableEnvironments": [
+      "Retail",
+      "Healthcare",
+      "Transport"
+    ],
     "minAreaM2": 800,
     "weightKg": 148,
-    "features": ["Automatische Tankspülung", "Flottenreporting"]
+    "features": [
+      "Automatische Tankspülung",
+      "Flottenreporting"
+    ]
   },
   "connectivity": {
     "fleetApi": true,
@@ -33,7 +46,9 @@
   "compliance": {
     "ceMarking": true,
     "conformityBasis": "MRL-2006-42-EC",
-    "standards": ["EN IEC 63327:2021"],
+    "standards": [
+      "EN IEC 63327:2021"
+    ],
     "operatingManualDeUrl": "https://example-supplier.de/docs/s50pro-betriebsanleitung.pdf",
     "dataPrivacy": {
       "camerasOnboard": true,
@@ -70,7 +85,15 @@
         "insurance": false,
         "notes": "Reinigungsmittel/Pads nicht enthalten"
       },
-      "availability": { "inStock": true, "leadTimeDays": 14, "serviceRegions": ["DE", "AT"] }
+      "availability": {
+        "status": "LeadTime",
+        "asOf": "2026-08-11T12:00:00Z",
+        "leadTimeDays": 14,
+        "serviceRegions": [
+          "DE",
+          "AT"
+        ]
+      }
     },
     {
       "offerType": "Purchase",
@@ -84,7 +107,14 @@
         "level": "None",
         "notes": "Wartungsvertrag separat: 10–15 % des Kaufpreises p. a."
       },
-      "availability": { "inStock": true, "leadTimeDays": 10, "serviceRegions": ["DE"] }
+      "availability": {
+        "status": "LeadTime",
+        "asOf": "2026-08-11T12:00:00Z",
+        "leadTimeDays": 10,
+        "serviceRegions": [
+          "DE"
+        ]
+      }
     }
   ],
   "supplier": {
@@ -95,5 +125,21 @@
     "countryCode": "DE",
     "vatId": "DE123456789"
   },
-  "location": { "countryCode": "DE", "postalCode": "65760", "city": "Eschborn" }
+  "location": {
+    "countryCode": "DE",
+    "postalCode": "65760",
+    "city": "Eschborn"
+  },
+  "classifications": [
+    {
+      "system": "cpv",
+      "code": "90900000-6",
+      "version": "2008"
+    },
+    {
+      "system": "cpv",
+      "code": "42995000-7",
+      "version": "2008"
+    }
+  ]
 }
