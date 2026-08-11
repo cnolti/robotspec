@@ -1,5 +1,35 @@
 # Changelog
 
+## v0.2.1 — 2026-08-11
+
+Werkzeug-Release: **keine Änderung am Schema**, `schemaVersion` bleibt `"0.2"`.
+
+### Neu
+
+- `converter/` — `@robotspec/to-schemaorg`, Konverter von RobotSpec v0.2 nach
+  schema.org JSON-LD (reines ESM, ohne Laufzeit-Abhängigkeiten, Node 20+,
+  zusätzlich als CLI aufrufbar):
+  `toSchemaOrg(doc, { profile, vatMode })` mit den Profilen
+  `merchant-listing` (einzelne `Offer`-Objekte) und `product-snippet`
+  (`AggregateOffer` je Währung und Abrechnungsperiode) sowie
+  `vatMode: gross | net` (brutto rechnet `vatRate` auf die Netto-Cent-Preise
+  auf und setzt `valueAddedTaxIncluded`).
+- Umsetzung der Bridge-Regeln inklusive Guards gegen ihre Anti-Patterns:
+  `lifecycleStatus: Announced` erzeugt kein Offer-Markup und niemals
+  `PreOrder`, Kaufpreis und Monatsrate landen nie im selben `AggregateOffer`,
+  CE-Kennzeichnung nur als `additionalProperty` statt `hasCertification`,
+  interne Herkunftsfelder (`sourceSystem`, `createdAt`, `extensions`) bleiben
+  aus dem Markup.
+- Tests: `converter/test.mjs` (zero-dependency, `node:assert`) mit 12
+  Golden-Files (6 v0.2-Listing-Beispiele × 2 Profile) unter
+  `converter/test/golden/` und Unit-Tests für Optionen, Preisrundung,
+  Verfügbarkeits- und Angebotstyp-Mapping, Bildmetadaten und
+  Aggregat-Gruppierung.
+- npm-Skripte: `test:converter`; `npm test` führt Schema-Validierung und
+  Konverter-Tests aus.
+- Doku: `converter/README.md` (API, Mapping-Tabelle, Guards,
+  Designentscheidungen).
+
 ## v0.2 — 2026-08-11 (Entwurf)
 
 ### Neu

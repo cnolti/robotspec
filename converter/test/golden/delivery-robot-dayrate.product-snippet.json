@@ -1,0 +1,141 @@
+{
+  "@context": [
+    "https://schema.org",
+    {
+      "rs": "https://robotspec.org/schema/v0.2/#",
+      "gr": "http://purl.org/goodrelations/v1#"
+    }
+  ],
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "_:supplier",
+      "name": "Demo Event Robotics",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "DE"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Pudu Robotics BellaBot",
+      "sku": "demo-supplier-bella-day",
+      "brand": {
+        "@type": "Brand",
+        "name": "Pudu Robotics"
+      },
+      "model": "BellaBot",
+      "description": "Service-/Lieferroboter für Gastronomie-Events — Beispiel für eine Nicht-Reinigungsklasse in openRobot (kuratiert, v0.1 spezifiziert Reinigungsklassen voll).",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:robotClass",
+          "name": "Roboterklasse (RobotSpec)",
+          "value": "Delivery"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:condition",
+          "name": "Zustand",
+          "value": "Demo"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:operatingHours",
+          "name": "Betriebsstunden",
+          "value": 220,
+          "unitText": "h"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.ceMarking",
+          "name": "CE-Kennzeichnung",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.camerasOnboard",
+          "name": "Kameras an Bord",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.recordsVideo",
+          "name": "Videoaufzeichnung",
+          "value": false
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.onDeviceProcessingOnly",
+          "name": "Verarbeitung nur auf dem Gerät",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.cloudUpload",
+          "name": "Cloud-Upload",
+          "value": false
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:supplier.supplierType",
+          "name": "Anbietertyp",
+          "value": "RentalCompany"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:updatedAt",
+          "name": "Stand der Angaben",
+          "value": "2026-07-31T10:00:00Z"
+        }
+      ],
+      "offers": {
+        "@type": "AggregateOffer",
+        "name": "Tagesmiete — Rate pro Tag",
+        "itemCondition": "https://schema.org/UsedCondition",
+        "availability": "https://schema.org/InStock",
+        "priceCurrency": "EUR",
+        "lowPrice": "177.31",
+        "highPrice": "177.31",
+        "offerCount": 1,
+        "seller": {
+          "@id": "_:supplier"
+        },
+        "description": "1 Angebot: netto 149,00 EUR/Tag zzgl. 19 % USt. Serviceumfang: Full-Service.",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "propertyID": "rs:offer.offerType",
+            "name": "Angebotsart",
+            "value": "DayRate"
+          },
+          {
+            "@type": "PropertyValue",
+            "propertyID": "rs:offer.priceCents",
+            "name": "Nettorate in Cent",
+            "value": 14900
+          },
+          {
+            "@type": "PropertyValue",
+            "propertyID": "rs:offer.vatRate",
+            "name": "USt.-Satz",
+            "value": 19,
+            "unitText": "%"
+          },
+          {
+            "@type": "PropertyValue",
+            "propertyID": "rs:offer.billingPeriod",
+            "name": "Abrechnungsperiode",
+            "value": "Day"
+          },
+          {
+            "@type": "PropertyValue",
+            "propertyID": "rs:offer.serviceScope.level",
+            "name": "Serviceumfang (Stufe)",
+            "value": "Full"
+          }
+        ]
+      }
+    }
+  ]
+}

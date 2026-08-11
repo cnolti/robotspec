@@ -1,0 +1,232 @@
+{
+  "@context": [
+    "https://schema.org",
+    {
+      "rs": "https://robotspec.org/schema/v0.2/#",
+      "gr": "http://purl.org/goodrelations/v1#"
+    }
+  ],
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "_:supplier",
+      "name": "Demo Manufacturer SE",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "DE"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Kärcher KIRA B 50",
+      "sku": "demo-mfr-kira-b50-spec",
+      "brand": {
+        "@type": "Brand",
+        "name": "Kärcher"
+      },
+      "model": "KIRA B 50",
+      "description": "Produkt-Datenblatt ohne Angebotsteil — so publiziert ein Hersteller Spezifikationen, während Händler die Angebote (offers) beisteuern.",
+      "weight": {
+        "@type": "QuantitativeValue",
+        "value": 245,
+        "unitCode": "KGM"
+      },
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:robotClass",
+          "name": "Roboterklasse (RobotSpec)",
+          "value": "ScrubberDryer"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:condition",
+          "name": "Zustand",
+          "value": "New"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.cleaningWidthCm",
+          "name": "Arbeitsbreite",
+          "value": 55,
+          "unitText": "cm"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.areaPerformanceTheoreticalM2h",
+          "name": "Flächenleistung (theoretisch)",
+          "value": 2365,
+          "unitText": "m²/h"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.runtimeMinutes",
+          "name": "Laufzeit",
+          "value": 210,
+          "unitText": "min"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.freshWaterTankL",
+          "name": "Frischwassertank",
+          "value": 55,
+          "unitText": "l"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.wasteWaterTankL",
+          "name": "Schmutzwassertank",
+          "value": 55,
+          "unitText": "l"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.navigationTypes",
+          "name": "Navigationstechnik",
+          "value": [
+            "Lidar2D",
+            "DepthCamera",
+            "Ultrasonic"
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.dockingStation",
+          "name": "Dockingstation",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.autonomousWaterExchange",
+          "name": "Autonomer Wasserwechsel",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.suitableEnvironments",
+          "name": "Geeignete Einsatzumgebungen",
+          "value": [
+            "Retail",
+            "Logistics",
+            "Healthcare"
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.maxSpeedKmh",
+          "name": "Höchstgeschwindigkeit",
+          "value": 4.3,
+          "unitText": "km/h"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.ipRating",
+          "name": "Schutzart (IP)",
+          "value": "IPX3"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.features",
+          "name": "Ausstattungsmerkmale",
+          "value": [
+            "Dockingstation mit Tankspülung",
+            "Kalenderfunktion"
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.dimensions.lengthMm",
+          "name": "Länge",
+          "value": 1250,
+          "unitText": "mm"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.dimensions.widthMm",
+          "name": "Breite",
+          "value": 750,
+          "unitText": "mm"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.dimensions.heightMm",
+          "name": "Höhe",
+          "value": 1100,
+          "unitText": "mm"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:connectivity.vda5050",
+          "name": "VDA-5050-Anbindung",
+          "value": false
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:connectivity.fleetApi",
+          "name": "Flotten-/Reporting-API",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.ceMarking",
+          "name": "CE-Kennzeichnung",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.conformityBasis",
+          "name": "Rechtsgrundlage des Inverkehrbringens",
+          "value": "MRL-2006-42-EC"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.operatingManualDeUrl",
+          "name": "Betriebsanleitung (deutsch)",
+          "value": "https://example-manufacturer.de/docs/kira-b50-ba.pdf"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.camerasOnboard",
+          "name": "Kameras an Bord",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.recordsVideo",
+          "name": "Videoaufzeichnung",
+          "value": false
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.onDeviceProcessingOnly",
+          "name": "Verarbeitung nur auf dem Gerät",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.cloudUpload",
+          "name": "Cloud-Upload",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.cloudRegion",
+          "name": "Cloud-Region",
+          "value": "EU"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:supplier.supplierType",
+          "name": "Anbietertyp",
+          "value": "Manufacturer"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:updatedAt",
+          "name": "Stand der Angaben",
+          "value": "2026-07-31T12:00:00Z"
+        }
+      ]
+    }
+  ]
+}

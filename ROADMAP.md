@@ -16,19 +16,27 @@
 
 **v0.2-Nacharbeit erledigt (11.08.2026):** Klassen-IRDIs manuell in der
 ECLASS-Content-Suche bestätigt, Merkmalszuordnung korrigiert, Neufund
-29-16-05-08 dokumentiert (siehe docs/crosswalk-eclass.md).
+29-16-05-08 dokumentiert, Merkmals-IRDIs AAJ714/AAJ747 in der
+Properties-Suche bestätigt (siehe docs/crosswalk-eclass.md).
 
 ## v0.3 (Kandidaten)
 
-- Konverter `@robotspec/to-schemaorg` (Profile `merchant-listing` /
+- ~~Konverter `@robotspec/to-schemaorg`~~ (Profile `merchant-listing` /
   `product-snippet`, `vatMode: gross|net`, Golden-File-Tests gegen die
-  Beispiele)
+  Beispiele) — **umgesetzt (11.08.2026)**: `converter/` (ESM, ohne
+  Abhängigkeiten, Node 20+, mit CLI), Guards gegen die Anti-Patterns der
+  Bridge, 12 Golden-Files (6 Beispiele × 2 Profile) plus Unit-Tests unter
+  `npm run test:converter`; Doku in
+  [converter/README.md](converter/README.md). Offen: `Offer.url` /
+  `Product.@id` aus einer Landingpage-URL, `shippingDetails`.
 - Referenz-API-Konventionen: Upsert über `(apiKey, listingId)`,
   `PATCH …/availability` für Teilupdates, `X-Idempotency-Key`
 - Delta-Feeds (`feedType: delta`) — erst wenn Voll-Feeds in der Praxis
   an Grenzen stoßen
 - `feedSignature` scharf schalten (HTTP Message Signatures, RFC 9421)
-- ECLASS-Change-Request „Autonome Scheuersaugmaschine" unter 21-19-01;
+- ECLASS-Change-Request „Autonome Scheuersaugmaschine" unter 21-19-01 —
+  **Entwurf einreichfertig** (11.08.2026):
+  [docs/eclass-change-request-entwurf.md](docs/eclass-change-request-entwurf.md);
   ETIM-Change-Request zum 12.0-Zyklus prüfen
 - Weitere Roboterklassen voll spezifizieren (Delivery, Disinfection —
   eigene Sub-Objekte analog `CleaningCapabilities`)

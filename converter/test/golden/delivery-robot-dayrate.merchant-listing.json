@@ -1,0 +1,203 @@
+{
+  "@context": [
+    "https://schema.org",
+    {
+      "rs": "https://robotspec.org/schema/v0.2/#",
+      "gr": "http://purl.org/goodrelations/v1#"
+    }
+  ],
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "_:supplier",
+      "name": "Demo Event Robotics",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "DE"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Pudu Robotics BellaBot",
+      "sku": "demo-supplier-bella-day",
+      "brand": {
+        "@type": "Brand",
+        "name": "Pudu Robotics"
+      },
+      "model": "BellaBot",
+      "description": "Service-/Lieferroboter für Gastronomie-Events — Beispiel für eine Nicht-Reinigungsklasse in openRobot (kuratiert, v0.1 spezifiziert Reinigungsklassen voll).",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:robotClass",
+          "name": "Roboterklasse (RobotSpec)",
+          "value": "Delivery"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:condition",
+          "name": "Zustand",
+          "value": "Demo"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:operatingHours",
+          "name": "Betriebsstunden",
+          "value": 220,
+          "unitText": "h"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.ceMarking",
+          "name": "CE-Kennzeichnung",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.camerasOnboard",
+          "name": "Kameras an Bord",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.recordsVideo",
+          "name": "Videoaufzeichnung",
+          "value": false
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.onDeviceProcessingOnly",
+          "name": "Verarbeitung nur auf dem Gerät",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.cloudUpload",
+          "name": "Cloud-Upload",
+          "value": false
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:supplier.supplierType",
+          "name": "Anbietertyp",
+          "value": "RentalCompany"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:updatedAt",
+          "name": "Stand der Angaben",
+          "value": "2026-07-31T10:00:00Z"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Tagesmiete (Vorführgerät, Full-Service)",
+          "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
+          "itemCondition": "https://schema.org/UsedCondition",
+          "availability": "https://schema.org/InStock",
+          "eligibleRegion": [
+            "DE-NW",
+            "DE-HE"
+          ],
+          "priceCurrency": "EUR",
+          "price": "177.31",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "177.31",
+            "priceCurrency": "EUR",
+            "valueAddedTaxIncluded": true,
+            "referenceQuantity": {
+              "@type": "QuantitativeValue",
+              "value": 1,
+              "unitCode": "DAY"
+            }
+          },
+          "warranty": {
+            "@type": "WarrantyPromise",
+            "name": "Full-Service (Wartung, Reparaturen, Ersatzgerät)"
+          },
+          "seller": {
+            "@id": "_:supplier"
+          },
+          "description": "Netto 149,00 EUR/Tag zzgl. 19 % USt. Full-Service enthalten (rs:offer.serviceScope.level = Full). Enthalten: Wartung, Reparaturen, Ersatzgerät, Inbetriebnahme/Einweisung. Servicegebiete: DE-NW, DE-HE. Stand der Preis- und Verfügbarkeitsangabe: 11.08.2026. Hinweis zum Service: Event-Tagesmiete inkl. Auf-/Abbau und Einweisung",
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.offerType",
+              "name": "Angebotsart",
+              "value": "DayRate"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.priceCents",
+              "name": "Nettorate in Cent",
+              "value": 14900
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.vatRate",
+              "name": "USt.-Satz",
+              "value": 19,
+              "unitText": "%"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.billingPeriod",
+              "name": "Abrechnungsperiode",
+              "value": "Day"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.serviceScope.level",
+              "name": "Serviceumfang (Stufe)",
+              "value": "Full"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.serviceScope.maintenance",
+              "name": "Wartung enthalten",
+              "value": true
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.serviceScope.repairs",
+              "name": "Reparaturen enthalten",
+              "value": true
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.serviceScope.replacementDevice",
+              "name": "Ersatzgerät enthalten",
+              "value": true
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.serviceScope.installation",
+              "name": "Inbetriebnahme/Einweisung enthalten",
+              "value": true
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.serviceScope.notes",
+              "name": "Hinweise zum Serviceumfang",
+              "value": "Event-Tagesmiete inkl. Auf-/Abbau und Einweisung"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.availability.status",
+              "name": "Verfügbarkeitsstatus (RobotSpec)",
+              "value": "InStock"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.availability.asOf",
+              "name": "Stand der Verfügbarkeits- und Preisaussage",
+              "value": "2026-08-11T12:00:00Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

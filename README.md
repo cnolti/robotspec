@@ -88,8 +88,29 @@ auseinander. RobotSpec macht die fehlenden Angaben zur Pflicht:
 
 ```bash
 npm install
-npm run validate   # Schema + alle Beispiele
+npm run validate         # Schema + alle Beispiele
+npm run test:converter   # Konverter-Tests (zero-dependency)
+npm test                 # beides
 ```
+
+## Konverter: RobotSpec → schema.org
+
+`converter/` enthält **`@robotspec/to-schemaorg`** — einen
+zero-dependency-ESM-Konverter (Node 20+), der aus einem v0.2-Listing fertiges
+schema.org-JSON-LD erzeugt:
+
+```js
+import { toSchemaOrg } from "./converter/index.mjs";
+const jsonld = toSchemaOrg(listing, { profile: "merchant-listing", vatMode: "gross" });
+```
+
+Zwei Profile (`merchant-listing` mit einzelnen `Offer`-Objekten,
+`product-snippet` mit `AggregateOffer` je Währung und Abrechnungsperiode),
+`vatMode: gross | net` (brutto rechnet `vatRate` auf die Netto-Cent-Preise auf),
+Guards gegen die Anti-Patterns der Bridge (Announced ⇒ kein Offer-Markup, kein
+Mischen von Kaufpreis und Monatsrate, CE nie über `hasCertification`) und
+Golden-File-Tests gegen alle Beispiele. Details, Mapping-Tabelle und
+Designentscheidungen: [converter/README.md](converter/README.md).
 
 ## Referenzimplementierung
 
@@ -109,7 +130,11 @@ Implementierungen sind ausdrücklich willkommen.
   ohne Service, Event-Tagesmiete, Spec-Sheets, Announced-Humanoid ohne offers,
   Voll-Feed, Feed-Lite-CSV)
 - `validate-schema.mjs` — Ajv-Validator (beide Versionen + Feed + Negativtest)
+- `converter/index.mjs` — Konverter RobotSpec v0.2 → schema.org JSON-LD (ESM, ohne Abhängigkeiten, mit CLI)
+- `converter/README.md` — API, Mapping-Tabelle, Guards und Designentscheidungen des Konverters
+- `converter/test.mjs`, `converter/test/golden/` — Testrunner und Golden-Files je Beispiel und Profil
 - `docs/crosswalk-eclass.md` — ECLASS/ETIM/CPV-Zuordnung (nicht-normativ)
+- `docs/eclass-change-request-entwurf.md` — einreichfertiger Change-Request-Entwurf (neue ECLASS-Klasse)
 - `docs/bridge-schema-org.md` — schema.org-Bridge (informativ)
 - `MAPPING-referenz.md` — Referenz-Mapping auf ein Marktplatz-Datenmodell
 - `ROADMAP.md` — geplante Erweiterungen

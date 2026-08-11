@@ -1,0 +1,359 @@
+{
+  "@context": [
+    "https://schema.org",
+    {
+      "rs": "https://robotspec.org/schema/v0.2/#",
+      "gr": "http://purl.org/goodrelations/v1#"
+    }
+  ],
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://example-supplier.de/#organization",
+      "name": "Demo Robotics GmbH",
+      "url": "https://example-supplier.de",
+      "email": "vertrieb@example-supplier.de",
+      "vatID": "DE123456789",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "DE",
+        "postalCode": "65760",
+        "addressLocality": "Eschborn"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Gausium Scrubber 50 Pro (Walzenbürste)",
+      "sku": "demo-supplier-s50pro-001",
+      "brand": {
+        "@type": "Brand",
+        "name": "Gausium"
+      },
+      "model": "Scrubber 50 Pro",
+      "description": "Autonomer Scheuersaugroboter der Mittelklasse für Hartböden in Supermärkten, Kliniken und Bahnhöfen.",
+      "weight": {
+        "@type": "QuantitativeValue",
+        "value": 148,
+        "unitCode": "KGM"
+      },
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:robotClass",
+          "name": "Roboterklasse (RobotSpec)",
+          "value": "ScrubberDryer"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:condition",
+          "name": "Zustand",
+          "value": "New"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:modelYear",
+          "name": "Modelljahr",
+          "value": 2026
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:highlights",
+          "name": "Highlights",
+          "value": [
+            "Selbstständiges Andocken",
+            "Walzenbürste nimmt Grobschmutz auf"
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:classifications.cpv",
+          "name": "CPV 2008",
+          "value": "90900000-6"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:classifications.cpv",
+          "name": "CPV 2008",
+          "value": "42995000-7"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.cleaningWidthCm",
+          "name": "Arbeitsbreite",
+          "value": 46,
+          "unitText": "cm"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.areaPerformanceTheoreticalM2h",
+          "name": "Flächenleistung (theoretisch)",
+          "value": 1754,
+          "unitText": "m²/h"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.areaPerformancePracticalM2h",
+          "name": "Flächenleistung (praktisch)",
+          "value": 900,
+          "unitText": "m²/h"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.runtimeMinutes",
+          "name": "Laufzeit",
+          "value": 180,
+          "unitText": "min"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.chargingTimeMinutes",
+          "name": "Ladezeit",
+          "value": 120,
+          "unitText": "min"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.freshWaterTankL",
+          "name": "Frischwassertank",
+          "value": 30,
+          "unitText": "l"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.wasteWaterTankL",
+          "name": "Schmutzwassertank",
+          "value": 24,
+          "unitText": "l"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.navigationTypes",
+          "name": "Navigationstechnik",
+          "value": [
+            "Lidar2D",
+            "DepthCamera"
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.dockingStation",
+          "name": "Dockingstation",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.suitableEnvironments",
+          "name": "Geeignete Einsatzumgebungen",
+          "value": [
+            "Retail",
+            "Healthcare",
+            "Transport"
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.minAreaM2",
+          "name": "Mindestfläche",
+          "value": 800,
+          "unitText": "m²"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.features",
+          "name": "Ausstattungsmerkmale",
+          "value": [
+            "Automatische Tankspülung",
+            "Flottenreporting"
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:connectivity.fleetApi",
+          "name": "Flotten-/Reporting-API",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:connectivity.offlineCapable",
+          "name": "Offline-Betrieb möglich",
+          "value": false
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.ceMarking",
+          "name": "CE-Kennzeichnung",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.conformityBasis",
+          "name": "Rechtsgrundlage des Inverkehrbringens",
+          "value": "MRL-2006-42-EC"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.standards",
+          "name": "Angewandte Normen",
+          "value": "EN IEC 63327:2021"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.operatingManualDeUrl",
+          "name": "Betriebsanleitung (deutsch)",
+          "value": "https://example-supplier.de/docs/s50pro-betriebsanleitung.pdf"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.camerasOnboard",
+          "name": "Kameras an Bord",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.recordsVideo",
+          "name": "Videoaufzeichnung",
+          "value": false
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.onDeviceProcessingOnly",
+          "name": "Verarbeitung nur auf dem Gerät",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.cloudUpload",
+          "name": "Cloud-Upload",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.dataPrivacy.cloudRegion",
+          "name": "Cloud-Region",
+          "value": "EU (Frankfurt)"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:supplier.supplierType",
+          "name": "Anbietertyp",
+          "value": "Dealer"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:updatedAt",
+          "name": "Stand der Angaben",
+          "value": "2026-07-31T10:00:00Z"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "AggregateOffer",
+          "name": "Kauf",
+          "itemCondition": "https://schema.org/NewCondition",
+          "availability": "https://schema.org/InStock",
+          "priceCurrency": "EUR",
+          "lowPrice": "38068.10",
+          "highPrice": "38068.10",
+          "offerCount": 1,
+          "seller": {
+            "@id": "https://example-supplier.de/#organization"
+          },
+          "description": "1 Angebot: netto 31.990,00 EUR zzgl. 19 % USt. Serviceumfang: ohne Servicevertrag.",
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.offerType",
+              "name": "Angebotsart",
+              "value": "Purchase"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.priceCents",
+              "name": "Nettopreis in Cent",
+              "value": 3199000
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.vatRate",
+              "name": "USt.-Satz",
+              "value": 19,
+              "unitText": "%"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.billingPeriod",
+              "name": "Abrechnungsperiode",
+              "value": "Once"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.serviceScope.level",
+              "name": "Serviceumfang (Stufe)",
+              "value": "None"
+            }
+          ]
+        },
+        {
+          "@type": "AggregateOffer",
+          "name": "Robot-as-a-Service — Rate pro Monat",
+          "itemCondition": "https://schema.org/NewCondition",
+          "availability": "https://schema.org/InStock",
+          "priceCurrency": "EUR",
+          "lowPrice": "1416.10",
+          "highPrice": "1416.10",
+          "offerCount": 1,
+          "seller": {
+            "@id": "https://example-supplier.de/#organization"
+          },
+          "description": "1 Angebot: netto 1.190,00 EUR/Monat zzgl. 19 % USt. Serviceumfang: Full-Service. Mindestlaufzeit 24 Monate.",
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.offerType",
+              "name": "Angebotsart",
+              "value": "RaaS"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.priceCents",
+              "name": "Nettorate in Cent",
+              "value": 119000
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.vatRate",
+              "name": "USt.-Satz",
+              "value": 19,
+              "unitText": "%"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.billingPeriod",
+              "name": "Abrechnungsperiode",
+              "value": "Month"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.minTermMonths",
+              "name": "Mindestlaufzeit",
+              "value": 24,
+              "unitText": "Monate"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.isStartingPrice",
+              "name": "Ab-Preis",
+              "value": true
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.serviceScope.level",
+              "name": "Serviceumfang (Stufe)",
+              "value": "Full"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

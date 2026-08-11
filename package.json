@@ -5,7 +5,9 @@
   "description": "RobotSpec — offener Datenstandard für Serviceroboter: Produkt-Spezifikationen und Angebotsdaten (Kauf, Miete, Leasing, RaaS)",
   "type": "module",
   "scripts": {
-    "validate": "node validate-schema.mjs"
+    "validate": "node validate-schema.mjs",
+    "test:converter": "node converter/test.mjs",
+    "test": "npm run validate && npm run test:converter"
   },
   "devDependencies": {
     "ajv": "^8.17.1",

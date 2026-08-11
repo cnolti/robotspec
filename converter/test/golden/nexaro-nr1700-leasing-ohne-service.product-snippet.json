@@ -1,0 +1,176 @@
+{
+  "@context": [
+    "https://schema.org",
+    {
+      "rs": "https://robotspec.org/schema/v0.2/#",
+      "gr": "http://purl.org/goodrelations/v1#"
+    }
+  ],
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "_:supplier",
+      "name": "Demo Robotics GmbH",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "DE"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Nexaro NR 1700",
+      "sku": "demo-supplier-nr1700-lease",
+      "brand": {
+        "@type": "Brand",
+        "name": "Nexaro"
+      },
+      "model": "NR 1700",
+      "description": "Kompakter gewerblicher Saugroboter für Büroflächen — deutscher Hersteller (Vorwerk-Gruppe).",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:robotClass",
+          "name": "Roboterklasse (RobotSpec)",
+          "value": "Vacuum"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:condition",
+          "name": "Zustand",
+          "value": "New"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.areaPerformancePracticalM2h",
+          "name": "Flächenleistung (praktisch)",
+          "value": 100,
+          "unitText": "m²/h"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.runtimeMinutes",
+          "name": "Laufzeit",
+          "value": 175,
+          "unitText": "min"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.dustbinL",
+          "name": "Staubbehälter",
+          "value": 1.5,
+          "unitText": "l"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.navigationTypes",
+          "name": "Navigationstechnik",
+          "value": "Lidar2D"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.suitableEnvironments",
+          "name": "Geeignete Einsatzumgebungen",
+          "value": "Office"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:capabilities.features",
+          "name": "Ausstattungsmerkmale",
+          "value": [
+            "IEC-63327-zertifiziert",
+            "TÜV SÜD GS"
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.ceMarking",
+          "name": "CE-Kennzeichnung",
+          "value": true
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.conformityBasis",
+          "name": "Rechtsgrundlage des Inverkehrbringens",
+          "value": "MRL-2006-42-EC"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:compliance.standards",
+          "name": "Angewandte Normen",
+          "value": "EN IEC 63327:2021"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:supplier.supplierType",
+          "name": "Anbietertyp",
+          "value": "Dealer"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:updatedAt",
+          "name": "Stand der Angaben",
+          "value": "2026-07-31T10:00:00Z"
+        }
+      ],
+      "offers": {
+        "@type": "AggregateOffer",
+        "name": "Leasing — Rate pro Monat",
+        "itemCondition": "https://schema.org/NewCondition",
+        "priceCurrency": "EUR",
+        "lowPrice": "73.78",
+        "highPrice": "73.78",
+        "offerCount": 1,
+        "seller": {
+          "@id": "_:supplier"
+        },
+        "description": "1 Angebot: netto 62,00 EUR/Monat zzgl. 19 % USt. Serviceumfang: ohne Servicevertrag. Mindestlaufzeit 48 Monate.",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "propertyID": "rs:offer.offerType",
+            "name": "Angebotsart",
+            "value": "Leasing"
+          },
+          {
+            "@type": "PropertyValue",
+            "propertyID": "rs:offer.priceCents",
+            "name": "Nettorate in Cent",
+            "value": 6200
+          },
+          {
+            "@type": "PropertyValue",
+            "propertyID": "rs:offer.vatRate",
+            "name": "USt.-Satz",
+            "value": 19,
+            "unitText": "%"
+          },
+          {
+            "@type": "PropertyValue",
+            "propertyID": "rs:offer.billingPeriod",
+            "name": "Abrechnungsperiode",
+            "value": "Month"
+          },
+          {
+            "@type": "PropertyValue",
+            "propertyID": "rs:offer.minTermMonths",
+            "name": "Mindestlaufzeit",
+            "value": 48,
+            "unitText": "Monate"
+          },
+          {
+            "@type": "PropertyValue",
+            "propertyID": "rs:offer.isStartingPrice",
+            "name": "Ab-Preis",
+            "value": true
+          },
+          {
+            "@type": "PropertyValue",
+            "propertyID": "rs:offer.serviceScope.level",
+            "name": "Serviceumfang (Stufe)",
+            "value": "None"
+          }
+        ]
+      }
+    }
+  ]
+}
