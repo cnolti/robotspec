@@ -14,8 +14,9 @@
 - ~~ECLASS/CPV-Crosswalk-Doku~~ (nicht-normativ, ToU-konform)
 - ~~Bildmetadaten~~ (`media.images[].widthPx/heightPx/altDe`)
 
-**Offene v0.2-Nacharbeit:** ECLASS-IRDIs manuell in der Content-Suche
-bestätigen (ca. 20 Min, siehe docs/crosswalk-eclass.md).
+**v0.2-Nacharbeit erledigt (11.08.2026):** Klassen-IRDIs manuell in der
+ECLASS-Content-Suche bestätigt, Merkmalszuordnung korrigiert, Neufund
+29-16-05-08 dokumentiert (siehe docs/crosswalk-eclass.md).
 
 ## v0.3 (Kandidaten)
 

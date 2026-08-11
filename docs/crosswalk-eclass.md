@@ -10,30 +10,37 @@ Ziffer 4.1.1 erlaubt die Nutzung in Standardisierungsdokumenten ausdrücklich
 „without the purchase of a license"; Ziffer 5.1 verlangt die Versionsnennung
 (deshalb ist `classifications[].version` bei `system: eclass` Pflicht).
 
-**Verifikationsstand:** Die folgenden Codes wurden am 04.08.2026 über die
-frei zugängliche ECLASS-Content-Suche recherchiert. Die Suche ist nicht
-maschinell abfragbar; **vor produktiver Nutzung die IRDIs manuell in der
-Content-Suche bestätigen** (https://eclass.eu/en/eclass-standard/search-content,
-Aufwand ca. 20 Minuten).
+**Verifikationsstand:** Die Klassen-IRDIs und die Negativ-Befunde wurden am
+**11.08.2026 manuell in der offiziellen ECLASS-Content-Suche bestätigt**
+(BASIC 16.0, EN): Detailseiten von 21-19-03-11, 21-19-01-04 und 27-38-01-10
+inkl. angezeigter IRDIs; Suche „humanoid" liefert null Treffer; die
+„scrubber"-Trefferliste enthält keine autonome Klasse. Nur die IRDIs der
+beiden Flächenleistungs-**Merkmale** (AAJ714/AAJ747) stammen weiterhin aus
+der Vorrecherche (Merkmalsnamen und Klassenzuordnung sind bestätigt, die
+Merkmals-Detailseiten wurden nicht einzeln geöffnet).
 
-## Klassen-Zuordnung
+## Klassen-Zuordnung (bestätigt 11.08.2026)
 
 | ECLASS-Klasse | IRDI | RobotSpec `robotClass` | Einordnung |
 |---|---|---|---|
-| 21-19-03-11 Robotersauger | 0173-1#01-ADH738#015 | `Vacuum` | Einzige robotische Reinigungsklasse (seit 13.0); Merkmale Consumer-orientiert, keine Flächenleistung |
-| 21-19-01-04 Scheuersaugmaschine, handgeführt (Akku) | 0173-1#01-ACD283#019 | `ScrubberDryer` (nächstliegend) | **Nicht autonom** — es existiert keine ECLASS-Klasse für autonome Scheuersaugmaschinen |
-| 27-38-01-10 Mobiler Roboter | 0173-1#01-AHY717#002 | AMR-nahe Klassen | Neu in 15.0, hängt unter Industrieroboter und erbt Armroboter-Merkmale — für Reinigungs-/Lieferroboter weitgehend unbrauchbar |
-| — | — | `Humanoid`, `Disinfection`, gewerbliche Reinigungsroboter | **Keine ECLASS-Klasse vorhanden** (Nulltreffer in 16.0) |
+| 21-19-03-11 Robot vacuum cleaner | 0173-1#01-ADH738#015 | `Vacuum` | Einzige robotische Reinigungsklasse im Profibereich (Segment 21 Betriebsausstattung); Definition nennt ausdrücklich „residential **or commercial** use" (Achtung: KI-generierter Definitionstext); Merkmale überwiegend Consumer-orientiert, enthalten aber „area efficiency (per hour)" |
+| 21-19-01-04 Hand-operated scrubber dryer (rechargeable) | 0173-1#01-ACD283#019 | `ScrubberDryer` (nächstliegend) | **Nicht autonom** — die „scrubber"-Suche in 16.0 bestätigt: keine ECLASS-Klasse für autonome Scheuersaugmaschinen |
+| 27-38-01-10 Mobile robot [Keywords: Autonomous robot, AGV, AMR] | 0173-1#01-AHY717#002 | AMR-nahe Klassen | Hängt unter 27-38-01 Industrieroboter und erbt Armroboter-Merkmale — für Reinigungs-/Lieferroboter weitgehend unbrauchbar |
+| 29-16-05-08 Cleaning robot (household) | — (Neufund 11.08.2026) | — | Consumer-Klasse im Segment 29 Hauswirtschaft — unterstreicht, dass der **gewerbliche** Reinigungsroboter fehlt |
+| — | — | `Humanoid`, `Disinfection`, gewerbliche Reinigungsroboter | **Keine ECLASS-Klasse vorhanden** („humanoid": null Treffer, bestätigt 11.08.2026) |
 
-## Merkmals-Crosswalk (der wichtigste Fund)
+## Merkmals-Crosswalk (korrigiert 11.08.2026)
 
-ECLASS trennt bei 21-19-01-04 theoretische und praktische Flächenleistung —
-exakt die RobotSpec-Ehrlichkeitsregel:
+ECLASS kennt beide Flächenleistungs-Merkmale — sie sind aber auf **zwei
+Klassen verteilt** (nicht, wie ursprünglich recherchiert, beide an
+21-19-01-04): das theoretische Merkmal an der Scheuersaugmaschine, das
+praktische am Robotersauger. RobotSpec führt beide als getrennte Felder an
+jedem Listing — die Ehrlichkeitsregel bleibt der gemeinsame Nenner:
 
-| ECLASS-Merkmal | IRDI | RobotSpec-Feld |
-|---|---|---|
-| area efficiency (per hour, theoretical) | 0173-1#02-AAJ714#007 | `capabilities.areaPerformanceTheoreticalM2h` |
-| area efficiency (per hour) | 0173-1#02-AAJ747#007 | `capabilities.areaPerformancePracticalM2h` |
+| ECLASS-Merkmal | IRDI (Vorrecherche) | An Klasse (bestätigt) | RobotSpec-Feld |
+|---|---|---|---|
+| area efficiency (per hour, theoretical) | 0173-1#02-AAJ714#007 | 21-19-01-04 | `capabilities.areaPerformanceTheoreticalM2h` |
+| area efficiency (per hour) | 0173-1#02-AAJ747#007 | 21-19-03-11 | `capabilities.areaPerformancePracticalM2h` |
 
 ## CPV (öffentliche Ausschreibungen)
 
