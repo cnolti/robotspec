@@ -1,6 +1,6 @@
 {
   "name": "robotspec-schema",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "private": true,
   "description": "RobotSpec — offener Datenstandard für Serviceroboter: Produkt-Spezifikationen und Angebotsdaten (Kauf, Miete, Leasing, RaaS)",
   "type": "module",
