@@ -1,8 +1,6 @@
 {
-  "schemaVersion": "0.3",
+  "schemaVersion": "0.2",
   "listingId": "neura-4ne1-gen35-specsheet",
-  "productId": "urn:neura-robotics.com:product:4ne1",
-  "variantId": "urn:neura-robotics.com:variant:4ne1-gen35",
   "robotClass": "Humanoid",
   "make": "NEURA Robotics",
   "model": "4NE1",
@@ -20,7 +18,6 @@
     "sdkAvailable": true
   },
   "supplier": {
-    "supplierId": "urn:neura-robotics.com:supplier:neura-robotics",
     "name": "NEURA Robotics",
     "legalName": "NEURA Robotics GmbH",
     "supplierType": "Manufacturer",

@@ -2,7 +2,7 @@
   "@context": [
     "https://schema.org",
     {
-      "rs": "https://robotspec.org/schema/v0.2/#",
+      "rs": "https://robotspec.org/schema/v0.3/#",
       "gr": "http://purl.org/goodrelations/v1#"
     }
   ],
@@ -11,6 +11,7 @@
       "@type": "Organization",
       "@id": "_:supplier",
       "name": "Demo Robotics GmbH",
+      "identifier": "urn:example-supplier.de:supplier:demo-robotics",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "DE"
@@ -20,6 +21,7 @@
       "@type": "Product",
       "name": "Nexaro NR 1700",
       "sku": "demo-supplier-nr1700-lease",
+      "productID": "urn:example-supplier.de:product:nexaro-nr1700",
       "brand": {
         "@type": "Brand",
         "name": "Nexaro"
@@ -142,6 +144,12 @@
           },
           "description": "Ab 62,00 EUR netto/Monat zzgl. 19 % USt. Mindestlaufzeit 48 Monate. Kein Servicevertrag enthalten (rs:offer.serviceScope.level = None). Hinweis zum Service: Reine Finanzierungsrate, bonitäts- und laufzeitabhängig. Nexaro HUB (Dockingstation) nicht enthalten.",
           "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.offerId",
+              "name": "Angebots-ID",
+              "value": "leasing-48m"
+            },
             {
               "@type": "PropertyValue",
               "propertyID": "rs:offer.offerType",

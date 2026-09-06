@@ -1,7 +1,6 @@
 {
-  "schemaVersion": "0.3",
+  "schemaVersion": "0.2",
   "listingId": "demo-supplier-nr1700-lease",
-  "productId": "urn:example-supplier.de:product:nexaro-nr1700",
   "updatedAt": "2026-07-31T10:00:00Z",
   "robotClass": "Vacuum",
   "make": "Nexaro",
@@ -32,7 +31,6 @@
   },
   "offers": [
     {
-      "offerId": "leasing-48m",
       "offerType": "Leasing",
       "priceCents": 6200,
       "currency": "EUR",
@@ -47,7 +45,6 @@
     }
   ],
   "supplier": {
-    "supplierId": "urn:example-supplier.de:supplier:demo-robotics",
     "name": "Demo Robotics GmbH",
     "supplierType": "Dealer",
     "countryCode": "DE"

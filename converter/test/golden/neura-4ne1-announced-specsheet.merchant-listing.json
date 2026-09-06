@@ -2,7 +2,7 @@
   "@context": [
     "https://schema.org",
     {
-      "rs": "https://robotspec.org/schema/v0.2/#",
+      "rs": "https://robotspec.org/schema/v0.3/#",
       "gr": "http://purl.org/goodrelations/v1#"
     }
   ],
@@ -11,6 +11,7 @@
       "@type": "Organization",
       "@id": "https://neura-robotics.com/#organization",
       "name": "NEURA Robotics",
+      "identifier": "urn:neura-robotics.com:supplier:neura-robotics",
       "legalName": "NEURA Robotics GmbH",
       "url": "https://neura-robotics.com",
       "address": {
@@ -22,6 +23,7 @@
       "@type": "Product",
       "name": "NEURA Robotics 4NE1 (Gen 3.5)",
       "sku": "neura-4ne1-gen35-specsheet",
+      "productID": "urn:neura-robotics.com:product:4ne1",
       "brand": {
         "@type": "Brand",
         "name": "NEURA Robotics"
@@ -41,6 +43,12 @@
           "propertyID": "rs:condition",
           "name": "Zustand",
           "value": "New"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "rs:variantId",
+          "name": "Varianten-ID",
+          "value": "urn:neura-robotics.com:variant:4ne1-gen35"
         },
         {
           "@type": "PropertyValue",

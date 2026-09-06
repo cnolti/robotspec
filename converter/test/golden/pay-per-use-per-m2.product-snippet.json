@@ -13,26 +13,23 @@
       "name": "Demo Robotics GmbH",
       "identifier": "urn:example-supplier.de:supplier:demo-robotics",
       "url": "https://example-supplier.de",
-      "email": "vertrieb@example-supplier.de",
       "vatID": "DE123456789",
       "address": {
         "@type": "PostalAddress",
-        "addressCountry": "DE",
-        "postalCode": "65760",
-        "addressLocality": "Eschborn"
+        "addressCountry": "DE"
       }
     },
     {
       "@type": "Product",
       "name": "Gausium Scrubber 50 Pro (Walzenbürste)",
-      "sku": "demo-supplier-s50pro-001",
+      "sku": "demo-supplier-ppu-m2-001",
       "productID": "urn:example-supplier.de:product:gausium-scrubber-50-pro",
       "brand": {
         "@type": "Brand",
         "name": "Gausium"
       },
       "model": "Scrubber 50 Pro",
-      "description": "Autonomer Scheuersaugroboter der Mittelklasse für Hartböden in Supermärkten, Kliniken und Bahnhöfen.",
+      "description": "Nutzungsabhängiges Angebot: abgerechnet wird die gereinigte Fläche, nicht das Gerät. Referenzbeispiel für unitPrice — 3,6 ct/m² sind als ganzzahlige Cent nicht darstellbar.",
       "weight": {
         "@type": "QuantitativeValue",
         "value": 148,
@@ -53,12 +50,6 @@
         },
         {
           "@type": "PropertyValue",
-          "propertyID": "rs:modelYear",
-          "name": "Modelljahr",
-          "value": 2026
-        },
-        {
-          "@type": "PropertyValue",
           "propertyID": "rs:variantId",
           "name": "Varianten-ID",
           "value": "urn:example-supplier.de:variant:gausium-scrubber-50-pro-walze"
@@ -67,28 +58,7 @@
           "@type": "PropertyValue",
           "propertyID": "rs:revision",
           "name": "Revision des Listings",
-          "value": 7
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:highlights",
-          "name": "Highlights",
-          "value": [
-            "Selbstständiges Andocken",
-            "Walzenbürste nimmt Grobschmutz auf"
-          ]
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:classifications.cpv",
-          "name": "CPV 2008",
-          "value": "90900000-6"
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:classifications.cpv",
-          "name": "CPV 2008",
-          "value": "42995000-7"
+          "value": 2
         },
         {
           "@type": "PropertyValue",
@@ -116,13 +86,6 @@
           "propertyID": "rs:capabilities.runtimeMinutes",
           "name": "Laufzeit",
           "value": 180,
-          "unitText": "min"
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:capabilities.chargingTimeMinutes",
-          "name": "Ladezeit",
-          "value": 120,
           "unitText": "min"
         },
         {
@@ -160,37 +123,15 @@
           "name": "Geeignete Einsatzumgebungen",
           "value": [
             "Retail",
-            "Healthcare",
-            "Transport"
+            "Logistics"
           ]
         },
         {
           "@type": "PropertyValue",
           "propertyID": "rs:capabilities.minAreaM2",
           "name": "Mindestfläche",
-          "value": 800,
+          "value": 2000,
           "unitText": "m²"
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:capabilities.features",
-          "name": "Ausstattungsmerkmale",
-          "value": [
-            "Automatische Tankspülung",
-            "Flottenreporting"
-          ]
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:connectivity.fleetApi",
-          "name": "Flotten-/Reporting-API",
-          "value": true
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:connectivity.offlineCapable",
-          "name": "Offline-Betrieb möglich",
-          "value": false
         },
         {
           "@type": "PropertyValue",
@@ -218,36 +159,6 @@
         },
         {
           "@type": "PropertyValue",
-          "propertyID": "rs:compliance.dataPrivacy.camerasOnboard",
-          "name": "Kameras an Bord",
-          "value": true
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:compliance.dataPrivacy.recordsVideo",
-          "name": "Videoaufzeichnung",
-          "value": false
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:compliance.dataPrivacy.onDeviceProcessingOnly",
-          "name": "Verarbeitung nur auf dem Gerät",
-          "value": true
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:compliance.dataPrivacy.cloudUpload",
-          "name": "Cloud-Upload",
-          "value": true
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:compliance.dataPrivacy.cloudRegion",
-          "name": "Cloud-Region",
-          "value": "EU (Frankfurt)"
-        },
-        {
-          "@type": "PropertyValue",
           "propertyID": "rs:supplier.supplierType",
           "name": "Anbietertyp",
           "value": "Dealer"
@@ -256,35 +167,35 @@
           "@type": "PropertyValue",
           "propertyID": "rs:updatedAt",
           "name": "Stand der Angaben",
-          "value": "2026-07-31T10:00:00Z"
+          "value": "2026-09-05T09:00:00Z"
         }
       ],
       "offers": [
         {
           "@type": "AggregateOffer",
-          "name": "Kauf",
+          "name": "Pay-per-Use — Preis je m²",
           "itemCondition": "https://schema.org/NewCondition",
           "availability": "https://schema.org/InStock",
           "priceCurrency": "EUR",
-          "lowPrice": "38068.10",
-          "highPrice": "38068.10",
+          "lowPrice": "0.04284",
+          "highPrice": "0.04284",
           "offerCount": 1,
           "seller": {
             "@id": "https://example-supplier.de/#organization"
           },
-          "description": "1 Angebot: netto 31.990,00 EUR zzgl. 19 % USt. Serviceumfang: ohne Servicevertrag.",
+          "description": "1 Angebot: netto 0,036 EUR/m² zzgl. 19 % USt. Serviceumfang: Full-Service. Mindestlaufzeit 12 Monate.",
           "additionalProperty": [
             {
               "@type": "PropertyValue",
               "propertyID": "rs:offer.offerType",
               "name": "Angebotsart",
-              "value": "Purchase"
+              "value": "PayPerUse"
             },
             {
               "@type": "PropertyValue",
-              "propertyID": "rs:offer.priceCents",
-              "name": "Nettopreis in Cent",
-              "value": 3199000
+              "propertyID": "rs:offer.unitPrice.amount",
+              "name": "Nettopreis je m²",
+              "value": "0.036"
             },
             {
               "@type": "PropertyValue",
@@ -297,73 +208,67 @@
               "@type": "PropertyValue",
               "propertyID": "rs:offer.billingPeriod",
               "name": "Abrechnungsperiode",
-              "value": "Once"
-            },
-            {
-              "@type": "PropertyValue",
-              "propertyID": "rs:offer.serviceScope.level",
-              "name": "Serviceumfang (Stufe)",
-              "value": "None"
-            }
-          ]
-        },
-        {
-          "@type": "AggregateOffer",
-          "name": "Robot-as-a-Service — Rate pro Monat",
-          "itemCondition": "https://schema.org/NewCondition",
-          "availability": "https://schema.org/InStock",
-          "priceCurrency": "EUR",
-          "lowPrice": "1416.10",
-          "highPrice": "1416.10",
-          "offerCount": 1,
-          "seller": {
-            "@id": "https://example-supplier.de/#organization"
-          },
-          "description": "1 Angebot: netto 1.190,00 EUR/Monat zzgl. 19 % USt. Serviceumfang: Full-Service. Mindestlaufzeit 24 Monate.",
-          "additionalProperty": [
-            {
-              "@type": "PropertyValue",
-              "propertyID": "rs:offer.offerType",
-              "name": "Angebotsart",
-              "value": "RaaS"
-            },
-            {
-              "@type": "PropertyValue",
-              "propertyID": "rs:offer.priceCents",
-              "name": "Nettorate in Cent",
-              "value": 119000
-            },
-            {
-              "@type": "PropertyValue",
-              "propertyID": "rs:offer.vatRate",
-              "name": "USt.-Satz",
-              "value": 19,
-              "unitText": "%"
-            },
-            {
-              "@type": "PropertyValue",
-              "propertyID": "rs:offer.billingPeriod",
-              "name": "Abrechnungsperiode",
-              "value": "Month"
+              "value": "PerSquareMeter"
             },
             {
               "@type": "PropertyValue",
               "propertyID": "rs:offer.minTermMonths",
               "name": "Mindestlaufzeit",
-              "value": 24,
+              "value": 12,
               "unitText": "Monate"
-            },
-            {
-              "@type": "PropertyValue",
-              "propertyID": "rs:offer.isStartingPrice",
-              "name": "Ab-Preis",
-              "value": true
             },
             {
               "@type": "PropertyValue",
               "propertyID": "rs:offer.serviceScope.level",
               "name": "Serviceumfang (Stufe)",
               "value": "Full"
+            }
+          ]
+        },
+        {
+          "@type": "AggregateOffer",
+          "name": "Pay-per-Use — Preis je Stunde",
+          "itemCondition": "https://schema.org/NewCondition",
+          "availability": "https://schema.org/InStock",
+          "priceCurrency": "EUR",
+          "lowPrice": "14.875",
+          "highPrice": "14.875",
+          "offerCount": 1,
+          "seller": {
+            "@id": "https://example-supplier.de/#organization"
+          },
+          "description": "1 Angebot: netto 12,50 EUR/h zzgl. 19 % USt. Serviceumfang: ohne Servicevertrag.",
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.offerType",
+              "name": "Angebotsart",
+              "value": "PayPerUse"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.unitPrice.amount",
+              "name": "Nettopreis je Stunde",
+              "value": "12.5"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.vatRate",
+              "name": "USt.-Satz",
+              "value": 19,
+              "unitText": "%"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.billingPeriod",
+              "name": "Abrechnungsperiode",
+              "value": "PerUnit"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.serviceScope.level",
+              "name": "Serviceumfang (Stufe)",
+              "value": "None"
             }
           ]
         }

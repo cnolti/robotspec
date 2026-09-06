@@ -2,7 +2,7 @@
   "@context": [
     "https://schema.org",
     {
-      "rs": "https://robotspec.org/schema/v0.2/#",
+      "rs": "https://robotspec.org/schema/v0.3/#",
       "gr": "http://purl.org/goodrelations/v1#"
     }
   ],
@@ -11,6 +11,7 @@
       "@type": "Organization",
       "@id": "_:supplier",
       "name": "Demo Event Robotics",
+      "identifier": "urn:example-events.de:supplier:demo-event-robotics",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "DE"
@@ -20,12 +21,13 @@
       "@type": "Product",
       "name": "Pudu Robotics BellaBot",
       "sku": "demo-supplier-bella-day",
+      "productID": "urn:example-events.de:product:pudu-bellabot",
       "brand": {
         "@type": "Brand",
         "name": "Pudu Robotics"
       },
       "model": "BellaBot",
-      "description": "Service-/Lieferroboter für Gastronomie-Events — Beispiel für eine Nicht-Reinigungsklasse in openRobot (kuratiert, v0.1 spezifiziert Reinigungsklassen voll).",
+      "description": "Service-/Lieferroboter für Gastronomie-Events — Beispiel für eine Nicht-Reinigungsklasse in RobotSpec (kuratiert; voll spezifiziert sind Reinigungsklassen und Humanoide).",
       "additionalProperty": [
         {
           "@type": "PropertyValue",

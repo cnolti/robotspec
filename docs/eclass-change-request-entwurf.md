@@ -1,12 +1,19 @@
 # ECLASS-Change-Request-Entwurf: „Autonomous scrubber dryer (robot)"
 
 > This content contains ECLASS. The ECLASS Terms of Use apply (www.eclass.eu).
-> Referenzierte Version: ECLASS 16.0. Stand des Entwurfs: 11.08.2026.
+> Referenzierte Version: ECLASS 16.0. Stand des Entwurfs: 11.08.2026,
+> Begründung präzisiert 05.09.2026.
 
 Einreichfertiger Entwurf für einen ECLASS-Change-Request (neue Klasse).
 Hintergrund und Belege: [crosswalk-eclass.md](crosswalk-eclass.md) — ECLASS
-16.0 kennt keine Klasse für autonome gewerbliche Reinigungsroboter
+16.0 kennt keine Klasse für **autonome Scheuersaugmaschinen**
 (am 11.08.2026 in der offiziellen Content-Suche verifiziert).
+
+**Scope-Disziplin:** Der Antrag betrifft ausschließlich autonome
+Scheuersaugmaschinen. Er behauptet **nicht**, dass ECLASS gewerbliche
+Reinigungsroboter allgemein nicht abbilde — für Saugroboter existiert
+21-19-03-11, dessen Definition „residential or commercial use" ausdrücklich
+einschließt. Eine zu breite Begründung wäre in der Vorabprüfung angreifbar.
 
 ## Einreichweg
 
@@ -47,21 +54,25 @@ Self-navigating floor cleaning machine for commercial use that scrubs and
 dries hard floors autonomously, using onboard sensors (e.g. LiDAR, cameras)
 for localization, path planning and obstacle avoidance, and operating
 without continuous human guidance. Distinct from hand-operated scrubber
-dryers (human-guided) and from robot vacuum cleaners (suction only,
-predominantly residential use).
+dryers (human-guided) and from robot vacuum cleaners (suction only, no
+scrubbing or drying).
 ```
 
 **Reason:**
 
 ```text
-ECLASS 16.0 BASIC has no class for autonomous commercial floor cleaning
-robots. The closest classes do not cover them: 21-19-01-04 is explicitly
+ECLASS 16.0 BASIC has no class for autonomous scrubber dryers, i.e. floor
+cleaning machines that scrub and dry hard floors without human guidance.
+This request is limited to that gap; it does not claim that commercial
+cleaning robots are generally unclassified. The closest classes do not
+cover autonomous scrubber dryers: 21-19-01-04 is explicitly
 "hand-operated"; 21-19-03-11 (robot vacuum cleaner) covers suction robots
-with predominantly residential characteristics; 29-16-05-08 covers
-household cleaning robots; 27-38-01-10 (mobile robot) sits under
-industrial robots and inherits arm-robot properties unsuitable for
-cleaning machines. Autonomous scrubber dryers are an established
-commercial product category: a July 2026 market survey of the DACH region
+and, per its own definition, spans residential or commercial use, but not
+scrubbing and drying; 29-16-05-08 covers household cleaning robots;
+27-38-01-10 (mobile robot) sits under industrial robots and inherits
+arm-robot properties unsuitable for cleaning machines. Autonomous scrubber
+dryers are an established commercial product category: a July 2026 market
+survey of the DACH region
 documented 20 models from more than 10 manufacturers (e.g. Gausium,
 Pudu Robotics, LionsBot, Tennant, Kärcher, Nilfisk, Cleanfix, Adlatus)
 with 114 published price points across purchase, rental, leasing and

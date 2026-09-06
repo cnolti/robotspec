@@ -2,7 +2,7 @@
   "@context": [
     "https://schema.org",
     {
-      "rs": "https://robotspec.org/schema/v0.2/#",
+      "rs": "https://robotspec.org/schema/v0.3/#",
       "gr": "http://purl.org/goodrelations/v1#"
     }
   ],
@@ -11,6 +11,7 @@
       "@type": "Organization",
       "@id": "_:supplier",
       "name": "Demo Manufacturer SE",
+      "identifier": "urn:example-manufacturer.de:supplier:demo-manufacturer",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "DE"
@@ -20,6 +21,7 @@
       "@type": "Product",
       "name": "Kärcher KIRA B 50",
       "sku": "demo-mfr-kira-b50-spec",
+      "productID": "urn:example-manufacturer.de:product:kira-b50",
       "brand": {
         "@type": "Brand",
         "name": "Kärcher"

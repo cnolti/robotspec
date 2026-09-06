@@ -1,7 +1,6 @@
 {
-  "schemaVersion": "0.3",
+  "schemaVersion": "0.2",
   "listingId": "demo-dealer-unitree-g1-spec",
-  "productId": "urn:example-dealer.de:product:unitree-g1",
   "updatedAt": "2026-07-31T14:00:00Z",
   "robotClass": "Humanoid",
   "make": "Unitree",
@@ -43,7 +42,6 @@
     }
   },
   "supplier": {
-    "supplierId": "urn:example-dealer.de:supplier:demo-robotics-dealer",
     "name": "Demo Robotics Dealer",
     "supplierType": "Dealer",
     "countryCode": "DE"

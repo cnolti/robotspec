@@ -1,0 +1,1403 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://robotspec.org/schema/v0.3/listing.json",
+  "title": "RobotSpec Listing v0.3",
+  "description": "Offener, herstellerneutraler Datenstandard für Serviceroboter: detaillierte Produkt-Spezifikationen UND Angebotsdaten (Kauf, Miete, Leasing, RaaS, Pay-per-Use). Ein Dokument ohne offers ist ein Produkt-Datenblatt, mit offers ein Angebot. v0.3 ergänzt: dauerhafte Identitäten (productId, variantId, revision, supplier.supplierId, offers[].offerId), aussagebezogene Herkunft (provenance), dezimale Einheitspreise für nutzungsabhängige Angebote (offers[].unitPrice) sowie validierte Konsistenzregeln für Serviceumfang und Abrechnungsperiode. Normativ reserviert: das propertyID-Präfix 'rs:' bezeichnet in externen Vokabularen (z. B. schema.org additionalProperty) RobotSpec-Feldpfade. Kernprinzip der Angebotsseite: Betrag, Laufzeit, Serviceumfang und MwSt.-Status sind Pflicht je Offer.",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "robotClass",
+    "make",
+    "model",
+    "condition",
+    "compliance",
+    "supplier"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "0.3"
+    },
+    "listingId": {
+      "type": "string",
+      "description": "Stabile ID des Anbieters für dieses Listing (für Updates/Idempotenz). Zusammen mit supplier.supplierId der Upsert-Schlüssel; im Feed Pflicht.",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "\\S"
+    },
+    "productId": {
+      "type": "string",
+      "description": "Dauerhafte, anbieterübergreifend gedachte Kennung des Produkts (Modell), z. B. eine URN oder URL des Herstellers. Bleibt über Preis- und Bestandsänderungen hinweg gleich.",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "examples": [
+        "urn:example:manufacturer:product:50"
+      ]
+    },
+    "variantId": {
+      "type": "string",
+      "description": "Dauerhafte Kennung der Konfigurations-/Ausstattungsvariante (siehe variant). Varianten bekommen getrennte IDs und werden NIE unter derselben listingId gemischt.",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "examples": [
+        "urn:example:manufacturer:variant:50-pro"
+      ]
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Monoton steigende Revisionsnummer dieses Listings. Konsumenten verwerfen eine Lieferung mit kleinerer revision als der gespeicherten (Schutz gegen verspätete/doppelte Lieferungen)."
+    },
+    "sourceSystem": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "robotClass": {
+      "type": "string",
+      "description": "Neutrale Taxonomie; Reinigungsklassen (capabilities) und Humanoide (humanoidCapabilities) sind voll spezifiziert, weitere Klassen sind zulässig und werden kuratiert",
+      "enum": [
+        "ScrubberDryer",
+        "Vacuum",
+        "Sweeper",
+        "Combination",
+        "Disinfection",
+        "Delivery",
+        "Inspection",
+        "Security",
+        "Humanoid",
+        "Other"
+      ]
+    },
+    "make": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "\\S"
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 150,
+      "pattern": "\\S"
+    },
+    "variant": {
+      "type": "string",
+      "maxLength": 150,
+      "description": "Konfigurations-/Ausstattungsvariante (z. B. 'Pro', 'Gen. II eco', 'Walzenbürste'). Varianten NIE unter demselben listingId mischen."
+    },
+    "modelYear": {
+      "type": "integer",
+      "minimum": 2015,
+      "maximum": 2035
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "New",
+        "Demo",
+        "Used",
+        "Refurbished"
+      ]
+    },
+    "operatingHours": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Pflichtangabe-Empfehlung bei condition != New"
+    },
+    "serialNumber": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "manufacturerSku": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "gtin": {
+      "type": "string",
+      "pattern": "^[0-9]{8,14}$"
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 5000
+    },
+    "highlights": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 200
+      },
+      "maxItems": 10
+    },
+    "capabilities": {
+      "$ref": "#/$defs/CleaningCapabilities"
+    },
+    "connectivity": {
+      "$ref": "#/$defs/Connectivity"
+    },
+    "compliance": {
+      "$ref": "#/$defs/Compliance"
+    },
+    "offers": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/Offer"
+      },
+      "description": "Optional: ohne offers ist das Dokument ein reines Produkt-Datenblatt (Spec Sheet)."
+    },
+    "media": {
+      "$ref": "#/$defs/Media"
+    },
+    "supplier": {
+      "$ref": "#/$defs/Supplier"
+    },
+    "location": {
+      "$ref": "#/$defs/Location"
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Plattform-/anbieterspezifische Zusatzdaten außerhalb des Standards"
+    },
+    "humanoidCapabilities": {
+      "$ref": "#/$defs/HumanoidCapabilities"
+    },
+    "classifications": {
+      "type": "array",
+      "maxItems": 10,
+      "description": "Optionale Verweise auf etablierte Produktklassifikationen. Mehrfachangabe erwünscht (z. B. ECLASS für Handel, CPV für öffentliche Ausschreibungen). Werte werden vom Lieferanten gepflegt und NICHT aus robotClass abgeleitet.",
+      "items": {
+        "type": "object",
+        "required": [
+          "system",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "system": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "Empfohlene Werte: eclass, etim, unspsc, cpv, gpc, customsTariff. Weitere Systeme zulässig.",
+            "examples": [
+              "eclass",
+              "etim",
+              "cpv"
+            ]
+          },
+          "code": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "Code in der Notation des Systems, z. B. '21-19-03-11' (ECLASS), 'EC000541' (ETIM), '90900000-6' (CPV)"
+          },
+          "version": {
+            "type": "string",
+            "maxLength": 20,
+            "description": "Release des Klassifikationssystems, z. B. '16.0'. Bei system=eclass PFLICHT (ECLASS Terms of Use 5.1)."
+          },
+          "irdi": {
+            "type": "string",
+            "maxLength": 60,
+            "description": "Optionaler ECLASS-IRDI, z. B. '0173-1#01-ADH738#015'"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "system": {
+                  "const": "eclass"
+                }
+              },
+              "required": [
+                "system"
+              ]
+            },
+            "then": {
+              "required": [
+                "system",
+                "code",
+                "version"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "lifecycleStatus": {
+      "type": "string",
+      "enum": [
+        "Announced",
+        "Available",
+        "Discontinued"
+      ],
+      "description": "Marktreife des Produkts, nicht Lagerbestand (Default-Semantik: Available). 'Announced' = öffentlich angekündigt, aber nicht bestellbar; solche Listings dürfen KEINE offers tragen — Statusdisziplin validierbar gemacht."
+    },
+    "provenance": {
+      "type": "array",
+      "maxItems": 100,
+      "description": "Optionale Herkunft je Aussage: Wer behauptet welchen Wert seit wann, mit welchem Prüfstatus? Ohne diesen Block sind alle Angaben Anbieterangaben (SupplierClaim) ohne Beleg.",
+      "items": {
+        "$ref": "#/$defs/ProvenanceEntry"
+      }
+    }
+  },
+  "$defs": {
+    "CleaningCapabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cleaningWidthCm": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 300
+        },
+        "areaPerformanceTheoreticalM2h": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Arbeitsbreite × Maximalgeschwindigkeit. NIE als praktischer Wert ausgeben."
+        },
+        "areaPerformancePracticalM2h": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Herstellerangabe unter realen Bedingungen (Wenden, Hindernisse, Ladepausen). Erfahrungswert: 30–50 % des theoretischen Werts."
+        },
+        "runtimeMinutes": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1440
+        },
+        "chargingTimeMinutes": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1440
+        },
+        "freshWaterTankL": {
+          "type": "number",
+          "minimum": 0
+        },
+        "wasteWaterTankL": {
+          "type": "number",
+          "minimum": 0
+        },
+        "dustbinL": {
+          "type": "number",
+          "minimum": 0
+        },
+        "navigationTypes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Lidar2D",
+              "Lidar3D",
+              "Camera",
+              "DepthCamera",
+              "Ultrasonic",
+              "Gps",
+              "MagneticTape",
+              "Other"
+            ]
+          }
+        },
+        "dockingStation": {
+          "type": "boolean"
+        },
+        "autonomousWaterExchange": {
+          "type": "boolean"
+        },
+        "suitableEnvironments": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Office",
+              "Retail",
+              "Logistics",
+              "Industry",
+              "Healthcare",
+              "Hospitality",
+              "Education",
+              "Transport",
+              "Outdoor"
+            ]
+          }
+        },
+        "minAreaM2": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxAreaM2": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "climbAbilityPct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 30
+        },
+        "noiseDb": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 120
+        },
+        "weightKg": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "dimensions": {
+          "$ref": "#/$defs/Dimensions"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "maxItems": 40
+        },
+        "maxSpeedKmh": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 20
+        },
+        "batteryCapacityWh": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "ipRating": {
+          "type": "string",
+          "pattern": "^IP[0-9X][0-9X]$",
+          "description": "Schutzart, z. B. IP54"
+        }
+      }
+    },
+    "Dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lengthMm": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "widthMm": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "heightMm": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "Connectivity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "vda5050": {
+          "type": "boolean",
+          "description": "VDA-5050-Anbindung (Fleet-Manager ↔ AMR)"
+        },
+        "fleetApi": {
+          "type": "boolean",
+          "description": "Herstellereigene Flotten-/Reporting-API vorhanden"
+        },
+        "apiDocsUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "offlineCapable": {
+          "type": "boolean",
+          "description": "Betrieb ohne Cloud-Anbindung möglich"
+        }
+      }
+    },
+    "Compliance": {
+      "type": "object",
+      "required": [
+        "ceMarking"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "ceMarking": {
+          "type": "boolean"
+        },
+        "declarationOfConformityUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "conformityBasis": {
+          "type": "string",
+          "enum": [
+            "MRL-2006-42-EC",
+            "MVO-2023-1230"
+          ],
+          "description": "Rechtsgrundlage des Inverkehrbringens; ab 20.01.2027 nur noch MVO-2023-1230 für Neugeräte"
+        },
+        "standards": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "description": "z. B. 'EN IEC 63327:2021', 'IEC 60335-2-72'"
+        },
+        "operatingManualDeUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "Betriebsanleitung in deutscher Sprache (Pflicht für DACH-Vermietung)"
+        },
+        "dataPrivacy": {
+          "$ref": "#/$defs/DataPrivacyProfile"
+        }
+      }
+    },
+    "DataPrivacyProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Sensorik-/Datenfluss-Profil für die DSGVO-Bewertung des Betreibers",
+      "properties": {
+        "camerasOnboard": {
+          "type": "boolean"
+        },
+        "recordsVideo": {
+          "type": "boolean"
+        },
+        "onDeviceProcessingOnly": {
+          "type": "boolean"
+        },
+        "cloudUpload": {
+          "type": "boolean"
+        },
+        "cloudRegion": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "dataSheetUrl": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "Offer": {
+      "type": "object",
+      "required": [
+        "offerType",
+        "currency",
+        "vatRate",
+        "serviceScope"
+      ],
+      "additionalProperties": false,
+      "description": "Ein konkretes Angebot. Feste Beträge IMMER netto in ganzen Cent (priceCents); nutzungsabhängige Angebote (PayPerUse) tragen stattdessen einen dezimalen Einheitspreis (unitPrice). Serviceumfang ist Pflicht — 'Leasing ab X €' ohne Service-Abgrenzung ist kein gültiges RobotSpec-Angebot.",
+      "properties": {
+        "offerId": {
+          "type": "string",
+          "description": "Stabile ID dieses Angebots innerhalb des Listings (für Updates und Referenzen). MUSS innerhalb eines Listings eindeutig sein.",
+          "minLength": 1,
+          "maxLength": 100,
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "examples": [
+            "lease-24m"
+          ]
+        },
+        "offerType": {
+          "type": "string",
+          "enum": [
+            "Purchase",
+            "Rent",
+            "Leasing",
+            "RaaS",
+            "DayRate",
+            "PayPerUse"
+          ]
+        },
+        "priceCents": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000000000,
+          "description": "Netto-Preis in ganzen Cent (7210 € Monatsrate = 721000). Pflicht bei allen Angebotsarten außer PayPerUse; bei PayPerUse verboten — dort gilt unitPrice."
+        },
+        "unitPrice": {
+          "$ref": "#/$defs/UnitPrice",
+          "description": "Dezimaler Einheitspreis für nutzungsabhängige Angebote (PayPerUse), z. B. 0,036 EUR je m². Nur dort zulässig und dort Pflicht."
+        },
+        "currency": {
+          "type": "string",
+          "enum": [
+            "EUR",
+            "CHF"
+          ]
+        },
+        "vatRate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 30,
+          "description": "Anzuwendender USt.-Satz in Prozent (DE 19, AT 20, CH 8.1)"
+        },
+        "isStartingPrice": {
+          "type": "boolean",
+          "description": "true = 'ab'-Preis, abhängig von Laufzeit/Bonität/Konfiguration"
+        },
+        "billingPeriod": {
+          "type": "string",
+          "enum": [
+            "Once",
+            "Day",
+            "Week",
+            "Month",
+            "Year",
+            "PerSquareMeter",
+            "PerUnit"
+          ],
+          "description": "Abrechnungsperiode bzw. Preisbezug. Purchase: Once (oder weglassen). Rent/Leasing/RaaS: Month, Week oder Year. DayRate: Day. PayPerUse: PerSquareMeter (Fläche) oder PerUnit (jede andere Bezugsgröße aus unitPrice.referenceQuantity.unit)."
+        },
+        "minTermMonths": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 120
+        },
+        "noticePeriodMonths": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 24
+        },
+        "autoRenewal": {
+          "type": "boolean"
+        },
+        "setupFeeCents": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Einmalige Einrichtung/Installation/Mapping, netto in Cent"
+        },
+        "deliveryFeeCents": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "buyoutOptionCents": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Kaufoption am Laufzeitende (Mietkauf), netto in Cent"
+        },
+        "serviceScope": {
+          "$ref": "#/$defs/ServiceScope"
+        },
+        "availability": {
+          "$ref": "#/$defs/Availability"
+        },
+        "validUntil": {
+          "type": "string",
+          "format": "date"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "offerType": {
+                "const": "Purchase"
+              }
+            },
+            "required": [
+              "offerType"
+            ]
+          },
+          "then": {
+            "properties": {
+              "billingPeriod": {
+                "const": "Once"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "offerType": {
+                "enum": [
+                  "Rent",
+                  "Leasing",
+                  "RaaS"
+                ]
+              }
+            },
+            "required": [
+              "offerType"
+            ]
+          },
+          "then": {
+            "required": [
+              "billingPeriod",
+              "minTermMonths"
+            ],
+            "properties": {
+              "billingPeriod": {
+                "enum": [
+                  "Month",
+                  "Week",
+                  "Year"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "offerType": {
+                "const": "DayRate"
+              }
+            },
+            "required": [
+              "offerType"
+            ]
+          },
+          "then": {
+            "required": [
+              "billingPeriod"
+            ],
+            "properties": {
+              "billingPeriod": {
+                "const": "Day"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "offerType": {
+                "const": "PayPerUse"
+              }
+            },
+            "required": [
+              "offerType"
+            ]
+          },
+          "then": {
+            "required": [
+              "billingPeriod",
+              "unitPrice"
+            ],
+            "not": {
+              "required": [
+                "priceCents"
+              ]
+            },
+            "properties": {
+              "billingPeriod": {
+                "enum": [
+                  "PerSquareMeter",
+                  "PerUnit"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "not": {
+              "properties": {
+                "offerType": {
+                  "const": "PayPerUse"
+                }
+              },
+              "required": [
+                "offerType"
+              ]
+            }
+          },
+          "then": {
+            "required": [
+              "priceCents"
+            ],
+            "not": {
+              "required": [
+                "unitPrice"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "currency": {
+                "const": "EUR"
+              }
+            },
+            "required": [
+              "currency",
+              "unitPrice"
+            ]
+          },
+          "then": {
+            "properties": {
+              "unitPrice": {
+                "properties": {
+                  "currency": {
+                    "const": "EUR"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "currency": {
+                "const": "CHF"
+              }
+            },
+            "required": [
+              "currency",
+              "unitPrice"
+            ]
+          },
+          "then": {
+            "properties": {
+              "unitPrice": {
+                "properties": {
+                  "currency": {
+                    "const": "CHF"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "UnitPrice": {
+      "type": "object",
+      "required": [
+        "amount",
+        "currency",
+        "referenceQuantity"
+      ],
+      "additionalProperties": false,
+      "description": "Dezimaler Netto-Einheitspreis für nutzungsabhängige Angebote. Der Betrag ist ein String, damit Subcent-Preise (3,6 ct/m² = '0.036') exakt bleiben; Rundung erfolgt erst am Rechnungsbetrag.",
+      "properties": {
+        "amount": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d{1,6})?$",
+          "description": "Netto-Betrag als Dezimalzahl in der Währungseinheit (NICHT in Cent), maximal sechs Nachkommastellen, z. B. '0.036' für 3,6 ct.",
+          "examples": [
+            "0.036"
+          ]
+        },
+        "currency": {
+          "type": "string",
+          "enum": [
+            "EUR",
+            "CHF"
+          ],
+          "description": "MUSS mit offers[].currency übereinstimmen."
+        },
+        "referenceQuantity": {
+          "type": "object",
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false,
+          "description": "Bezugsmenge, auf die sich amount bezieht (z. B. 1 M2).",
+          "properties": {
+            "value": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "unit": {
+              "type": "string",
+              "enum": [
+                "M2",
+                "Hour",
+                "Day",
+                "Km",
+                "Cycle",
+                "Item"
+              ],
+              "description": "Bezugsgröße: Quadratmeter, Stunde, Tag, Kilometer, Reinigungs-/Arbeitszyklus oder Stück."
+            }
+          }
+        }
+      }
+    },
+    "ServiceScope": {
+      "type": "object",
+      "required": [
+        "level"
+      ],
+      "additionalProperties": false,
+      "description": "Explizite Service-Abgrenzung des Angebots. level=Full verlangt Wartung, Reparaturen UND Ersatzgerät (schema-validiert); level=None verbietet dieselben drei Bausteine.",
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": [
+            "Full",
+            "Partial",
+            "None"
+          ]
+        },
+        "maintenance": {
+          "type": "boolean",
+          "description": "Regelmäßige Wartung enthalten"
+        },
+        "repairs": {
+          "type": "boolean"
+        },
+        "wearParts": {
+          "type": "boolean",
+          "description": "Verschleißteile (Bürsten, Sauglippen, Filter) enthalten"
+        },
+        "consumables": {
+          "type": "boolean",
+          "description": "Verbrauchsmaterial (Pads, Reinigungsmittel) enthalten"
+        },
+        "replacementDevice": {
+          "type": "boolean",
+          "description": "Ersatzgerät bei Ausfall (SLA)"
+        },
+        "replacementSlaHours": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 336
+        },
+        "onSiteSupport": {
+          "type": "boolean"
+        },
+        "remoteMonitoring": {
+          "type": "boolean"
+        },
+        "softwareUpdates": {
+          "type": "boolean"
+        },
+        "installation": {
+          "type": "boolean",
+          "description": "Inbetriebnahme/Mapping/Schulung enthalten"
+        },
+        "statutoryInspection": {
+          "type": "boolean",
+          "description": "Jährliche UVV-/DGUV-V3-Prüfung enthalten"
+        },
+        "insurance": {
+          "type": "boolean",
+          "description": "Maschinenbruch-/Haftpflichtdeckung enthalten"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "level": {
+                "const": "Full"
+              }
+            },
+            "required": [
+              "level"
+            ]
+          },
+          "then": {
+            "required": [
+              "maintenance",
+              "repairs",
+              "replacementDevice"
+            ],
+            "properties": {
+              "maintenance": {
+                "const": true
+              },
+              "repairs": {
+                "const": true
+              },
+              "replacementDevice": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "level": {
+                "const": "None"
+              }
+            },
+            "required": [
+              "level"
+            ]
+          },
+          "then": {
+            "properties": {
+              "maintenance": {
+                "const": false
+              },
+              "repairs": {
+                "const": false
+              },
+              "replacementDevice": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "asOf"
+      ],
+      "description": "Verfügbarkeitsaussage mit Pflicht-Zeitstempel. BREAKING gegenüber v0.2: das in v0.2 deprecated markierte Feld inStock entfällt ersatzlos — der Zustand steht in status.",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "InStock",
+            "LeadTime",
+            "MadeToOrder",
+            "PreOrder",
+            "OnRequest",
+            "OutOfStock"
+          ]
+        },
+        "asOf": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Stand dieser Verfügbarkeits- und Preisaussage. Pflicht: eine Aussage ohne Datum ist keine Aussage."
+        },
+        "availableFrom": {
+          "type": "string",
+          "format": "date",
+          "description": "Pflicht bei PreOrder und bei LeadTime mit Termin statt Tagen. Sollte max. 12 Monate in der Zukunft liegen."
+        },
+        "leadTimeDays": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 365
+        },
+        "quantityAvailable": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Nur sinnvoll bei Miet-/Vorführflotte"
+        },
+        "serviceRegions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 10
+          },
+          "description": "ISO-3166-1/2-Codes (DE, AT, CH, DE-BY …) oder PLZ-Präfixe"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "PreOrder"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "availableFrom"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "LeadTime"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "anyOf": [
+              {
+                "required": [
+                  "leadTimeDays"
+                ]
+              },
+              {
+                "required": [
+                  "availableFrom"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "Media": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "images": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "object",
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "Product",
+                  "InUse",
+                  "Detail",
+                  "Datasheet"
+                ]
+              },
+              "widthPx": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Bildbreite in Pixeln (Vorbereitung Google-Bildanforderungen)"
+              },
+              "heightPx": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "altDe": {
+                "type": "string",
+                "maxLength": 300,
+                "description": "Deutscher Alternativtext"
+              }
+            }
+          }
+        },
+        "brochureUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "videoUrl": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "Supplier": {
+      "type": "object",
+      "required": [
+        "name",
+        "countryCode"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "supplierId": {
+          "type": "string",
+          "description": "Dauerhafte Kennung des Anbieters (URN/URL). Zusammen mit listingId der empfohlene Upsert-Schlüssel — stabiler als ein rotierender API-Key.",
+          "minLength": 1,
+          "maxLength": 200,
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "examples": [
+            "urn:example:supplier:42"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "legalName": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "supplierType": {
+          "type": "string",
+          "enum": [
+            "Manufacturer",
+            "Distributor",
+            "Dealer",
+            "Integrator",
+            "RentalCompany"
+          ]
+        },
+        "website": {
+          "type": "string",
+          "format": "uri"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "countryCode": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "vatId": {
+          "type": "string",
+          "maxLength": 20,
+          "description": "USt-IdNr. — Basis der Anbieter-Verifizierung"
+        }
+      }
+    },
+    "Location": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "countryCode": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "postalCode": {
+          "type": "string",
+          "maxLength": 10
+        },
+        "city": {
+          "type": "string",
+          "maxLength": 100
+        }
+      }
+    },
+    "HumanoidCapabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Spezifikationsblock für robotClass Humanoid. Statusdisziplin gilt auch hier: keine angekündigten Werte als gemessene ausgeben.",
+      "properties": {
+        "heightCm": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 250
+        },
+        "weightKg": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "payloadKg": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Nutzlast beim Tragen/Manipulieren"
+        },
+        "liftingCapacityKg": {
+          "type": "number",
+          "minimum": 0,
+          "description": "maximale Hebekraft, falls separat spezifiziert"
+        },
+        "degreesOfFreedom": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Gesamt-Freiheitsgrade (Basis-Konfiguration)"
+        },
+        "handDegreesOfFreedom": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60,
+          "description": "Freiheitsgrade je Hand, falls separat angegeben"
+        },
+        "handType": {
+          "type": "string",
+          "enum": [
+            "FiveFingerHand",
+            "ThreeFingerHand",
+            "TwoFingerGripper",
+            "Interchangeable",
+            "None"
+          ]
+        },
+        "walkingSpeedKmh": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 15
+        },
+        "runningSpeedKmh": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 40
+        },
+        "runtimeMinutes": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1440
+        },
+        "batteryCapacityWh": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "batterySwappable": {
+          "type": "boolean"
+        },
+        "navigationTypes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Lidar2D",
+              "Lidar3D",
+              "Camera",
+              "DepthCamera",
+              "Ultrasonic",
+              "Gps",
+              "MagneticTape",
+              "Other"
+            ]
+          }
+        },
+        "autonomyLevel": {
+          "type": "string",
+          "enum": [
+            "Teleoperated",
+            "Scripted",
+            "SemiAutonomous",
+            "Autonomous"
+          ],
+          "description": "Ehrliche Einstufung des heutigen Serienstands, nicht der Vision"
+        },
+        "teleoperationSupported": {
+          "type": "boolean"
+        },
+        "computePlatform": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "z. B. Nvidia Jetson Orin, eigener Chip"
+        },
+        "sdkAvailable": {
+          "type": "boolean"
+        },
+        "simulationSupport": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "description": "z. B. Isaac Sim, MuJoCo, Gazebo"
+        },
+        "ipRating": {
+          "type": "string",
+          "pattern": "^IP[0-9X][0-9X]$"
+        },
+        "noiseDb": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 120
+        },
+        "dimensions": {
+          "$ref": "#/$defs/Dimensions"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "maxItems": 40
+        }
+      }
+    },
+    "ProvenanceEntry": {
+      "type": "object",
+      "required": [
+        "path",
+        "assertedBy",
+        "assertedAt",
+        "verificationStatus"
+      ],
+      "additionalProperties": false,
+      "description": "Herkunft und Prüfstatus EINER Aussage dieses Listings. Macht Herstellerbehauptung, Anbieterangabe, Betreibermessung und unabhängige Prüfung maschinell unterscheidbar.",
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^/",
+          "maxLength": 300,
+          "description": "JSON-Pointer (RFC 6901) auf das belegte Feld dieses Dokuments, z. B. '/capabilities/areaPerformancePracticalM2h'. '/' bezeichnet das gesamte Listing.",
+          "examples": [
+            "/capabilities/areaPerformancePracticalM2h"
+          ]
+        },
+        "sourceUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "Beleg (Datenblatt, Prüfbericht, Preisliste)"
+        },
+        "assertedBy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "description": "Wer die Aussage verantwortet — Rolle ('Hersteller', 'Anbieter', 'Prüfstelle') oder dauerhafte Kennung (URN/URL)."
+        },
+        "assertedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Zeitpunkt der Aussage — nicht der Zeitpunkt der Lieferung."
+        },
+        "verificationStatus": {
+          "type": "string",
+          "enum": [
+            "ManufacturerClaim",
+            "SupplierClaim",
+            "OperatorReport",
+            "IndependentlyVerified"
+          ],
+          "description": "ManufacturerClaim = Herstellerangabe, SupplierClaim = Angabe des liefernden Anbieters, OperatorReport = Erfahrungswert eines Betreibers, IndependentlyVerified = durch Dritte geprüft (Prüfbericht in sourceUrl)."
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "lifecycleStatus": {
+            "const": "Announced"
+          }
+        },
+        "required": [
+          "lifecycleStatus"
+        ]
+      },
+      "then": {
+        "not": {
+          "required": [
+            "offers"
+          ]
+        }
+      }
+    }
+  ]
+}

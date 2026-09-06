@@ -4,9 +4,21 @@ Diese Bridge beschreibt, wie ein Händler/Anbieter aus einem RobotSpec-Listing
 sein schema.org-Markup (JSON-LD) erzeugt. Sie ist bewusst **kein normativer
 Bestandteil** der Spec: Googles Rich-Result-Anforderungen ändern sich mehrmals
 jährlich, und rund 60 % des RobotSpec-Modells (serviceScope, Compliance,
-Netto-Cent-Preise) haben ohnehin keine SERP-Wirkung. Normativ reserviert
+Netto-Preise) haben ohnehin keine SERP-Wirkung. Normativ reserviert
 RobotSpec nur das `propertyID`-Präfix **`rs:`** für RobotSpec-Feldpfade in
 `additionalProperty`-Einträgen.
+
+**Zum `rs:`-Kanal, damit keine falsche Erwartung entsteht:** Die Zeichenketten
+hinter `rs:` sind eine **Konvention zur Wiedererkennung**, keine wörtlich
+auflösbaren Schema-Pfade. `rs:offer.priceCents` bezeichnet die Eigenschaft
+`priceCents` eines Angebots — im Dokument steht sie unter
+`/offers/<index>/priceCents`, und in einem `AggregateOffer` fasst derselbe
+Schlüssel mehrere Angebote zusammen. Ein Roundtrip zurück nach RobotSpec ist
+deshalb nicht garantiert: Die Aggregation verliert absichtlich
+Einzelvertragsdaten, und die Klassifikationsversion steckt nur im Anzeigenamen.
+Das Präfix zeigt auf die Schemaversion des Quelldokuments
+(`https://robotspec.org/schema/v0.3/#`); stabil und normativ ist der
+`rs:`-Schlüssel, nicht die IRI dahinter.
 
 ## Die drei Regeln, die über den Modus entscheiden (an Google-Doku verifiziert, Stand 08/2026)
 
@@ -36,12 +48,17 @@ Google-Property-Tabelle auf — korrektes Markup ohne SERP-Wirkung.
 | RobotSpec | schema.org |
 |---|---|
 | `make` / `model` / `variant` | `Product.brand` / `Product.model` / im `name` |
-| `gtin` / `manufacturerSku` | `Product.gtin` / `Product.mpn` |
+| `gtin` / `manufacturerSku` / `listingId` | `Product.gtin` / `Product.mpn` / `Product.sku` |
+| `productId` | `Product.productID` (`variantId` und `revision` bleiben `rs:`) |
+| `supplier.supplierId` | `Organization.identifier` |
 | `media.images[]` (+ `widthPx`/`heightPx`/`altDe`) | `Product.image[]` |
 | `capabilities.*`, `compliance.*` | `additionalProperty[]` mit `propertyID: "rs:<feldpfad>"` |
 | `offers[].priceCents` + `vatRate` | `Offer.price` (BRUTTO, berechnet) + `rs:offer.priceCents` (netto) |
+| `offers[].unitPrice` (PayPerUse) | `Offer.price` als **Dezimalbetrag** (brutto berechnet, subcent-genau) + `UnitPriceSpecification.referenceQuantity` aus `referenceQuantity` (UN/CEFACT: `M2`→MTK, `Hour`→HUR, `Day`→DAY, `Km`→KMT, `Item`→C62; `Cycle` nur als `unitText`) + `rs:offer.unitPrice.amount` (netto) |
 | `offers[].offerType Purchase` | `businessFunction: gr:Sell` |
 | `offers[].offerType Rent/Leasing/RaaS` | `businessFunction: gr:LeaseOut` bzw. `gr:ProvideService`, `UnitPriceSpecification` mit `referenceQuantity` (MON) und `billingDuration` (Mindestlaufzeit) |
+| `offers[].offerType PayPerUse` | `businessFunction: gr:ProvideService`, `UnitPriceSpecification` **ohne** `priceComponentType` — ein Einheitspreis ist kein Abonnement |
+| `provenance[]` | kein Mapping — Herkunftsdaten gehören nicht ins seitensichtbare Markup |
 | `offers[].availability.status` | `Offer.availability` (InStock/PreOrder/…) — **`lifecycleStatus: Announced` wird NIE auf `PreOrder` gemappt** (PreOrder heißt „bestellbar") |
 | `offers[].setupFeeCents` | `Offer.addOn` mit `priceComponentType: ActivationFee` |
 | `serviceScope` (Full-Service) | `Offer.warranty` (WarrantyPromise) + `rs:offer.serviceScope.*` |
@@ -58,7 +75,7 @@ RaaS-Offer, Bruttopreise berechnet aus den Netto-Cent-Werten der Quelldatei
 {
   "@context": [
     "https://schema.org",
-    { "rs": "https://robotspec.org/schema/v0.2/#", "gr": "http://purl.org/goodrelations/v1#" }
+    { "rs": "https://robotspec.org/schema/v0.3/#", "gr": "http://purl.org/goodrelations/v1#" }
   ],
   "@graph": [
     {
@@ -162,9 +179,16 @@ RaaS-Offer, Bruttopreise berechnet aus den Netto-Cent-Werten der Quelldatei
 ## Anti-Patterns
 
 - **Netto ins `price`-Feld** — in DE muss der Bruttopreis der Landingpage
-  ins Markup; Netto-Cent gehört in `rs:offer.priceCents`.
-- **Kauf- und Mietangebote in einem `AggregateOffer` mischen** — erzeugt
-  „ab 1.416 €"-Klickfallen (Monatsrate neben Kaufpreis).
+  ins Markup; der Nettobetrag gehört in `rs:offer.priceCents` bzw.
+  `rs:offer.unitPrice.amount`.
+- **Kauf-, Miet- und Nutzungsangebote in einem `AggregateOffer` mischen** —
+  erzeugt „ab 1.416 €"-Klickfallen (Monatsrate neben Kaufpreis) und, seit es
+  Einheitspreise gibt, „ab 0,04 €"-Fallen (Preis je m² neben Monatsrate).
+  Auch zwei Einheitspreise mit verschiedenen Bezugsgrößen (je m² und je
+  Stunde) sind kein gemeinsamer Preisbereich.
+- **Einheitspreise auf Cent runden** — 3,6 ct/m² werden dabei zu 4 ct/m²
+  (+11 %) oder gleich zu „0 €". Der Dezimalbetrag bleibt exakt; gerundet wird
+  erst der Rechnungsbetrag.
 - **`lifecycleStatus: Announced` als `PreOrder` mappen** — PreOrder heißt
   „bestellbar"; ein angekündigter Roboter bekommt gar kein Offer-Markup.
 - **CE über `hasCertification`** — von Google nicht ausgewertet; als
@@ -172,10 +196,17 @@ RaaS-Offer, Bruttopreise berechnet aus den Netto-Cent-Werten der Quelldatei
 - **Markup für unsichtbare Inhalte** — alles im JSON-LD muss auf der Seite
   sichtbar sein; JSON-LD serverseitig rendern.
 
-## Konverter (geplant)
+## Konverter (umgesetzt)
 
-`@robotspec/to-schemaorg` (MIT): Profile `merchant-listing` /
-`product-snippet`, `vatMode: gross|net`, Golden-File-Tests gegen
-`schema/examples/*.json`. Siehe ROADMAP — der Konverter ist primär ein
-Argument FÜR Anbieter, RobotSpec zu liefern: „dein Feed erzeugt nebenbei
-dein Google-Markup".
+`@robotspec/to-schemaorg` (MIT) setzt diese Bridge um: Profile
+`merchant-listing` / `product-snippet`, `vatMode: gross|net`,
+Golden-File-Tests gegen `schema/examples/*.json`, ESM ohne Laufzeit-
+Abhängigkeiten, zusätzlich als CLI. Er akzeptiert v0.3- und v0.2-Listings.
+API, vollständige Mapping-Tabelle und die Designentscheidungen stehen in
+[../converter/README.md](../converter/README.md).
+
+Der Konverter ist primär ein Argument FÜR Anbieter, RobotSpec zu liefern:
+„dein Feed erzeugt nebenbei dein Google-Markup". Was er **nicht** erzeugt:
+`Offer.url` und `Product.@id` (RobotSpec kennt keine Landingpage-URL),
+`shippingDetails`, `hasMerchantReturnPolicy`, `aggregateRating`. Und er ist
+kein Validator — ungültige Listings ergeben ungültiges Markup.

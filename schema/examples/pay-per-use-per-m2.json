@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "0.3",
+  "listingId": "demo-supplier-ppu-m2-001",
+  "productId": "urn:example-supplier.de:product:gausium-scrubber-50-pro",
+  "variantId": "urn:example-supplier.de:variant:gausium-scrubber-50-pro-walze",
+  "revision": 2,
+  "updatedAt": "2026-09-05T09:00:00Z",
+  "createdAt": "2026-08-20T09:00:00Z",
+  "robotClass": "ScrubberDryer",
+  "make": "Gausium",
+  "model": "Scrubber 50 Pro",
+  "variant": "Walzenbürste",
+  "condition": "New",
+  "summary": "Nutzungsabhängiges Angebot: abgerechnet wird die gereinigte Fläche, nicht das Gerät. Referenzbeispiel für unitPrice — 3,6 ct/m² sind als ganzzahlige Cent nicht darstellbar.",
+  "capabilities": {
+    "cleaningWidthCm": 46,
+    "areaPerformanceTheoreticalM2h": 1754,
+    "areaPerformancePracticalM2h": 900,
+    "runtimeMinutes": 180,
+    "freshWaterTankL": 30,
+    "wasteWaterTankL": 24,
+    "navigationTypes": [
+      "Lidar2D",
+      "DepthCamera"
+    ],
+    "dockingStation": true,
+    "suitableEnvironments": [
+      "Retail",
+      "Logistics"
+    ],
+    "minAreaM2": 2000,
+    "weightKg": 148
+  },
+  "compliance": {
+    "ceMarking": true,
+    "conformityBasis": "MRL-2006-42-EC",
+    "standards": [
+      "EN IEC 63327:2021"
+    ],
+    "operatingManualDeUrl": "https://example-supplier.de/docs/s50pro-betriebsanleitung.pdf"
+  },
+  "offers": [
+    {
+      "offerId": "ppu-m2-full",
+      "offerType": "PayPerUse",
+      "unitPrice": {
+        "amount": "0.036",
+        "currency": "EUR",
+        "referenceQuantity": {
+          "value": 1,
+          "unit": "M2"
+        }
+      },
+      "currency": "EUR",
+      "vatRate": 19,
+      "billingPeriod": "PerSquareMeter",
+      "minTermMonths": 12,
+      "setupFeeCents": 95000,
+      "serviceScope": {
+        "level": "Full",
+        "maintenance": true,
+        "repairs": true,
+        "wearParts": true,
+        "consumables": false,
+        "replacementDevice": true,
+        "replacementSlaHours": 72,
+        "remoteMonitoring": true,
+        "softwareUpdates": true,
+        "installation": true,
+        "notes": "Abrechnung monatlich nach gereinigter Fläche laut Flottenreporting; Reinigungsmittel/Pads nicht enthalten."
+      },
+      "availability": {
+        "status": "LeadTime",
+        "asOf": "2026-09-05T09:00:00Z",
+        "leadTimeDays": 21,
+        "serviceRegions": [
+          "DE",
+          "AT"
+        ]
+      },
+      "notes": "Mindestabnahme 15.000 m² je Monat, im Preis nicht enthalten."
+    },
+    {
+      "offerId": "ppu-hour-none",
+      "offerType": "PayPerUse",
+      "unitPrice": {
+        "amount": "12.5",
+        "currency": "EUR",
+        "referenceQuantity": {
+          "value": 1,
+          "unit": "Hour"
+        }
+      },
+      "currency": "EUR",
+      "vatRate": 19,
+      "billingPeriod": "PerUnit",
+      "serviceScope": {
+        "level": "None",
+        "notes": "Reine Gerätestunde ohne Servicevertrag — Vergleichsangebot zur Flächenabrechnung."
+      },
+      "availability": {
+        "status": "LeadTime",
+        "asOf": "2026-09-05T09:00:00Z",
+        "leadTimeDays": 21,
+        "serviceRegions": [
+          "DE"
+        ]
+      }
+    }
+  ],
+  "supplier": {
+    "supplierId": "urn:example-supplier.de:supplier:demo-robotics",
+    "name": "Demo Robotics GmbH",
+    "supplierType": "Dealer",
+    "website": "https://example-supplier.de",
+    "countryCode": "DE",
+    "vatId": "DE123456789"
+  },
+  "provenance": [
+    {
+      "path": "/offers/0/unitPrice",
+      "sourceUrl": "https://example-supplier.de/preise/pay-per-use",
+      "assertedBy": "urn:example-supplier.de:supplier:demo-robotics",
+      "assertedAt": "2026-09-05T09:00:00Z",
+      "verificationStatus": "SupplierClaim"
+    }
+  ]
+}

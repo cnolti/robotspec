@@ -1,9 +1,6 @@
 {
-  "schemaVersion": "0.3",
+  "schemaVersion": "0.2",
   "listingId": "demo-supplier-s50pro-001",
-  "productId": "urn:example-supplier.de:product:gausium-scrubber-50-pro",
-  "variantId": "urn:example-supplier.de:variant:gausium-scrubber-50-pro-walze",
-  "revision": 7,
   "sourceSystem": "demo-erp",
   "updatedAt": "2026-07-31T10:00:00Z",
   "robotClass": "ScrubberDryer",
@@ -63,7 +60,6 @@
   },
   "offers": [
     {
-      "offerId": "raas-24m-full",
       "offerType": "RaaS",
       "priceCents": 119000,
       "currency": "EUR",
@@ -100,7 +96,6 @@
       }
     },
     {
-      "offerId": "purchase-net",
       "offerType": "Purchase",
       "priceCents": 3199000,
       "currency": "EUR",
@@ -123,7 +118,6 @@
     }
   ],
   "supplier": {
-    "supplierId": "urn:example-supplier.de:supplier:demo-robotics",
     "name": "Demo Robotics GmbH",
     "supplierType": "Dealer",
     "website": "https://example-supplier.de",
@@ -146,28 +140,6 @@
       "system": "cpv",
       "code": "42995000-7",
       "version": "2008"
-    }
-  ],
-  "provenance": [
-    {
-      "path": "/capabilities/areaPerformanceTheoreticalM2h",
-      "sourceUrl": "https://example-supplier.de/docs/s50pro-datenblatt.pdf",
-      "assertedBy": "Hersteller",
-      "assertedAt": "2026-05-14T09:00:00Z",
-      "verificationStatus": "ManufacturerClaim"
-    },
-    {
-      "path": "/capabilities/areaPerformancePracticalM2h",
-      "assertedBy": "urn:example-supplier.de:supplier:demo-robotics",
-      "assertedAt": "2026-07-31T10:00:00Z",
-      "verificationStatus": "OperatorReport",
-      "notes": "Mittelwert aus drei Objekten im Einzelhandel, 12 Wochen Betrieb."
-    },
-    {
-      "path": "/offers/0/priceCents",
-      "assertedBy": "urn:example-supplier.de:supplier:demo-robotics",
-      "assertedAt": "2026-07-31T10:00:00Z",
-      "verificationStatus": "SupplierClaim"
     }
   ]
 }

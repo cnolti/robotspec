@@ -1,7 +1,6 @@
 {
-  "schemaVersion": "0.3",
+  "schemaVersion": "0.2",
   "listingId": "demo-mfr-kira-b50-spec",
-  "productId": "urn:example-manufacturer.de:product:kira-b50",
   "updatedAt": "2026-07-31T12:00:00Z",
   "robotClass": "ScrubberDryer",
   "make": "Kärcher",
@@ -56,7 +55,6 @@
     }
   },
   "supplier": {
-    "supplierId": "urn:example-manufacturer.de:supplier:demo-manufacturer",
     "name": "Demo Manufacturer SE",
     "supplierType": "Manufacturer",
     "countryCode": "DE"

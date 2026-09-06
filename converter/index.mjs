@@ -1,5 +1,5 @@
 /**
- * @robotspec/to-schemaorg — RobotSpec v0.2 → schema.org JSON-LD
+ * @robotspec/to-schemaorg — RobotSpec v0.2/v0.3 → schema.org JSON-LD
  *
  * Reines ESM, keine Laufzeit-Abhängigkeiten, Node 20+.
  * Umsetzungsgrundlage: docs/bridge-schema-org.md (informative Bridge).
@@ -11,12 +11,17 @@
 
 export const PROFILES = ["merchant-listing", "product-snippet"];
 export const VAT_MODES = ["gross", "net"];
+export const SUPPORTED_SCHEMA_VERSIONS = ["0.2", "0.3"];
 
 const SO = "https://schema.org/";
 const GR = "http://purl.org/goodrelations/v1#";
-const RS_NS = "https://robotspec.org/schema/v0.2/#";
+const DEFAULT_SCHEMA_VERSION = "0.3";
 
-const CONTEXT = ["https://schema.org", { rs: RS_NS, gr: GR }];
+/** Das rs:-Präfix zeigt auf die Schemaversion des Eingabedokuments. */
+function contextFor(doc) {
+  const version = doc.schemaVersion ?? DEFAULT_SCHEMA_VERSION;
+  return ["https://schema.org", { rs: `https://robotspec.org/schema/v${version}/#`, gr: GR }];
+}
 
 /* ------------------------------------------------------------------ *
  * Wertetabellen
@@ -42,7 +47,8 @@ const BUSINESS_FUNCTION = {
   PayPerUse: "ProvideService",
 };
 
-// UN/CEFACT-Codes: ANN Jahr, MON Monat, WEE Woche, DAY Tag, MTK Quadratmeter.
+// UN/CEFACT-Codes: ANN Jahr, MON Monat, WEE Woche, DAY Tag, MTK Quadratmeter,
+// C62 Stück (dimensionslose Einheit).
 const PERIOD = {
   Once: { rank: 0, suffix: "", label: null, unitCode: null },
   Year: { rank: 1, suffix: "/Jahr", label: "Jahr", unitCode: "ANN" },
@@ -50,7 +56,33 @@ const PERIOD = {
   Week: { rank: 3, suffix: "/Woche", label: "Woche", unitCode: "WEE" },
   Day: { rank: 4, suffix: "/Tag", label: "Tag", unitCode: "DAY" },
   PerSquareMeter: { rank: 5, suffix: "/m²", label: "m²", unitCode: "MTK" },
+  PerUnit: { rank: 6, suffix: "/Einheit", label: "Einheit", unitCode: "C62" },
 };
+
+// Bezugsgrößen des dezimalen Einheitspreises (v0.3, offers[].unitPrice).
+// UN/CEFACT: MTK m², HUR Stunde, DAY Tag, KMT Kilometer, C62 Stück.
+// Für „Zyklus" gibt es keinen passenden Code — dort nur unitText.
+const UNIT = {
+  M2: { rank: 0, unitCode: "MTK", unitText: null, suffix: "/m²", label: "m²" },
+  Hour: { rank: 1, unitCode: "HUR", unitText: null, suffix: "/h", label: "Stunde" },
+  Day: { rank: 2, unitCode: "DAY", unitText: null, suffix: "/Tag", label: "Tag" },
+  Km: { rank: 3, unitCode: "KMT", unitText: null, suffix: "/km", label: "km" },
+  Cycle: { rank: 4, unitCode: null, unitText: "Zyklus", suffix: "/Zyklus", label: "Zyklus" },
+  Item: { rank: 5, unitCode: "C62", unitText: null, suffix: "/Stück", label: "Stück" },
+};
+
+// Angebotsklassen für die Aggregation: Kauf, Überlassung auf Zeit und
+// nutzungsabhängige Abrechnung dürfen nie in einem AggregateOffer landen.
+const OFFER_CLASS = {
+  Purchase: "purchase",
+  Rent: "recurring",
+  Leasing: "recurring",
+  RaaS: "recurring",
+  DayRate: "recurring",
+  PayPerUse: "usage",
+};
+
+const CLASS_RANK = { purchase: 0, recurring: 1, usage: 2 };
 
 const ITEM_CONDITION = {
   New: SO + "NewCondition",
@@ -124,6 +156,8 @@ const META_TOP = {
   modelYear: ["Modelljahr"],
   operatingHours: ["Betriebsstunden", "h"],
   serialNumber: ["Seriennummer"],
+  variantId: ["Varianten-ID"],
+  revision: ["Revision des Listings"],
   lifecycleStatus: ["Marktstatus"],
   highlights: ["Highlights"],
 };
@@ -210,6 +244,7 @@ const META_MEDIA = {
 };
 
 const META_OFFER = {
+  offerId: ["Angebots-ID"],
   offerType: ["Angebotsart"],
   vatRate: ["USt.-Satz", "%"],
   isStartingPrice: ["Ab-Preis"],
@@ -302,6 +337,70 @@ function centsToDe(cents) {
   return `${grouped},${s.slice(-2)}`;
 }
 
+/* Dezimale Einheitspreise (v0.3) werden in Mikroeinheiten gerechnet
+   (10^-6 der Währungseinheit, also 10^-4 Cent) — damit bleiben Subcent-Preise
+   wie 0,036 EUR/m² exakt und die MwSt.-Rechnung ganzzahlig. */
+
+/** Dezimalstring → Mikroeinheiten ("0.036" → 36000). */
+function amountToMicros(amount) {
+  const [whole, frac = ""] = String(amount).split(".");
+  return Number(whole) * 1000000 + Number(`${frac}000000`.slice(0, 6));
+}
+
+/** Mikroeinheiten → Dezimalstring mit 2–6 Nachkommastellen (36000 → "0.036"). */
+function microsToDecimalString(micros) {
+  const s = String(Math.round(micros)).padStart(7, "0");
+  let frac = s.slice(-6).replace(/0+$/, "");
+  while (frac.length < 2) frac += "0";
+  return `${s.slice(0, -6)}.${frac}`;
+}
+
+/** Mikroeinheiten → deutsche Betragsschreibweise (36000 → "0,036"). */
+function microsToDe(micros) {
+  const [whole, frac] = microsToDecimalString(micros).split(".");
+  return `${whole.replace(/\B(?=(\d{3})+(?!\d))/g, ".")},${frac}`;
+}
+
+/** Netto-Mikroeinheiten → Brutto, auf ganze Mikroeinheiten gerundet. */
+function grossMicros(netMicros, vatRate) {
+  return Math.round((netMicros * (100 + vatRate)) / 100);
+}
+
+/** true, wenn das Angebot nutzungsabhängig über unitPrice bepreist ist. */
+function isUnitPriced(offer) {
+  return isPlainObject(offer.unitPrice);
+}
+
+/** Netto-Betrag des Angebots in Mikroeinheiten (vergleichbar über beide Preisformen). */
+function netMicrosOf(offer) {
+  return isUnitPriced(offer) ? amountToMicros(offer.unitPrice.amount) : offer.priceCents * 10000;
+}
+
+/** Auszugebender Betrag in Mikroeinheiten; Cent-Preise runden auf ganze Cent. */
+function targetMicrosOf(offer, vatMode) {
+  if (isUnitPriced(offer)) {
+    const net = amountToMicros(offer.unitPrice.amount);
+    return vatMode === "gross" ? grossMicros(net, offer.vatRate) : net;
+  }
+  const cents = vatMode === "gross" ? grossCents(offer.priceCents, offer.vatRate) : offer.priceCents;
+  return cents * 10000;
+}
+
+/** Bezugsgröße eines Einheitspreises als deutscher Text ("m²", "100 m²"). */
+function unitQuantityLabel(unitPrice) {
+  const unit = UNIT[unitPrice.referenceQuantity.unit];
+  const value = unitPrice.referenceQuantity.value;
+  const label = unit ? unit.label : unitPrice.referenceQuantity.unit;
+  return value === 1 ? label : `${numberToDe(value)} ${label}`;
+}
+
+/** Preis-Suffix eines Einheitspreises ("/m²" bzw. " je 100 m²"). */
+function unitSuffix(unitPrice) {
+  const unit = UNIT[unitPrice.referenceQuantity.unit];
+  if (unit && unitPrice.referenceQuantity.value === 1) return unit.suffix;
+  return ` je ${unitQuantityLabel(unitPrice)}`;
+}
+
 /** Zahl → deutsche Schreibweise (19 → "19", 8.1 → "8,1"). */
 function numberToDe(n) {
   return String(n).replace(".", ",");
@@ -341,8 +440,11 @@ function offerName(offer, doc) {
 }
 
 function priceSentence(offer) {
-  const suffix = PERIOD[periodOf(offer)].suffix;
-  const amount = moneyDe(offer.priceCents, offer.currency);
+  const unitPriced = isUnitPriced(offer);
+  const suffix = unitPriced ? unitSuffix(offer.unitPrice) : PERIOD[periodOf(offer)].suffix;
+  const amount = unitPriced
+    ? `${microsToDe(netMicrosOf(offer))} ${offer.currency}`
+    : moneyDe(offer.priceCents, offer.currency);
   const vat = `zzgl. ${numberToDe(offer.vatRate)} % USt.`;
   return offer.isStartingPrice
     ? `Ab ${amount} netto${suffix} ${vat}`
@@ -427,6 +529,9 @@ function organizationId(doc) {
 function buildOrganization(doc, orgId) {
   const s = doc.supplier ?? {};
   const org = { "@type": "Organization", "@id": orgId, name: s.name };
+  // supplierId ist die dauerhafte Anbieterkennung — schema.org kennt dafür
+  // Thing.identifier; ein zusätzlicher rs:-Eintrag wäre ein Doppelmapping.
+  if (s.supplierId) org.identifier = s.supplierId;
   if (s.legalName) org.legalName = s.legalName;
   if (s.website) org.url = s.website;
   if (s.email) org.email = s.email;
@@ -519,16 +624,30 @@ function buildProductProps(doc) {
 function priceCentsLabel(offer) {
   const period = periodOf(offer);
   if (period === "Once") return "Nettopreis in Cent";
+  // Nur noch aus v0.2-Dokumenten erreichbar: dort war PayPerUse ein Cent-Preis.
   if (period === "PerSquareMeter") return "Nettopreis je m² in Cent";
   return "Nettorate in Cent";
 }
 
+/** Label des dezimalen Einheitspreises ("Nettopreis je m²"). */
+function unitPriceLabel(offer) {
+  return `Nettopreis je ${unitQuantityLabel(offer.unitPrice)}`;
+}
+
+/** Netto-Betrag als rs:-Property — je nach Preisform priceCents oder unitPrice.amount. */
+function netAmountProp(offer) {
+  return isUnitPriced(offer)
+    ? pv("offer.unitPrice.amount", unitPriceLabel(offer), offer.unitPrice.amount)
+    : pv("offer.priceCents", priceCentsLabel(offer), offer.priceCents);
+}
+
 function buildOfferProps(offer) {
   const props = [];
+  push(props, pv("offer.offerId", META_OFFER.offerId[0], offer.offerId));
   push(props, pv("offer.offerType", META_OFFER.offerType[0], offer.offerType));
-  push(props, pv("offer.priceCents", priceCentsLabel(offer), offer.priceCents));
+  push(props, netAmountProp(offer));
   for (const key of Object.keys(META_OFFER)) {
-    if (key === "offerType") continue;
+    if (key === "offerType" || key === "offerId") continue;
     const [name, unitText] = META_OFFER[key];
     push(props, pv(`offer.${key}`, name, offer[key], unitText));
   }
@@ -597,6 +716,15 @@ function buildPriceSpecification(offer, price, vatMode) {
     priceCurrency: offer.currency,
     valueAddedTaxIncluded: vatMode === "gross",
   };
+  if (isUnitPriced(offer)) {
+    // Nutzungsabhängig: die Bezugsmenge kommt aus unitPrice, nicht aus billingPeriod.
+    // Kein priceComponentType — ein Einheitspreis ist kein Abonnement.
+    const rq = offer.unitPrice.referenceQuantity;
+    const unit = UNIT[rq.unit];
+    spec.referenceQuantity = qv(rq.value, unit?.unitCode ?? undefined, unit?.unitText ?? undefined);
+    if (offer.minTermMonths) spec.billingDuration = qv(offer.minTermMonths, "MON");
+    return spec;
+  }
   const period = periodOf(offer);
   if (period !== "Once") {
     // Subscription nur für die wiederkehrenden Vertragsformen der Bridge-Tabelle
@@ -611,7 +739,9 @@ function buildPriceSpecification(offer, price, vatMode) {
 }
 
 function buildOffer(offer, doc, orgId, vatMode) {
-  const price = priceString(offer.priceCents, offer.vatRate, vatMode);
+  const price = isUnitPriced(offer)
+    ? microsToDecimalString(targetMicrosOf(offer, vatMode))
+    : priceString(offer.priceCents, offer.vatRate, vatMode);
   const out = { "@type": "Offer", name: offerName(offer, doc) };
   out.businessFunction = GR + (BUSINESS_FUNCTION[offer.offerType] ?? "Sell");
   if (ITEM_CONDITION[doc.condition]) out.itemCondition = ITEM_CONDITION[doc.condition];
@@ -662,38 +792,71 @@ function uniformValue(offers, pick) {
 }
 
 /**
- * Gruppiert nach Währung UND Abrechnungsperiode. Damit landen Kaufpreis und
- * Monatsrate nie im selben AggregateOffer ("ab 1.416 €"-Klickfalle).
+ * Gruppiert nach Angebotsklasse, Währung UND Preisbasis. Damit landen Kaufpreis,
+ * Monatsrate und nutzungsabhängiger Einheitspreis nie im selben AggregateOffer
+ * ("ab 1.416 €"-Klickfalle). Nutzungsabhängige Angebote werden zusätzlich nach
+ * Bezugsgröße getrennt — 0,036 €/m² und 12,50 €/h sind kein Preisbereich.
  */
 function groupOffers(offers) {
   const groups = new Map();
   for (const offer of offers) {
+    const cls = OFFER_CLASS[offer.offerType] ?? "recurring";
     const period = periodOf(offer);
-    const key = `${offer.currency}|${period}`;
-    if (!groups.has(key)) groups.set(key, { currency: offer.currency, period, offers: [] });
+    const unitPriced = isUnitPriced(offer);
+    const rq = unitPriced ? offer.unitPrice.referenceQuantity : null;
+    const basis = unitPriced ? `unit:${rq.unit}:${rq.value}` : `period:${period}`;
+    const key = `${cls}|${offer.currency}|${basis}`;
+    if (!groups.has(key)) {
+      groups.set(key, {
+        cls,
+        currency: offer.currency,
+        period,
+        unitPriced,
+        unit: rq?.unit,
+        unitValue: rq?.value,
+        offers: [],
+      });
+    }
     groups.get(key).offers.push(offer);
   }
   return [...groups.values()].sort(
-    (a, b) => PERIOD[a.period].rank - PERIOD[b.period].rank || a.currency.localeCompare(b.currency),
+    (a, b) =>
+      CLASS_RANK[a.cls] - CLASS_RANK[b.cls] ||
+      basisRank(a) - basisRank(b) ||
+      a.currency.localeCompare(b.currency),
   );
+}
+
+function basisRank(group) {
+  return group.unitPriced ? (UNIT[group.unit]?.rank ?? 99) : PERIOD[group.period].rank;
+}
+
+/** Preis-Suffix einer Gruppe ("/Monat", "/m²", " je 100 m²"). */
+function groupSuffix(group) {
+  if (!group.unitPriced) return PERIOD[group.period].suffix;
+  return unitSuffix(group.offers[0].unitPrice);
 }
 
 function aggregateName(group) {
   const types = uniqueValues(group.offers.map((o) => OFFER_TYPE_LABEL[o.offerType] ?? o.offerType));
   const label = types.join(" / ");
+  if (group.unitPriced) {
+    return `${label} — Preis je ${unitQuantityLabel(group.offers[0].unitPrice)}`;
+  }
   const period = PERIOD[group.period];
   return period.label ? `${label} — Rate pro ${period.label}` : label;
 }
 
 function aggregateDescription(group, lowNet, highNet) {
-  const { offers, currency, period } = group;
-  const suffix = PERIOD[period].suffix;
+  const { offers, currency, unitPriced } = group;
+  const suffix = groupSuffix(group);
+  const money = (micros) => (unitPriced ? microsToDe(micros) : centsToDe(micros / 10000));
   const vatRate = uniformValue(offers, (o) => o.vatRate);
   const vat = vatRate === undefined ? "zzgl. USt." : `zzgl. ${numberToDe(vatRate)} % USt.`;
   const amount =
     lowNet === highNet
-      ? `${moneyDe(lowNet, currency)}${suffix}`
-      : `${centsToDe(lowNet)}–${centsToDe(highNet)} ${currency}${suffix}`;
+      ? `${money(lowNet)} ${currency}${suffix}`
+      : `${money(lowNet)}–${money(highNet)} ${currency}${suffix}`;
   const s = [
     `${offers.length} ${offers.length === 1 ? "Angebot" : "Angebote"}: netto ${amount} ${vat}`,
   ];
@@ -709,11 +872,13 @@ function aggregateDescription(group, lowNet, highNet) {
 }
 
 function buildAggregateOffer(group, doc, orgId, vatMode) {
-  const { offers, currency } = group;
-  const netCents = offers.map((o) => o.priceCents);
-  const lowNet = Math.min(...netCents);
-  const highNet = Math.max(...netCents);
-  const target = offers.map((o) => (vatMode === "gross" ? grossCents(o.priceCents, o.vatRate) : o.priceCents));
+  const { offers, currency, unitPriced } = group;
+  const net = offers.map(netMicrosOf);
+  const lowNet = Math.min(...net);
+  const highNet = Math.max(...net);
+  const target = offers.map((o) => targetMicrosOf(o, vatMode));
+  const asString = (micros) =>
+    unitPriced ? microsToDecimalString(micros) : centsToDecimalString(micros / 10000);
 
   const out = { "@type": "AggregateOffer", name: aggregateName(group) };
   if (ITEM_CONDITION[doc.condition]) out.itemCondition = ITEM_CONDITION[doc.condition];
@@ -725,23 +890,39 @@ function buildAggregateOffer(group, doc, orgId, vatMode) {
     out.availability = availabilities[0];
   }
   out.priceCurrency = currency;
-  out.lowPrice = centsToDecimalString(Math.min(...target));
-  out.highPrice = centsToDecimalString(Math.max(...target));
+  out.lowPrice = asString(Math.min(...target));
+  out.highPrice = asString(Math.max(...target));
   out.offerCount = offers.length;
   out.seller = { "@id": orgId };
   out.description = aggregateDescription(group, lowNet, highNet);
 
   const props = [];
   push(props, pv("offer.offerType", "Angebotsart", uniqueValues(offers.map((o) => o.offerType))));
-  const centsLabel = priceCentsLabel(offers[0]);
-  push(
-    props,
-    pv(
-      "offer.priceCents",
-      lowNet === highNet ? centsLabel : `${centsLabel} (von–bis)`,
-      lowNet === highNet ? lowNet : [lowNet, highNet],
-    ),
-  );
+  if (unitPriced) {
+    const label = unitPriceLabel(offers[0]);
+    push(
+      props,
+      pv(
+        "offer.unitPrice.amount",
+        lowNet === highNet ? label : `${label} (von–bis)`,
+        lowNet === highNet
+          ? offers[0].unitPrice.amount
+          : [microsToDecimalString(lowNet), microsToDecimalString(highNet)],
+      ),
+    );
+  } else {
+    const centsLabel = priceCentsLabel(offers[0]);
+    const lowCents = lowNet / 10000;
+    const highCents = highNet / 10000;
+    push(
+      props,
+      pv(
+        "offer.priceCents",
+        lowCents === highCents ? centsLabel : `${centsLabel} (von–bis)`,
+        lowCents === highCents ? lowCents : [lowCents, highCents],
+      ),
+    );
+  }
   push(props, pv("offer.vatRate", "USt.-Satz", uniformValue(offers, (o) => o.vatRate), "%"));
   push(props, pv("offer.billingPeriod", "Abrechnungsperiode", uniformValue(offers, (o) => o.billingPeriod)));
   push(props, pv("offer.minTermMonths", "Mindestlaufzeit", uniformValue(offers, (o) => o.minTermMonths), "Monate"));
@@ -793,9 +974,9 @@ export function toSchemaOrg(doc, options = {}) {
       `toSchemaOrg: vatMode muss ${VAT_MODES.map((v) => `"${v}"`).join(" oder ")} sein, erhalten: ${describe(vatMode)}.`,
     );
   }
-  if (doc.schemaVersion !== undefined && doc.schemaVersion !== "0.2") {
+  if (doc.schemaVersion !== undefined && !SUPPORTED_SCHEMA_VERSIONS.includes(doc.schemaVersion)) {
     throw new Error(
-      `toSchemaOrg: unterstützt wird nur RobotSpec v0.2, gefunden: schemaVersion ${describe(doc.schemaVersion)}.`,
+      `toSchemaOrg: unterstützt werden RobotSpec ${SUPPORTED_SCHEMA_VERSIONS.map((v) => `v${v}`).join(" und ")}, gefunden: schemaVersion ${describe(doc.schemaVersion)}.`,
     );
   }
   if (!doc.make || !doc.model) {
@@ -805,6 +986,7 @@ export function toSchemaOrg(doc, options = {}) {
   const orgId = organizationId(doc);
   const product = { "@type": "Product", name: productName(doc) };
   if (doc.listingId) product.sku = doc.listingId;
+  if (doc.productId) product.productID = doc.productId;
   if (doc.manufacturerSku) product.mpn = doc.manufacturerSku;
   if (doc.gtin) product.gtin = doc.gtin;
   product.brand = { "@type": "Brand", name: doc.make };
@@ -835,7 +1017,7 @@ export function toSchemaOrg(doc, options = {}) {
   }
 
   return {
-    "@context": structuredClone(CONTEXT),
+    "@context": contextFor(doc),
     "@graph": [buildOrganization(doc, orgId), product],
   };
 }

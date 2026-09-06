@@ -32,12 +32,12 @@ function check(label, fn) {
 const readJson = (path) => JSON.parse(readFileSync(path, "utf8"));
 
 /* ------------------------------------------------------------------ *
- * 1) Golden-File-Tests: jedes v0.2-Listing-Beispiel × jedes Profil
+ * 1) Golden-File-Tests: jedes v0.3-Listing-Beispiel × jedes Profil
  * ------------------------------------------------------------------ */
 
 const listingFiles = readdirSync(EXAMPLES_DIR)
   .filter((f) => f.endsWith(".json") && !f.startsWith("feed-"))
-  .filter((f) => readJson(EXAMPLES_DIR + f).schemaVersion === "0.2")
+  .filter((f) => readJson(EXAMPLES_DIR + f).schemaVersion === "0.3")
   .sort();
 
 console.log(`Golden-Files (${listingFiles.length} Beispiele × ${PROFILES.length} Profile):`);
@@ -73,6 +73,8 @@ console.log("\nOptionen und Fehlerfälle:");
 const gausium = readJson(EXAMPLES_DIR + "gausium-scrubber-50-raas.json");
 const nexaro = readJson(EXAMPLES_DIR + "nexaro-nr1700-leasing-ohne-service.json");
 const neura = readJson(EXAMPLES_DIR + "neura-4ne1-announced-specsheet.json");
+const payPerUse = readJson(EXAMPLES_DIR + "pay-per-use-per-m2.json");
+const gausiumV02 = readJson(EXAMPLES_DIR + "v0.2/gausium-scrubber-50-raas.json");
 
 const productOf = (out) => out["@graph"].find((n) => n["@type"] === "Product");
 const offersOf = (out) => productOf(out).offers;
@@ -105,8 +107,20 @@ check("Nicht-Objekt als doc wirft", () => {
 check("fremde schemaVersion wirft", () => {
   assert.throws(
     () => toSchemaOrg({ ...gausium, schemaVersion: "0.1" }),
-    /nur RobotSpec v0.2/,
+    /unterstützt werden RobotSpec v0.2 und v0.3/,
   );
+});
+
+check("v0.2-Listings bleiben konvertierbar, rs:-Präfix folgt der Schemaversion", () => {
+  const out = toSchemaOrg(gausiumV02);
+  assert.equal(out["@context"][1].rs, "https://robotspec.org/schema/v0.2/#");
+  assert.equal(toSchemaOrg(gausium)["@context"][1].rs, "https://robotspec.org/schema/v0.3/#");
+  // Ohne schemaVersion gilt die aktuelle Version.
+  const { schemaVersion, ...ohneVersion } = gausium;
+  assert.equal(toSchemaOrg(ohneVersion)["@context"][1].rs, "https://robotspec.org/schema/v0.3/#");
+  // Der v0.2-Datensatz kennt weder offerId noch productId — das Markup bleibt trotzdem vollständig.
+  assert.equal(productOf(out).productID, undefined);
+  assert.equal(offersOf(out)[0].price, "1416.10");
 });
 
 check("Defaults: merchant-listing + gross", () => {
@@ -188,9 +202,9 @@ check("Tagesmiete → referenceQuantity 1 DAY", () => {
   assert.equal(offer.price, "177.31"); // 149,00 × 1,19
 });
 
-check("PayPerUse → referenceQuantity 1 MTK ohne Subscription", () => {
+check("PayPerUse (v0.2, Cent-Preis) → referenceQuantity 1 MTK ohne Subscription", () => {
   const doc = {
-    ...nexaro,
+    ...gausiumV02,
     offers: [
       {
         offerType: "PayPerUse",
@@ -206,6 +220,77 @@ check("PayPerUse → referenceQuantity 1 MTK ohne Subscription", () => {
   assert.equal(offer.priceSpecification.referenceQuantity.unitCode, "MTK");
   assert.equal(offer.priceSpecification.priceComponentType, undefined);
   assert.equal(propOf(offer, "rs:offer.priceCents").name, "Nettopreis je m² in Cent");
+});
+
+console.log("\nDezimaler Einheitspreis (unitPrice):");
+
+check("unitPrice 0,036 EUR/m² bleibt subcent-genau (brutto und netto)", () => {
+  const [flaeche] = offersOf(toSchemaOrg(payPerUse));
+  assert.equal(flaeche.price, "0.04284"); // 0,036 × 1,19
+  assert.equal(flaeche.priceSpecification.price, "0.04284");
+  assert.equal(flaeche.priceSpecification.valueAddedTaxIncluded, true);
+  const [netto] = offersOf(toSchemaOrg(payPerUse, { vatMode: "net" }));
+  assert.equal(netto.price, "0.036");
+  assert.equal(netto.priceSpecification.valueAddedTaxIncluded, false);
+  // Der Nettobetrag bleibt zusätzlich als rs:-Wert erhalten (wie priceCents sonst).
+  assert.equal(propOf(flaeche, "rs:offer.unitPrice.amount").value, "0.036");
+  assert.equal(propOf(flaeche, "rs:offer.unitPrice.amount").name, "Nettopreis je m²");
+  assert.equal(propOf(flaeche, "rs:offer.priceCents"), undefined);
+});
+
+check("unitPrice → UnitPriceSpecification mit referenceQuantity aus der Bezugsgröße", () => {
+  const [flaeche, stunde] = offersOf(toSchemaOrg(payPerUse));
+  assert.deepStrictEqual(flaeche.priceSpecification.referenceQuantity, {
+    "@type": "QuantitativeValue",
+    value: 1,
+    unitCode: "MTK",
+  });
+  assert.equal(flaeche.priceSpecification.priceComponentType, undefined);
+  assert.deepStrictEqual(stunde.priceSpecification.referenceQuantity, {
+    "@type": "QuantitativeValue",
+    value: 1,
+    unitCode: "HUR",
+  });
+  assert.equal(flaeche.businessFunction, "http://purl.org/goodrelations/v1#ProvideService");
+});
+
+check("Bezugsgröße Cycle hat keinen UN/CEFACT-Code und nutzt unitText", () => {
+  const doc = {
+    ...payPerUse,
+    offers: [
+      {
+        ...payPerUse.offers[1],
+        unitPrice: { amount: "1.75", currency: "EUR", referenceQuantity: { value: 1, unit: "Cycle" } },
+      },
+    ],
+  };
+  assert.deepStrictEqual(offersOf(toSchemaOrg(doc))[0].priceSpecification.referenceQuantity, {
+    "@type": "QuantitativeValue",
+    value: 1,
+    unitText: "Zyklus",
+  });
+});
+
+check("Bezugsmenge > 1 erscheint im Text und in referenceQuantity", () => {
+  const doc = {
+    ...payPerUse,
+    offers: [
+      {
+        ...payPerUse.offers[1],
+        unitPrice: { amount: "3.60", currency: "EUR", referenceQuantity: { value: 100, unit: "M2" } },
+      },
+    ],
+  };
+  const offer = offersOf(toSchemaOrg(doc))[0];
+  assert.equal(offer.priceSpecification.referenceQuantity.value, 100);
+  assert.ok(offer.description.startsWith("Netto 3,60 EUR je 100 m² zzgl. 19 % USt."), offer.description);
+  assert.equal(propOf(offer, "rs:offer.unitPrice.amount").name, "Nettopreis je 100 m²");
+});
+
+check("Preistext nennt den Einheitspreis mit Bezugsgröße", () => {
+  const [flaeche, stunde] = offersOf(toSchemaOrg(payPerUse));
+  assert.ok(flaeche.description.startsWith("Netto 0,036 EUR/m² zzgl. 19 % USt."), flaeche.description);
+  assert.ok(stunde.description.startsWith("Netto 12,50 EUR/h zzgl. 19 % USt."), stunde.description);
 });
 
 check("Full-Service erzeugt WarrantyPromise, None nicht", () => {
@@ -335,6 +420,60 @@ check("Kauf und Monatsrate landen nie im selben AggregateOffer", () => {
     assert.equal(aggregate["@type"], "AggregateOffer");
     assert.equal(aggregate.offerCount, 1);
   }
+});
+
+check("Kauf, Überlassung auf Zeit und Nutzungsabrechnung bleiben getrennt", () => {
+  const doc = {
+    ...gausium,
+    offers: [
+      ...gausium.offers,
+      {
+        offerId: "ppu-m2",
+        offerType: "PayPerUse",
+        unitPrice: { amount: "0.036", currency: "EUR", referenceQuantity: { value: 1, unit: "M2" } },
+        currency: "EUR",
+        vatRate: 19,
+        billingPeriod: "PerSquareMeter",
+        serviceScope: { level: "None" },
+      },
+      {
+        offerId: "rent-monat",
+        offerType: "Rent",
+        priceCents: 149000,
+        currency: "EUR",
+        vatRate: 19,
+        billingPeriod: "Month",
+        minTermMonths: 6,
+        serviceScope: { level: "None" },
+      },
+    ],
+  };
+  const aggregates = offersOf(toSchemaOrg(doc, { profile: "product-snippet" }));
+  assert.deepStrictEqual(
+    aggregates.map((a) => a.name),
+    ["Kauf", "Robot-as-a-Service / Miete — Rate pro Monat", "Pay-per-Use — Preis je m²"],
+  );
+  assert.deepStrictEqual(
+    aggregates.map((a) => [a.lowPrice, a.highPrice]),
+    [
+      ["38068.10", "38068.10"],
+      ["1416.10", "1773.10"],
+      ["0.04284", "0.04284"],
+    ],
+  );
+  assert.equal(propOf(aggregates[2], "rs:offer.unitPrice.amount").value, "0.036");
+  assert.equal(propOf(aggregates[2], "rs:offer.priceCents"), undefined);
+});
+
+check("nutzungsabhängige Angebote mit verschiedenen Bezugsgrößen mischen nicht", () => {
+  const aggregates = offersOf(toSchemaOrg(payPerUse, { profile: "product-snippet" }));
+  assert.equal(aggregates.length, 2);
+  assert.deepStrictEqual(
+    aggregates.map((a) => a.name),
+    ["Pay-per-Use — Preis je m²", "Pay-per-Use — Preis je Stunde"],
+  );
+  assert.equal(aggregates[0].lowPrice, "0.04284");
+  assert.equal(aggregates[1].lowPrice, "14.875");
 });
 
 check("merchant-listing erzeugt nie ein AggregateOffer", () => {
@@ -491,9 +630,20 @@ check("summary/description: description gewinnt, summary wird disambiguating", (
 check("interne Herkunftsfelder erscheinen nicht im Markup", () => {
   const doc = { ...gausium, sourceSystem: "demo-erp", createdAt: "2026-07-01T00:00:00Z", extensions: { intern: 1 } };
   const out = JSON.stringify(toSchemaOrg(doc));
-  for (const needle of ["sourceSystem", "demo-erp", "createdAt", "extensions", "schemaVersion"]) {
+  for (const needle of ["sourceSystem", "demo-erp", "createdAt", "extensions", "schemaVersion", "provenance", "OperatorReport"]) {
     assert.ok(!out.includes(needle), needle);
   }
+});
+
+check("dauerhafte Identitäten: productId → productID, supplierId → identifier, Rest rs:", () => {
+  const product = productOf(toSchemaOrg(gausium));
+  const org = toSchemaOrg(gausium)["@graph"][0];
+  assert.equal(product.productID, gausium.productId);
+  assert.equal(product.sku, gausium.listingId);
+  assert.equal(org.identifier, gausium.supplier.supplierId);
+  assert.equal(propOf(product, "rs:variantId").value, gausium.variantId);
+  assert.equal(propOf(product, "rs:revision").value, 7);
+  assert.equal(propOf(offersOf(toSchemaOrg(gausium))[0], "rs:offer.offerId").value, "raas-24m-full");
 });
 
 check("Supplier ohne Website bekommt einen Blank-Node statt erfundener URL", () => {

@@ -13,26 +13,23 @@
       "name": "Demo Robotics GmbH",
       "identifier": "urn:example-supplier.de:supplier:demo-robotics",
       "url": "https://example-supplier.de",
-      "email": "vertrieb@example-supplier.de",
       "vatID": "DE123456789",
       "address": {
         "@type": "PostalAddress",
-        "addressCountry": "DE",
-        "postalCode": "65760",
-        "addressLocality": "Eschborn"
+        "addressCountry": "DE"
       }
     },
     {
       "@type": "Product",
       "name": "Gausium Scrubber 50 Pro (Walzenbürste)",
-      "sku": "demo-supplier-s50pro-001",
+      "sku": "demo-supplier-ppu-m2-001",
       "productID": "urn:example-supplier.de:product:gausium-scrubber-50-pro",
       "brand": {
         "@type": "Brand",
         "name": "Gausium"
       },
       "model": "Scrubber 50 Pro",
-      "description": "Autonomer Scheuersaugroboter der Mittelklasse für Hartböden in Supermärkten, Kliniken und Bahnhöfen.",
+      "description": "Nutzungsabhängiges Angebot: abgerechnet wird die gereinigte Fläche, nicht das Gerät. Referenzbeispiel für unitPrice — 3,6 ct/m² sind als ganzzahlige Cent nicht darstellbar.",
       "weight": {
         "@type": "QuantitativeValue",
         "value": 148,
@@ -53,12 +50,6 @@
         },
         {
           "@type": "PropertyValue",
-          "propertyID": "rs:modelYear",
-          "name": "Modelljahr",
-          "value": 2026
-        },
-        {
-          "@type": "PropertyValue",
           "propertyID": "rs:variantId",
           "name": "Varianten-ID",
           "value": "urn:example-supplier.de:variant:gausium-scrubber-50-pro-walze"
@@ -67,28 +58,7 @@
           "@type": "PropertyValue",
           "propertyID": "rs:revision",
           "name": "Revision des Listings",
-          "value": 7
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:highlights",
-          "name": "Highlights",
-          "value": [
-            "Selbstständiges Andocken",
-            "Walzenbürste nimmt Grobschmutz auf"
-          ]
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:classifications.cpv",
-          "name": "CPV 2008",
-          "value": "90900000-6"
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:classifications.cpv",
-          "name": "CPV 2008",
-          "value": "42995000-7"
+          "value": 2
         },
         {
           "@type": "PropertyValue",
@@ -116,13 +86,6 @@
           "propertyID": "rs:capabilities.runtimeMinutes",
           "name": "Laufzeit",
           "value": 180,
-          "unitText": "min"
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:capabilities.chargingTimeMinutes",
-          "name": "Ladezeit",
-          "value": 120,
           "unitText": "min"
         },
         {
@@ -160,37 +123,15 @@
           "name": "Geeignete Einsatzumgebungen",
           "value": [
             "Retail",
-            "Healthcare",
-            "Transport"
+            "Logistics"
           ]
         },
         {
           "@type": "PropertyValue",
           "propertyID": "rs:capabilities.minAreaM2",
           "name": "Mindestfläche",
-          "value": 800,
+          "value": 2000,
           "unitText": "m²"
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:capabilities.features",
-          "name": "Ausstattungsmerkmale",
-          "value": [
-            "Automatische Tankspülung",
-            "Flottenreporting"
-          ]
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:connectivity.fleetApi",
-          "name": "Flotten-/Reporting-API",
-          "value": true
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:connectivity.offlineCapable",
-          "name": "Offline-Betrieb möglich",
-          "value": false
         },
         {
           "@type": "PropertyValue",
@@ -218,36 +159,6 @@
         },
         {
           "@type": "PropertyValue",
-          "propertyID": "rs:compliance.dataPrivacy.camerasOnboard",
-          "name": "Kameras an Bord",
-          "value": true
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:compliance.dataPrivacy.recordsVideo",
-          "name": "Videoaufzeichnung",
-          "value": false
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:compliance.dataPrivacy.onDeviceProcessingOnly",
-          "name": "Verarbeitung nur auf dem Gerät",
-          "value": true
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:compliance.dataPrivacy.cloudUpload",
-          "name": "Cloud-Upload",
-          "value": true
-        },
-        {
-          "@type": "PropertyValue",
-          "propertyID": "rs:compliance.dataPrivacy.cloudRegion",
-          "name": "Cloud-Region",
-          "value": "EU (Frankfurt)"
-        },
-        {
-          "@type": "PropertyValue",
           "propertyID": "rs:supplier.supplierType",
           "name": "Anbietertyp",
           "value": "Dealer"
@@ -256,19 +167,19 @@
           "@type": "PropertyValue",
           "propertyID": "rs:updatedAt",
           "name": "Stand der Angaben",
-          "value": "2026-07-31T10:00:00Z"
+          "value": "2026-09-05T09:00:00Z"
         }
       ],
       "offers": [
         {
           "@type": "Offer",
-          "name": "Robot-as-a-Service (Neugerät, Full-Service, Mindestlaufzeit 24 Monate)",
+          "name": "Pay-per-Use (Neugerät, Full-Service, Mindestlaufzeit 12 Monate)",
           "businessFunction": "http://purl.org/goodrelations/v1#ProvideService",
           "itemCondition": "https://schema.org/NewCondition",
           "availability": "https://schema.org/InStock",
           "deliveryLeadTime": {
             "@type": "QuantitativeValue",
-            "value": 14,
+            "value": 21,
             "unitCode": "DAY"
           },
           "eligibleRegion": [
@@ -276,56 +187,69 @@
             "AT"
           ],
           "priceCurrency": "EUR",
-          "price": "1416.10",
+          "price": "0.04284",
           "priceSpecification": {
             "@type": "UnitPriceSpecification",
-            "price": "1416.10",
+            "price": "0.04284",
             "priceCurrency": "EUR",
             "valueAddedTaxIncluded": true,
-            "priceComponentType": "https://schema.org/Subscription",
             "referenceQuantity": {
               "@type": "QuantitativeValue",
               "value": 1,
-              "unitCode": "MON"
+              "unitCode": "MTK"
             },
             "billingDuration": {
               "@type": "QuantitativeValue",
-              "value": 24,
+              "value": 12,
               "unitCode": "MON"
             }
           },
-          "eligibleCustomerType": "http://purl.org/goodrelations/v1#Business",
           "warranty": {
             "@type": "WarrantyPromise",
-            "name": "Full-Service (Wartung, Reparaturen, Verschleißteile, Ersatzgerät binnen 48 h)",
+            "name": "Full-Service (Wartung, Reparaturen, Verschleißteile, Ersatzgerät binnen 72 h)",
             "durationOfWarranty": {
               "@type": "QuantitativeValue",
-              "value": 24,
+              "value": 12,
               "unitCode": "MON"
             }
           },
+          "addOn": [
+            {
+              "@type": "Offer",
+              "name": "Einmalige Einrichtung/Installation",
+              "priceCurrency": "EUR",
+              "price": "1130.50",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": "1130.50",
+                "priceCurrency": "EUR",
+                "valueAddedTaxIncluded": true,
+                "priceComponentType": "https://schema.org/ActivationFee"
+              }
+            }
+          ],
           "seller": {
             "@id": "https://example-supplier.de/#organization"
           },
-          "description": "Ab 1.190,00 EUR netto/Monat zzgl. 19 % USt. Mindestlaufzeit 24 Monate. Kündigungsfrist 3 Monate. Full-Service enthalten (rs:offer.serviceScope.level = Full). Enthalten: Wartung, Reparaturen, Verschleißteile, Ersatzgerät binnen 48 h, Vor-Ort-Service, Remote-Monitoring, Software-Updates, Inbetriebnahme/Einweisung, UVV-/DGUV-V3-Prüfung. Nicht enthalten: Verbrauchsmaterial, Versicherung. Einrichtung/Installation kostenfrei. Lieferzeit 14 Tage. Servicegebiete: DE, AT. Stand der Preis- und Verfügbarkeitsangabe: 11.08.2026. Hinweis zum Service: Reinigungsmittel/Pads nicht enthalten",
+          "description": "Netto 0,036 EUR/m² zzgl. 19 % USt. Mindestlaufzeit 12 Monate. Full-Service enthalten (rs:offer.serviceScope.level = Full). Enthalten: Wartung, Reparaturen, Verschleißteile, Ersatzgerät binnen 72 h, Remote-Monitoring, Software-Updates, Inbetriebnahme/Einweisung. Nicht enthalten: Verbrauchsmaterial. Einmalige Einrichtung/Installation: 950,00 EUR netto. Lieferzeit 21 Tage. Servicegebiete: DE, AT. Stand der Preis- und Verfügbarkeitsangabe: 05.09.2026. Hinweis zum Service: Abrechnung monatlich nach gereinigter Fläche laut Flottenreporting; Reinigungsmittel/Pads nicht enthalten. Mindestabnahme 15.000 m² je Monat, im Preis nicht enthalten.",
           "additionalProperty": [
             {
               "@type": "PropertyValue",
               "propertyID": "rs:offer.offerId",
               "name": "Angebots-ID",
-              "value": "raas-24m-full"
+              "value": "ppu-m2-full"
             },
             {
               "@type": "PropertyValue",
               "propertyID": "rs:offer.offerType",
               "name": "Angebotsart",
-              "value": "RaaS"
+              "value": "PayPerUse"
             },
             {
               "@type": "PropertyValue",
-              "propertyID": "rs:offer.priceCents",
-              "name": "Nettorate in Cent",
-              "value": 119000
+              "propertyID": "rs:offer.unitPrice.amount",
+              "name": "Nettopreis je m²",
+              "value": "0.036"
             },
             {
               "@type": "PropertyValue",
@@ -336,35 +260,22 @@
             },
             {
               "@type": "PropertyValue",
-              "propertyID": "rs:offer.isStartingPrice",
-              "name": "Ab-Preis",
-              "value": true
-            },
-            {
-              "@type": "PropertyValue",
               "propertyID": "rs:offer.billingPeriod",
               "name": "Abrechnungsperiode",
-              "value": "Month"
+              "value": "PerSquareMeter"
             },
             {
               "@type": "PropertyValue",
               "propertyID": "rs:offer.minTermMonths",
               "name": "Mindestlaufzeit",
-              "value": 24,
-              "unitText": "Monate"
-            },
-            {
-              "@type": "PropertyValue",
-              "propertyID": "rs:offer.noticePeriodMonths",
-              "name": "Kündigungsfrist",
-              "value": 3,
+              "value": 12,
               "unitText": "Monate"
             },
             {
               "@type": "PropertyValue",
               "propertyID": "rs:offer.setupFeeCents",
               "name": "Einrichtungsgebühr netto in Cent",
-              "value": 0
+              "value": 95000
             },
             {
               "@type": "PropertyValue",
@@ -406,14 +317,8 @@
               "@type": "PropertyValue",
               "propertyID": "rs:offer.serviceScope.replacementSlaHours",
               "name": "Ersatzgerät-SLA",
-              "value": 48,
+              "value": 72,
               "unitText": "h"
-            },
-            {
-              "@type": "PropertyValue",
-              "propertyID": "rs:offer.serviceScope.onSiteSupport",
-              "name": "Vor-Ort-Service enthalten",
-              "value": true
             },
             {
               "@type": "PropertyValue",
@@ -435,21 +340,9 @@
             },
             {
               "@type": "PropertyValue",
-              "propertyID": "rs:offer.serviceScope.statutoryInspection",
-              "name": "UVV-/DGUV-V3-Prüfung enthalten",
-              "value": true
-            },
-            {
-              "@type": "PropertyValue",
-              "propertyID": "rs:offer.serviceScope.insurance",
-              "name": "Versicherung enthalten",
-              "value": false
-            },
-            {
-              "@type": "PropertyValue",
               "propertyID": "rs:offer.serviceScope.notes",
               "name": "Hinweise zum Serviceumfang",
-              "value": "Reinigungsmittel/Pads nicht enthalten"
+              "value": "Abrechnung monatlich nach gereinigter Fläche laut Flottenreporting; Reinigungsmittel/Pads nicht enthalten."
             },
             {
               "@type": "PropertyValue",
@@ -461,79 +354,63 @@
               "@type": "PropertyValue",
               "propertyID": "rs:offer.availability.asOf",
               "name": "Stand der Verfügbarkeits- und Preisaussage",
-              "value": "2026-08-11T12:00:00Z"
+              "value": "2026-09-05T09:00:00Z"
+            },
+            {
+              "@type": "PropertyValue",
+              "propertyID": "rs:offer.notes",
+              "name": "Hinweise",
+              "value": "Mindestabnahme 15.000 m² je Monat, im Preis nicht enthalten."
             }
           ]
         },
         {
           "@type": "Offer",
-          "name": "Kauf (Neugerät, ohne Servicevertrag)",
-          "businessFunction": "http://purl.org/goodrelations/v1#Sell",
+          "name": "Pay-per-Use (Neugerät, ohne Servicevertrag)",
+          "businessFunction": "http://purl.org/goodrelations/v1#ProvideService",
           "itemCondition": "https://schema.org/NewCondition",
           "availability": "https://schema.org/InStock",
           "deliveryLeadTime": {
             "@type": "QuantitativeValue",
-            "value": 10,
+            "value": 21,
             "unitCode": "DAY"
           },
           "eligibleRegion": "DE",
           "priceCurrency": "EUR",
-          "price": "38068.10",
+          "price": "14.875",
           "priceSpecification": {
             "@type": "UnitPriceSpecification",
-            "price": "38068.10",
+            "price": "14.875",
             "priceCurrency": "EUR",
-            "valueAddedTaxIncluded": true
-          },
-          "addOn": [
-            {
-              "@type": "Offer",
-              "name": "Einmalige Einrichtung/Installation",
-              "priceCurrency": "EUR",
-              "price": "1487.50",
-              "priceSpecification": {
-                "@type": "UnitPriceSpecification",
-                "price": "1487.50",
-                "priceCurrency": "EUR",
-                "valueAddedTaxIncluded": true,
-                "priceComponentType": "https://schema.org/ActivationFee"
-              }
-            },
-            {
-              "@type": "Offer",
-              "name": "Lieferung",
-              "priceCurrency": "EUR",
-              "price": "296.31",
-              "priceSpecification": {
-                "@type": "UnitPriceSpecification",
-                "price": "296.31",
-                "priceCurrency": "EUR",
-                "valueAddedTaxIncluded": true
-              }
+            "valueAddedTaxIncluded": true,
+            "referenceQuantity": {
+              "@type": "QuantitativeValue",
+              "value": 1,
+              "unitCode": "HUR"
             }
-          ],
+          },
           "seller": {
             "@id": "https://example-supplier.de/#organization"
           },
-          "description": "Netto 31.990,00 EUR zzgl. 19 % USt. Kein Servicevertrag enthalten (rs:offer.serviceScope.level = None). Einmalige Einrichtung/Installation: 1.250,00 EUR netto. Lieferung: 249,00 EUR netto. Lieferzeit 10 Tage. Servicegebiete: DE. Stand der Preis- und Verfügbarkeitsangabe: 11.08.2026. Hinweis zum Service: Wartungsvertrag separat: 10–15 % des Kaufpreises p. a.",
+          "description": "Netto 12,50 EUR/h zzgl. 19 % USt. Kein Servicevertrag enthalten (rs:offer.serviceScope.level = None). Lieferzeit 21 Tage. Servicegebiete: DE. Stand der Preis- und Verfügbarkeitsangabe: 05.09.2026. Hinweis zum Service: Reine Gerätestunde ohne Servicevertrag — Vergleichsangebot zur Flächenabrechnung.",
           "additionalProperty": [
             {
               "@type": "PropertyValue",
               "propertyID": "rs:offer.offerId",
               "name": "Angebots-ID",
-              "value": "purchase-net"
+              "value": "ppu-hour-none"
             },
             {
               "@type": "PropertyValue",
               "propertyID": "rs:offer.offerType",
               "name": "Angebotsart",
-              "value": "Purchase"
+              "value": "PayPerUse"
             },
             {
               "@type": "PropertyValue",
-              "propertyID": "rs:offer.priceCents",
-              "name": "Nettopreis in Cent",
-              "value": 3199000
+              "propertyID": "rs:offer.unitPrice.amount",
+              "name": "Nettopreis je Stunde",
+              "value": "12.5"
             },
             {
               "@type": "PropertyValue",
@@ -546,19 +423,7 @@
               "@type": "PropertyValue",
               "propertyID": "rs:offer.billingPeriod",
               "name": "Abrechnungsperiode",
-              "value": "Once"
-            },
-            {
-              "@type": "PropertyValue",
-              "propertyID": "rs:offer.setupFeeCents",
-              "name": "Einrichtungsgebühr netto in Cent",
-              "value": 125000
-            },
-            {
-              "@type": "PropertyValue",
-              "propertyID": "rs:offer.deliveryFeeCents",
-              "name": "Liefergebühr netto in Cent",
-              "value": 24900
+              "value": "PerUnit"
             },
             {
               "@type": "PropertyValue",
@@ -570,7 +435,7 @@
               "@type": "PropertyValue",
               "propertyID": "rs:offer.serviceScope.notes",
               "name": "Hinweise zum Serviceumfang",
-              "value": "Wartungsvertrag separat: 10–15 % des Kaufpreises p. a."
+              "value": "Reine Gerätestunde ohne Servicevertrag — Vergleichsangebot zur Flächenabrechnung."
             },
             {
               "@type": "PropertyValue",
@@ -582,7 +447,7 @@
               "@type": "PropertyValue",
               "propertyID": "rs:offer.availability.asOf",
               "name": "Stand der Verfügbarkeits- und Preisaussage",
-              "value": "2026-08-11T12:00:00Z"
+              "value": "2026-09-05T09:00:00Z"
             }
           ]
         }

@@ -2,7 +2,7 @@
   "@context": [
     "https://schema.org",
     {
-      "rs": "https://robotspec.org/schema/v0.2/#",
+      "rs": "https://robotspec.org/schema/v0.3/#",
       "gr": "http://purl.org/goodrelations/v1#"
     }
   ],
@@ -11,6 +11,7 @@
       "@type": "Organization",
       "@id": "_:supplier",
       "name": "Demo Robotics Dealer",
+      "identifier": "urn:example-dealer.de:supplier:demo-robotics-dealer",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "DE"
@@ -20,6 +21,7 @@
       "@type": "Product",
       "name": "Unitree G1",
       "sku": "demo-dealer-unitree-g1-spec",
+      "productID": "urn:example-dealer.de:product:unitree-g1",
       "brand": {
         "@type": "Brand",
         "name": "Unitree"
