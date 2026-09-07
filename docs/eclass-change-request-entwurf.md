@@ -134,6 +134,12 @@ Formular oder den Klassenbaum erzwungen:
 - **Ursprung der Definition**: eigene Definition, Abgrenzung gegen die
   genannten Klassen, Bezug auf EN IEC 63327.
 
+**Validierungsregel des CDP, die beim ersten Speicherversuch zuschlug:** Im
+Feld „Ursprung der Definition" sind die Zeichen `* " ; ! ? # & { }`
+verboten. Semikolons mussten durch Kommas ersetzt werden. Für die übrigen
+Freitextfelder ist dieselbe Regel zu erwarten — Doppelpunkte, Klammern,
+Schrägstriche und Bindestriche wurden dagegen akzeptiert.
+
 **Frist:** Die Release-Planung im CDP nennt für Release 17.0 den
 **22.09.2026** als Deadline für Beta-Change-Requests (Initial war der
 30.04.2026, Alpha der 17.07.2026). Beta-CRs erscheinen laut Fußnote erst im
