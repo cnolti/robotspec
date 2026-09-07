@@ -140,7 +140,14 @@ verboten. Semikolons mussten durch Kommas ersetzt werden. Für die übrigen
 Freitextfelder ist dieselbe Regel zu erwarten — Doppelpunkte, Klammern,
 Schrägstriche und Bindestriche wurden dagegen akzeptiert.
 
-**Frist:** Die Release-Planung im CDP nennt für Release 17.0 den
-**22.09.2026** als Deadline für Beta-Change-Requests (Initial war der
-30.04.2026, Alpha der 17.07.2026). Beta-CRs erscheinen laut Fußnote erst im
-Prod-Release, es gibt also keine Korrekturrunde. Danach ist 18.0 das Ziel.
+**Realistisches Zielrelease: 18.0, nicht 17.0.** Die Release-Planung im CDP
+nennt für 17.0 drei Fristen: initiale Change Requests bis **30.04.2026**,
+Alpha bis 17.07.2026, Beta bis 22.09.2026. Entscheidend ist, was in welcher
+Phase überhaupt zulässig ist: Laut
+[eclass.eu/support/content-creation/release-process](https://eclass.eu/support/content-creation/release-process)
+sind in der Alpha-Phase nur „editing CRs" und in der Beta-Phase nur
+„correcting CRs" erlaubt. Eine **neue Klasse ist ein initialer CR** — die
+Frist dafür ist am 30.04.2026 abgelaufen. Der Antrag läuft damit auf
+Release 18.0 zu. Das ist kein Grund zu warten: Ein früh eingestellter CR
+durchläuft die Fachgruppen-Diskussion, statt am Ende durchgewinkt oder
+abgelehnt zu werden.
