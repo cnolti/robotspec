@@ -1,8 +1,11 @@
 # ECLASS-Change-Request-Entwurf: „Autonomous scrubber dryer (robot)"
 
 > This content contains ECLASS. The ECLASS Terms of Use apply (www.eclass.eu).
-> Referenzierte Version: ECLASS 16.0. Stand des Entwurfs: 11.08.2026,
-> Begründung präzisiert 05.09.2026, Marktzahlen aktualisiert 07.09.2026.
+> Referenzierte Version: ECLASS 16.0 (Recherchestand 11.08.2026); die
+> Einreichung läuft gegen den Arbeitsstand **17.0 BETA**, in dem die Lücke
+> am 07.09.2026 im CDP-Klassenbaum erneut bestätigt wurde. Stand des
+> Entwurfs: 11.08.2026, Begründung präzisiert 05.09.2026, Marktzahlen und
+> Klassenbezüge aktualisiert 07.09.2026.
 
 Einreichfertiger Entwurf für einen ECLASS-Change-Request (neue Klasse).
 Hintergrund und Belege: [crosswalk-eclass.md](crosswalk-eclass.md) — ECLASS
@@ -59,8 +62,8 @@ Self-navigating floor cleaning machine for commercial use that scrubs and
 dries hard floors autonomously, using onboard sensors (e.g. LiDAR, cameras)
 for localization, path planning and obstacle avoidance, and operating
 without continuous human guidance. Distinct from hand-operated scrubber
-dryers (human-guided) and from robot vacuum cleaners (suction only, no
-scrubbing or drying).
+and ride-on scrubber dryers (human-guided) and from robot vacuum cleaners
+(suction only, no scrubbing or drying).
 ```
 
 **Reason:**
@@ -70,8 +73,8 @@ ECLASS 16.0 BASIC has no class for autonomous scrubber dryers, i.e. floor
 cleaning machines that scrub and dry hard floors without human guidance.
 This request is limited to that gap; it does not claim that commercial
 cleaning robots are generally unclassified. The closest classes do not
-cover autonomous scrubber dryers: 21-19-01-04 is explicitly
-"hand-operated"; 21-19-03-11 (robot vacuum cleaner) covers suction robots
+cover autonomous scrubber dryers: 21-19-01-01 is ride-on and
+21-19-01-04/-05 are hand-operated; 21-19-03-11 (robot vacuum cleaner) covers suction robots
 and, per its own definition, spans residential or commercial use, but not
 scrubbing and drying; 29-16-05-08 covers household cleaning robots;
 27-38-01-10 (mobile robot) sits under industrial robots and inherits
@@ -112,3 +115,26 @@ klassifiziert Produkte, RobotSpec transportiert Angebots- und
 Servicetransparenz (Preise, Laufzeiten, `serviceScope`, Compliance,
 Praxis-Flächenleistung). Der Change-Request stärkt die Interoperabilität
 (`classifications`-Array) — er ersetzt den Standard nicht.
+
+## Was am 07.09.2026 tatsächlich eingegeben wurde
+
+Der Antrag wurde im CDP unter 21-19-01 angelegt (Formular ausgefüllt, noch
+nicht gespeichert). Abweichungen gegenüber den Blöcken oben, alle durch das
+Formular oder den Klassenbaum erzwungen:
+
+- **Code** wird vergeben, nicht gewählt: `21-19-01-43`.
+- **Bevorzugte Benennung DE** folgt der Konvention der Geschwisterklassen:
+  `Autonome Scheuersaugmaschine (Betriebsausstattung)`. EN unverändert.
+- **Begründung** ist auf **500 Zeichen** begrenzt — der `Reason`-Block oben
+  passt nicht hinein. Eingegeben wurde eine 478-Zeichen-Fassung mit
+  denselben Aussagen.
+- **Klassenbezüge präzisiert** nach Sicht in den Baum: `21-19-01-01`
+  (Aufsitz), `21-19-01-04/-05` (handgeführt, Akku bzw. elektrisch).
+- **Kurzbezeichnung** (max. 17 Zeichen) blieb leer — optional.
+- **Ursprung der Definition**: eigene Definition, Abgrenzung gegen die
+  genannten Klassen, Bezug auf EN IEC 63327.
+
+**Frist:** Die Release-Planung im CDP nennt für Release 17.0 den
+**22.09.2026** als Deadline für Beta-Change-Requests (Initial war der
+30.04.2026, Alpha der 17.07.2026). Beta-CRs erscheinen laut Fußnote erst im
+Prod-Release, es gibt also keine Korrekturrunde. Danach ist 18.0 das Ziel.
