@@ -2,12 +2,17 @@
 
 > This content contains ECLASS. The ECLASS Terms of Use apply (www.eclass.eu).
 > Referenzierte Version: ECLASS 16.0. Stand des Entwurfs: 11.08.2026,
-> Begründung präzisiert 05.09.2026.
+> Begründung präzisiert 05.09.2026, Marktzahlen aktualisiert 07.09.2026.
 
 Einreichfertiger Entwurf für einen ECLASS-Change-Request (neue Klasse).
 Hintergrund und Belege: [crosswalk-eclass.md](crosswalk-eclass.md) — ECLASS
 16.0 kennt keine Klasse für **autonome Scheuersaugmaschinen**
 (am 11.08.2026 in der offiziellen Content-Suche verifiziert).
+
+**Zahlenbasis:** Die Marktzahlen im `Reason` beziehen sich auf die
+Scheuersaug- und Kombiroboter der Erhebung (Stand September 2026) und sind
+damit nachprüfbar — frühere Fassungen nannten die Gesamtzahlen der
+Juli-Erhebung, die eine breitere Grundgesamtheit hatten.
 
 **Scope-Disziplin:** Der Antrag betrifft ausschließlich autonome
 Scheuersaugmaschinen. Er behauptet **nicht**, dass ECLASS gewerbliche
@@ -71,12 +76,12 @@ and, per its own definition, spans residential or commercial use, but not
 scrubbing and drying; 29-16-05-08 covers household cleaning robots;
 27-38-01-10 (mobile robot) sits under industrial robots and inherits
 arm-robot properties unsuitable for cleaning machines. Autonomous scrubber
-dryers are an established commercial product category: a July 2026 market
-survey of the DACH region
-documented 20 models from more than 10 manufacturers (e.g. Gausium,
-Pudu Robotics, LionsBot, Tennant, Kärcher, Nilfisk, Cleanfix, Adlatus)
-with 114 published price points across purchase, rental, leasing and
-robot-as-a-service offers. A dedicated product safety standard exists
+dryers are an established commercial product category: a market survey of
+the DACH region documented 27 autonomous scrubbing models from 16
+manufacturers (e.g. Gausium, Pudu Robotics, LionsBot, Tennant, Kärcher,
+Nilfisk, Cleanfix, Adlatus, Hako, Avidbots) with 65 published price points
+across purchase, rental, leasing and robot-as-a-service offers (as of
+September 2026). A dedicated product safety standard exists
 (EN IEC 63327, machines for commercial floor treatment with or without
 autonomous functions), underlining that this is a distinct, standardized
 product category. Procurement platforms and public tenders currently have
