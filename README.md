@@ -182,12 +182,19 @@ alle Beispiele. Details, Mapping-Tabelle und Designentscheidungen:
 
 ## Referenzimplementierung
 
-Ein RaaS-Marktplatz-POC für Reinigungsrobotik im DACH-Raum nutzt RobotSpec
-produktiv als Partner-Ingest-Format: Validierung per Ajv, Kuratierungs-Queue
-statt Auto-Publish, Mapping auf ein internes Listing-Modell
-([MAPPING-referenz.md](MAPPING-referenz.md)). RobotSpec ist
-**herstellerneutral und offen** (MIT) — Beiträge und weitere
-Implementierungen sind ausdrücklich willkommen.
+**[Tarandis](https://tarandis.de)**, ein Marktvergleich für Reinigungs- und
+Serviceroboter im DACH-Raum, nutzt RobotSpec produktiv als
+Partner-Ingest-Format: Validierung per Ajv, Kuratierungs-Queue statt
+Auto-Publish, Mapping auf ein internes Listing-Modell
+([MAPPING-referenz.md](MAPPING-referenz.md)). Wer die Struktur an echten
+Daten sehen will, findet dort den vollständigen Bestand als Text unter
+[tarandis.de/llms-full.txt](https://tarandis.de/llms-full.txt) und das
+akzeptierte Schema unter
+[tarandis.de/api/v1/robotspec/schema](https://tarandis.de/api/v1/robotspec/schema).
+
+RobotSpec ist **herstellerneutral und offen** (MIT) und gehört keiner
+Implementierung: Beiträge und weitere Implementierungen sind ausdrücklich
+willkommen und werden hier gleichrangig genannt.
 
 ## Dateien
 
