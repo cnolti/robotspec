@@ -5,7 +5,7 @@
 > Einreichung läuft gegen den Arbeitsstand **17.0 BETA**, in dem die Lücke
 > am 07.09.2026 im CDP-Klassenbaum erneut bestätigt wurde. Stand des
 > Entwurfs: 11.08.2026, Begründung präzisiert 05.09.2026, Marktzahlen und
-> Klassenbezüge aktualisiert 07.09.2026.
+> Klassenbezüge aktualisiert 07.09.2026, Marktzahlen erneut 14.09.2026.
 
 Einreichfertiger Entwurf für einen ECLASS-Change-Request (neue Klasse).
 Hintergrund und Belege: [crosswalk-eclass.md](crosswalk-eclass.md) — ECLASS
@@ -80,9 +80,9 @@ scrubbing and drying; 29-16-05-08 covers household cleaning robots;
 27-38-01-10 (mobile robot) sits under industrial robots and inherits
 arm-robot properties unsuitable for cleaning machines. Autonomous scrubber
 dryers are an established commercial product category: a market survey of
-the DACH region documented 27 autonomous scrubbing models from 16
+the DACH region documented 53 autonomous scrubbing models from 24
 manufacturers (e.g. Gausium, Pudu Robotics, LionsBot, Tennant, Kärcher,
-Nilfisk, Cleanfix, Adlatus, Hako, Avidbots) with 65 published price points
+Nilfisk, Cleanfix, Adlatus, Hako, Avidbots) with 151 published price points
 across purchase, rental, leasing and robot-as-a-service offers (as of
 September 2026). A dedicated product safety standard exists
 (EN IEC 63327, machines for commercial floor treatment with or without
@@ -151,3 +151,15 @@ Frist dafür ist am 30.04.2026 abgelaufen. Der Antrag läuft damit auf
 Release 18.0 zu. Das ist kein Grund zu warten: Ein früh eingestellter CR
 durchläuft die Fachgruppen-Diskussion, statt am Ende durchgewinkt oder
 abgelehnt zu werden.
+
+## Status: eingereicht (18.09.2026)
+
+Alle neun Change Requests stehen im ECLASS-CDP auf „Submitted" — die
+Klassifikationsklasse 21-19-01-43 seit dem 14.09.2026, Applikationsklasse,
+Zuordnung und die sechs Aspektzuordnungen seit dem 18.09.2026 (CDP-IDs
+38245904–38245912, Release ECLASS 17.0 Beta, Frist 22.09.2026 eingehalten).
+Die Begründung nennt in allen neun Anträgen den Stand der Markterhebung vom
+09.09.2026 (53 Modelle, 24 Hersteller, 151 Preispunkte). Ab hier ist nichts
+mehr editierbar; der IRDI kommt mit dem Release (Veröffentlichung bis
+30.11.2026).
+

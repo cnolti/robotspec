@@ -41,8 +41,12 @@ Properties-Suche bestätigt (siehe docs/crosswalk-eclass.md).
   gegen die Listenlänge, doppelte IDs, ID gleichzeitig im Bestand und
   zurückgezogen — im Validator umgesetzt, dazu eine Negativ-Testsuite.
 - ~~ECLASS-Change-Request „Autonome Scheuersaugmaschine" unter 21-19-01~~ —
-  **Entwurf einreichfertig**, Begründung auf autonome Scheuersaugmaschinen
-  eingegrenzt (09/2026):
+  **eingereicht** (Klassifikationsklasse 21-19-01-43 am 14.09.2026,
+  Applikationsklasse, Zuordnung und sechs Aspekte am 18.09.2026; CDP-IDs
+  38245904–38245912, Zielrelease ECLASS 17.0 Beta). Nächster Schritt liegt
+  bei ECLASS: Fachgruppenprüfung, IRDI mit Release 17.0 (Veröffentlichung
+  bis 30.11.2026), dann Crosswalk und Beispiele nachziehen. Begründung auf
+  autonome Scheuersaugmaschinen eingegrenzt:
   [docs/eclass-change-request-entwurf.md](docs/eclass-change-request-entwurf.md).
 
 ## v0.4 (Kandidaten)
